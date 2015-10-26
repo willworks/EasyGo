@@ -27,8 +27,10 @@
     "debug": "~2.2.0",
     "ejs": "^2.3.4",
     "express": "~4.13.1",
+    "express-session": "^1.12.0",
     "jade": "^1.11.0",
     "jquery": "^2.1.4",
+    "mongoose": "^4.2.2",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
   }
