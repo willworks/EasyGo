@@ -1,36 +1,65 @@
 var express = require('express');
+var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-// ==========自定义路由==========
-var test = require('./routes/test');
 
-var app = express();
+// 数据模型
+global.dbHandel = require('./database/dbHandel');
+global.db = mongoose.connect("mongodb://localhost:27017/nodedb");
 
-// view engine setup
+// session生命周期设置
+app.use(session({ 
+  secret: 'secret',
+  cookie:{ 
+    maxAge: 1000*60*30
+  }
+}));
+
+
+// 模版引擎
 app.set('views', path.join(__dirname, 'views'));
-app.engine("html",require("ejs").__express); // or   app.engine("html",require("ejs").renderFile);
+app.engine("html",require("ejs").__express); 
 //app.set("view engine","ejs");
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// session验证登陆
+app.use(function(req,res,next){ 
+  res.locals.user = req.session.user;
+  var err = req.session.error;
+  delete req.session.error;
+  res.locals.message = "";
+  if(err){ 
+    res.locals.message = '<div class="alert alert-danger" style="margin-bottom:20px;color:red;">'+err+'</div>';
+  }
+  next();
+});
+
+
+// 设置路由
 app.use('/', routes);
 app.use('/users', users);
+app.use('/login',routes);
+app.use('/register',routes);
+app.use('/home',routes);
+app.use("/logout",routes);
 
-// ==========自定义路由==========
-app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

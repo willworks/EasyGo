@@ -12,7 +12,10 @@
   "keywords": [
     "EasyGo",
     "node",
-    "mongodb"
+    "mongodb",
+    "express",
+    "bootstrap",
+    "jquery"
   ],
   "author": "kevin.zhong",
   "license": "MIT",
