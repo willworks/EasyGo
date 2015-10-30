@@ -1,19 +1,29 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var session = require('express-session');
+/** 
+    Document   : EasyGo
+    Created on : 2015.10
+    Author     : Kevin Zhong
+    License    : MIT
+    github     : https://github.com/willworks/EasyGo
+    Description: EasyGo is a co-working-system for office approval
+    Copyright (c) 2015 Kevin Zhong
+*/
+var express = require('express'),
+    app = express(),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose'),
+    session = require('express-session'),
+    routes = require('./routes/index'),
+    users = require('./routes/users');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
 
 // 数据模型
 global.dbHandel = require('./database/dbHandel');
 global.db = mongoose.connect("mongodb://localhost:27017/nodedb");
+
 
 // session生命周期设置
 app.use(session({ 
@@ -29,6 +39,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine("html",require("ejs").__express); 
 //app.set("view engine","ejs");
 app.set('view engine', 'html');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
