@@ -48,6 +48,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// 设置bower静态资源路由，后期通过bower管理公共静态资源
+app.use(express.static(path.join(__dirname, 'bower_components')));
 
 
 // session验证登陆

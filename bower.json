@@ -1,0 +1,32 @@
+{
+  "name": "EasyGo",
+  "description": "EasyGo is a co-working-system for Office approval",
+  "main": "app.js",
+  "authors": [
+    "kevin.zhong"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "EasyGo",
+    "node",
+    "mongodb",
+    "express",
+    "bootstrap",
+    "jquery"
+  ],
+  "homepage": "https://github.com/willworks/EasyGo",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6",
+    "angular": "~1.4.8"
+  }
+}
