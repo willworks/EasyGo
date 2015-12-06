@@ -5,3 +5,7 @@ EasyGo is a co-working-system for office approval
 
  - run npm install & bower install
  - run npm start
+
+### static resource
+
+ - run gulp
