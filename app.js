@@ -24,7 +24,7 @@ var express = require('express'),
 
 
 // 数据模型
-global.dbHandel = require('./models/dbHandel');
+global.dbConn = require('./models/dbConn');
 global.db = mongoose.connect("mongodb://localhost:27017/EasyGo");
 
 

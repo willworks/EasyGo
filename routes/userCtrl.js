@@ -11,8 +11,8 @@ router.route("/login").get(function(req,res){    // 到达此路径则渲染logi
 	res.render("login",{title:'User Login'});
 }).post(function(req,res){ 					   // 从此路径检测到post方式则进行post数据的处理操作
 	//get User info
-	 //这里的User就是从model中获取user对象，通过global.dbHandel全局方法（这个方法在app.js中已经实现)
-	var User = global.dbHandel.getModel('user');  
+	 //这里的User就是从model中获取user对象，通过global.dbConn全局方法（这个方法在app.js中已经实现)
+	var User = global.dbConn.getModel('user');  
 	var uname = req.body.uname;				//获取post上来的 data数据中 uname的值
 	User.findOne({name:uname},function(err,doc){   //通过此model以用户名的条件 查询数据库中的匹配信息
 		if(err){ 										//错误就返回给原post处（login.html) 状态码为500的错误
@@ -40,8 +40,8 @@ router.route("/login").get(function(req,res){    // 到达此路径则渲染logi
 router.route("/register").get(function(req,res){    // 到达此路径则渲染register文件，并传出title值供 register.html使用
 	res.render("register",{title:'User register'});
 }).post(function(req,res){ 
-	 //这里的User就是从model中获取user对象，通过global.dbHandel全局方法（这个方法在app.js中已经实现)
-	var User = global.dbHandel.getModel('user');
+	 //这里的User就是从model中获取user对象，通过global.dbConn全局方法（这个方法在app.js中已经实现)
+	var User = global.dbConn.getModel('user');
 	var uname = req.body.uname;
 	var upwd = req.body.upwd;
 	User.findOne({name: uname},function(err,doc){   // 同理 /login 路径的处理方式
