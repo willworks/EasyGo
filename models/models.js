@@ -6,5 +6,11 @@ module.exports = {
 	},
 	depart:{
 		name:{type:String,required:true}
+	},
+	apply:{
+		name:{type:String,required:true}
+	},
+	notice:{
+		name:{type:String,required:true}
 	}
 };
