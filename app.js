@@ -69,6 +69,7 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 
 
 // ===================设置路由===================
+
 // 登陆控制
 app.use('/', userCtrl);
 app.use('/login',userCtrl);
