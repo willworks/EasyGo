@@ -17,6 +17,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     session = require('express-session'),
     // controllers
+    mainCtrl = require('./routes/mainCtrl'),
     userCtrl = require('./routes/userCtrl'),
     departCtrl = require('./routes/departCtrl'),
     applyCtrl = require('./routes/applyCtrl'),
@@ -53,7 +54,7 @@ app.use(function(req,res,next){
 // 模版引擎
 app.set('views', path.join(__dirname, 'views'));
 app.engine("html",require("ejs").__express); 
-//app.set("view engine","ejs");
+// app.set("view engine","ejs");
 app.set('view engine', 'html');
 
 
@@ -72,11 +73,11 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 // ===================设置路由===================
 
 // 登陆控制
-app.use('/', userCtrl);
-app.use('/login',userCtrl);
-app.use('/register',userCtrl);
-app.use('/home',userCtrl);
-app.use('/logout',userCtrl);
+app.use('/', mainCtrl);
+app.use('/login',mainCtrl);
+app.use('/register',mainCtrl);
+app.use('/home',mainCtrl);
+app.use('/logout',mainCtrl);
 
 // 用户控制
 app.use('/', userCtrl);
@@ -84,9 +85,7 @@ app.use('/user', userCtrl);
 app.use('/user/new', userCtrl);
 app.use('/user/:id', userCtrl);
 app.use('/user/:id/edit', userCtrl);
-app.use('/user/:id/edit', userCtrl);
 app.use('/user/:id/delete', userCtrl);
-app.use('/user/:id/finish', userCtrl);
 
 // 部门控制
 app.use('/', departCtrl);
@@ -94,9 +93,7 @@ app.use('/depart', departCtrl);
 app.use('/depart/new', departCtrl);
 app.use('/depart/:id', departCtrl);
 app.use('/depart/:id/edit', departCtrl);
-app.use('/depart/:id/edit', departCtrl);
 app.use('/depart/:id/delete', departCtrl);
-app.use('/depart/:id/finish', departCtrl);
 
 // 申请控制
 app.use('/', applyCtrl);
@@ -104,9 +101,7 @@ app.use('/apply', applyCtrl);
 app.use('/apply/new', applyCtrl);
 app.use('/apply/:id', applyCtrl);
 app.use('/apply/:id/edit', applyCtrl);
-app.use('/apply/:id/edit', applyCtrl);
 app.use('/apply/:id/delete', applyCtrl);
-app.use('/apply/:id/finish', applyCtrl);
 
 // 通知控制
 app.use('/', noticeCtrl);
@@ -114,9 +109,8 @@ app.use('/notice', noticeCtrl);
 app.use('/notice/new', noticeCtrl);
 app.use('/notice/:id', noticeCtrl);
 app.use('/notice/:id/edit', noticeCtrl);
-app.use('/notice/:id/edit', noticeCtrl);
 app.use('/notice/:id/delete', noticeCtrl);
-app.use('/notice/:id/finish', noticeCtrl);
+
 // ==============================================
 
 
