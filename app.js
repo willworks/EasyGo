@@ -57,14 +57,15 @@ app.engine("html",require("ejs").__express);
 app.set('view engine', 'html');
 
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+
+// 静态资源路由，后期通过bower管理公共静态资源
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
-// 设置bower静态资源路由，后期通过bower管理公共静态资源
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 
