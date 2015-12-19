@@ -12,10 +12,10 @@ router.route('/apply').get(function(req,res){
 
 
 router.route("/apply/new").post(function(req,res){ 
-    var User = global.dbConn.getModel('user');
+    var User = global.dbConn.getModel('apply');
     var uname = req.body.uname;
     var upwd = req.body.upwd;
-    User.findOne({name: uname},function(err,data){
+    apply.findOne({name: uname},function(err,data){
         if(err){ 
             res.send(500);
             req.session.error =  '网络异常错误！';
@@ -24,7 +24,7 @@ router.route("/apply/new").post(function(req,res){
             req.session.error = '用户名已存在！';
             res.send(500);
         }else{ 
-            User.create({ 
+            apply.create({ 
                 name: uname,
                 password: upwd
             },function(err,data){ 
@@ -49,7 +49,7 @@ router.route("/apply/:id").get(function(req,res){
         // 读取具体内容操作
         var apply = global.dbConn.getModel('apply');
         var did = req.body.id;
-        User.findOne({id: id},function(err,data){
+        apply.findOne({id: id},function(err,data){
             if(err){ 
                 res.send(500);
                 req.session.error =  '网络异常错误！';
@@ -73,7 +73,7 @@ router.route("/apply/:id/edit").post(function(req,res){
         // 编辑具体内容操作
         var apply = global.dbConn.getModel('apply');
         var did = req.body.id;
-        User.findOne({id: id},function(err,data){
+        apply.findOne({id: id},function(err,data){
             if(err){ 
                 res.send(500);
                 req.session.error =  '网络异常错误！';
@@ -82,7 +82,7 @@ router.route("/apply/:id/edit").post(function(req,res){
                 req.session.error = '用户名已存在！';
                 res.send(500);
             }else{ 
-                User.create({ 
+                apply.create({ 
                     name: uname,
                     password: upwd
                 },function(err,data){ 

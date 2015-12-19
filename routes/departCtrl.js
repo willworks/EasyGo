@@ -12,10 +12,10 @@ router.route('/depart').get(function(req,res){
 
 
 router.route("/depart/new").post(function(req,res){ 
-    var User = global.dbConn.getModel('user');
+    var depart = global.dbConn.getModel('depart');
     var uname = req.body.uname;
     var upwd = req.body.upwd;
-    User.findOne({name: uname},function(err,data){
+    depart.findOne({name: uname},function(err,data){
         if(err){ 
             res.send(500);
             req.session.error =  '网络异常错误！';
@@ -24,7 +24,7 @@ router.route("/depart/new").post(function(req,res){
             req.session.error = '用户名已存在！';
             res.send(500);
         }else{ 
-            User.create({ 
+            depart.create({ 
                 name: uname,
                 password: upwd
             },function(err,data){ 
@@ -49,7 +49,7 @@ router.route("/depart/:id").get(function(req,res){
         // 读取具体内容操作
         var Depart = global.dbConn.getModel('depart');
         var did = req.body.id;
-        User.findOne({id: id},function(err,data){
+        depart.findOne({id: id},function(err,data){
             if(err){ 
                 res.send(500);
                 req.session.error =  '网络异常错误！';
@@ -73,7 +73,7 @@ router.route("/depart/:id/edit").post(function(req,res){
         // 编辑具体内容操作
         var Depart = global.dbConn.getModel('depart');
         var did = req.body.id;
-        User.findOne({id: id},function(err,data){
+        depart.findOne({id: id},function(err,data){
             if(err){ 
                 res.send(500);
                 req.session.error =  '网络异常错误！';
@@ -82,7 +82,7 @@ router.route("/depart/:id/edit").post(function(req,res){
                 req.session.error = '用户名已存在！';
                 res.send(500);
             }else{ 
-                User.create({ 
+                depart.create({ 
                     name: uname,
                     password: upwd
                 },function(err,data){ 
