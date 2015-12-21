@@ -1,16 +1,33 @@
 // 数据模型
 module.exports = { 
 	user:{ 
+		id:{type:String,required:true},
 		name:{type:String,required:true},
-		password:{type:String,required:true}
+		password:{type:String,required:true},
+		sex:{type:String,required:true},
+		email:{type:String,required:true},
+		phone:{type:String,required:true},
+		position:{type:String,required:true},
+		depart_id:{type:String,required:true}
 	},
 	depart:{
-		name:{type:String,required:true}
+		id:{type:String,required:true},
+		name:{type:String,required:true},
+		leader_id:{type:String,required:true},
+		depart_upper_id:{type:String,required:true}
 	},
 	apply:{
-		name:{type:String,required:true}
+		id:{type:String,required:true},
+		title:{type:String,required:true},
+		content:{type:String,required:true},
+		applicant_id:{type:String,required:true},
+		recipient_id:{type:String,required:true}
 	},
 	notice:{
-		name:{type:String,required:true}
+		id:{type:String,required:true},
+		title:{type:String,required:true},
+		content:{type:String,required:true},
+		applicant_id:{type:String,required:true},
+		recipient_id:{type:String,required:true}
 	}
 };

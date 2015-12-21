@@ -6,17 +6,17 @@ var router = express.Router();
  * 例如 var User = global.dbConn.getModel('user');
  */
 
-router.get('/', function(req, res,next) {
+router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' }); 
 });
 
 
-router.route("/login").get(function(req,res){
+router.route("/login").get(function(req, res){
     res.render("login",{title:'User Login'});
 }).post(function(req,res){
     var User = global.dbConn.getModel('user');  
     var uname = req.body.uname;
-    User.findOne({name:uname},function(err,data){
+    User.findOne({name:uname},function(err, data){
         if(err){
             res.send(500);
             console.log(err);
@@ -39,13 +39,13 @@ router.route("/login").get(function(req,res){
 });
 
 
-router.route("/register").get(function(req,res){ 
+router.route("/register").get(function(req, res){ 
     res.render("register",{title:'User register'});
-}).post(function(req,res){ 
+}).post(function(req, res){ 
     var User = global.dbConn.getModel('user');
     var uname = req.body.uname;
     var upwd = req.body.upwd;
-    User.findOne({name: uname},function(err,data){
+    User.findOne({name: uname},function(err, data){
         if(err){ 
             res.send(500);
             req.session.error =  '网络异常错误！';
@@ -71,7 +71,7 @@ router.route("/register").get(function(req,res){
 });
 
 
-router.get("/home",function(req,res){ 
+router.get("/home",function(req, res){ 
     if(!req.session.user){
         req.session.error = "请先登录";
         res.redirect("/login");
@@ -80,7 +80,7 @@ router.get("/home",function(req,res){
 });
 
 
-router.get("/logout",function(req,res){
+router.get("/logout",function(req, res){
     req.session.user = null;
     req.session.error = null;
     res.redirect("/");

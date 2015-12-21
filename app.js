@@ -50,13 +50,13 @@ app.use(function(req,res,next){
 });
 // ==============================================
 
-
-// 模版引擎
-app.set('views', path.join(__dirname, 'views'));
-app.engine("html",require("ejs").__express); 
-// app.set("view engine","ejs");
-app.set('view engine', 'html');
-
+/*
+ // 模版引擎
+ // ====技术栈为 Node + Angular，故后台只有提供api不负责渲染，渲染发生在前端angular====
+ app.set('views', path.join(__dirname, 'views'));
+ app.engine("html",require("ejs").__express); 
+ app.set('view engine', 'html');
+*/
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
