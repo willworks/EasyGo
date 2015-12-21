@@ -35,7 +35,6 @@
     "gulp-webserver": "^0.9.1",
     "mongoose": "^4.2.2",
     "morgan": "~1.6.1",
-    "node-gyp": "^3.2.1",
     "serve-favicon": "~2.3.0",
     "tiny-lr": "^0.2.1"
   }
