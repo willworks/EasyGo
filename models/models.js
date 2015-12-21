@@ -8,26 +8,30 @@ module.exports = {
 		email:{type:String,required:true},
 		phone:{type:String,required:true},
 		position:{type:String,required:true},
-		depart_id:{type:String,required:true}
+		depart_id:{type:String,required:true},
+		delete_flag:{type:String,required:true}
 	},
 	depart:{
 		id:{type:String,required:true},
 		name:{type:String,required:true},
 		leader_id:{type:String,required:true},
-		depart_upper_id:{type:String,required:true}
+		depart_upper_id:{type:String,required:true},
+		delete_flag:{type:String,required:true}
 	},
 	apply:{
 		id:{type:String,required:true},
 		title:{type:String,required:true},
 		content:{type:String,required:true},
 		applicant_id:{type:String,required:true},
-		recipient_id:{type:String,required:true}
+		recipient_id:{type:String,required:true},
+		delete_flag:{type:String,required:true}
 	},
 	notice:{
 		id:{type:String,required:true},
 		title:{type:String,required:true},
 		content:{type:String,required:true},
 		applicant_id:{type:String,required:true},
-		recipient_id:{type:String,required:true}
+		recipient_id:{type:String,required:true},
+		delete_flag:{type:String,required:true}
 	}
 };

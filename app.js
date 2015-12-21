@@ -123,7 +123,7 @@ app.use('/notice/:id/delete', noticeCtrl);
 
 // 通过通配符处理没有经过路由的所有404页面
 app.get('*', function(req, res){
-    res.render("login",{title:'1823619231'});
+    res.end('error');
 });
 
 // error handlers
