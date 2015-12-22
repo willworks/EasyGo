@@ -17,11 +17,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     session = require('express-session'),
     // controllers
-    mainCtrl = require('./routes/mainCtrl'),
-    userCtrl = require('./routes/userCtrl'),
-    departCtrl = require('./routes/departCtrl'),
-    applyCtrl = require('./routes/applyCtrl'),
-    noticeCtrl = require('./routes/noticeCtrl');
+    mainCtrl = require('./routes/mainCtrl');
 
 
 // 数据模型
@@ -58,7 +54,7 @@ app.use(function(req,res,next){
  app.set('view engine', 'html');
 */
 
-app.use(logger('dev'));
+app.use(logger('dev')); // 在控制台中，显示req请求的信息
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -73,60 +69,46 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 // ===================设置路由===================
 
 // 登陆控制
-app.use('/', mainCtrl);
-app.use('/login',mainCtrl);
-app.use('/register',mainCtrl);
-app.use('/home',mainCtrl);
-app.use('/logout',mainCtrl);
+app.get('/', mainCtrl.index);
+app.post('/login', mainCtrl.login);
+app.get('/logout', mainCtrl.logout);
 
-// 用户控制
-app.use('/', userCtrl);
-app.use('/user', userCtrl);
-app.use('/user/new', userCtrl);
-app.use('/user/:id', userCtrl);
-app.use('/user/:id/edit', userCtrl);
-app.use('/user/:id/delete', userCtrl);
+// // 用户控制
+// app.get('/user', userCtrl.index);
+// app.get('/user/new', userCtrl.add);
+// app.get('/user/:id', userCtrl.list);
+// app.get('/user/:id/edit', userCtrl.edit);
+// app.get('/user/:id/delete', userCtrl.delete);
 
-// 部门控制
-app.use('/', departCtrl);
-app.use('/depart', departCtrl);
-app.use('/depart/new', departCtrl);
-app.use('/depart/:id', departCtrl);
-app.use('/depart/:id/edit', departCtrl);
-app.use('/depart/:id/delete', departCtrl);
+// // 部门控制
+// app.get('/depart', departCtrl);
+// app.get('/depart/new', departCtrl);
+// app.get('/depart/:id', departCtrl);
+// app.get('/depart/:id/edit', departCtrl);
+// app.get('/depart/:id/delete', departCtrl);
 
-// 申请控制
-app.use('/', applyCtrl);
-app.use('/apply', applyCtrl);
-app.use('/apply/new', applyCtrl);
-app.use('/apply/:id', applyCtrl);
-app.use('/apply/:id/edit', applyCtrl);
-app.use('/apply/:id/delete', applyCtrl);
+// // 申请控制
+// app.get('/apply', applyCtrl);
+// app.get('/apply/new', applyCtrl);
+// app.get('/apply/:id', applyCtrl);
+// app.get('/apply/:id/edit', applyCtrl);
+// app.get('/apply/:id/delete', applyCtrl);
 
-// 通知控制
-app.use('/', noticeCtrl);
-app.use('/notice', noticeCtrl);
-app.use('/notice/new', noticeCtrl);
-app.use('/notice/:id', noticeCtrl);
-app.use('/notice/:id/edit', noticeCtrl);
-app.use('/notice/:id/delete', noticeCtrl);
+// // 通知控制
+// app.get('/notice', noticeCtrl);
+// app.get('/notice/new', noticeCtrl);
+// app.get('/notice/:id', noticeCtrl);
+// app.get('/notice/:id/edit', noticeCtrl);
+// app.get('/notice/:id/delete', noticeCtrl);
 
 // ==============================================
 
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//     var err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-// });
-
 // 通过通配符处理没有经过路由的所有404页面
 app.get('*', function(req, res){
-    res.end('error');
+    res.send('404');
 });
 
-// error handlers
 
 // development error handler
 // will print stacktrace
@@ -139,6 +121,7 @@ if (app.get('env') === 'development') {
         });
     });
 }
+
 
 // production error handler
 // no stacktraces leaked to user
