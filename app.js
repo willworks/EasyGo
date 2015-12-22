@@ -69,7 +69,6 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 
 // 登陆控制
 app.get('/', mainCtrl.index);
-app.get('/login', mainCtrl.loginPage);
 app.post('/login', mainCtrl.login);
 app.get('/logout', mainCtrl.logout);
 

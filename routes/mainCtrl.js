@@ -8,9 +8,9 @@ exports.index = function(req, res, next) {
     console.log(req.session);
     if (!req.session.user) {
         req.session.error = "请先登录";
-        // res.redirect("/login");
+        // 接口返回对象 res.send();
     } else {
-        // res.sendfile('main.html');
+        // 接口返回对象 res.send();
     }
 };
 
@@ -20,21 +20,18 @@ exports.login = function(req, res, next) {
     var uname = req.body.uname;
     userModel.findOne({name:uname},function(err, data){
         if(err){
-            res.send(500);
+            // 接口返回对象 res.send();
             console.log(err);
         }else if(!data){
             req.session.error = '用户名不存在';
-            res.send('用户名不存在');
-            // res.redirect("/login");
+            // 接口返回对象 res.send();
         }else{
             if(req.body.upwd != data.password){
                 req.session.error = "密码错误";
-                res.send("密码错误");
-                // res.redirect("/login");
+                // 接口返回对象 res.send();
             }else{
                 req.session.user = data;
-                res.send('用户存在');
-                // res.redirect('/');
+                // 接口返回对象 res.send();
             }
         }
     });
@@ -44,5 +41,5 @@ exports.login = function(req, res, next) {
 exports.logout = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
-    // res.redirect("/login");
+    // 接口返回对象 res.send();
 };
