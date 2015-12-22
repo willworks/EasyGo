@@ -1,12 +1,19 @@
 /*
- * 通过session来检测登陆状态
+ * 通过req.session来检测登陆状态
  * model通过global.dbConn全局方法（这个方法在app.js中已经实现)，来获取对象
  * 例如 var userModel = global.dbConn.getModel('user');
  */
 
 exports.index = function(req, res, next) {
-    res.redirect('/public/');
+    console.log(req.session);
+    if (!req.session.user) {
+        req.session.error = "请先登录";
+        // res.redirect("/login");
+    } else {
+        // res.sendfile('main.html');
+    }
 };
+
 
 exports.login = function(req, res, next) {
     var userModel = global.dbConn.getModel('user');  
@@ -27,7 +34,7 @@ exports.login = function(req, res, next) {
             }else{
                 req.session.user = data;
                 res.send('用户存在');
-                //res.redirect('/');
+                // res.redirect('/');
             }
         }
     });
@@ -37,5 +44,5 @@ exports.login = function(req, res, next) {
 exports.logout = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
-    res.redirect("/");
+    // res.redirect("/login");
 };
