@@ -42,4 +42,9 @@ module.exports = function (app) {
     app.get('/notice/:id/delete', noticeCtrl.delete);
 
     // ==============================================
+
+    // 通过通配符处理没有经过路由的所有404页面，必须放在上边所有路由最后
+    app.get('*', function(req, res){
+        res.send('404');
+    });
 };

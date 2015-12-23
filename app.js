@@ -18,12 +18,12 @@ var express = require('express'),
     session = require('express-session'),
     routes = require('./routes/routes');
 
-
 // 数据模型
 global.dbConn = require('./models/dbConn');
 global.db = mongoose.connect("mongodb://localhost:27017/EasyGo");
 
-
+// 请求到达之后先经过app.use处理，再传到路由app.get等
+// next()用于确保请求进入下个路由
 // ===================登陆校验===================
 // session生命周期设置
 app.use(session({ 
@@ -45,51 +45,17 @@ app.use(function(req,res,next){
 });
 // ==============================================
 
-
 app.use(logger('dev')); // 在控制台中，显示req请求的信息
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 
 // 静态资源路由，后期通过bower管理公共静态资源
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-
 // 路由入口
 routes(app);
-
-
-// 通过通配符处理没有经过路由的所有404页面
-app.get('*', function(req, res){
-    res.send('404');
-});
-
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
-
 
 module.exports = app;
