@@ -1,89 +1,94 @@
-var express = require('express');
-var router = express.Router();
-
-router.route('/user').get(function(req,res){
+exports.index = function(req, res, next) {
     if (!req.session.user) {
         req.session.error = "请先登录";
-        res.redirect("/login");
+        // 接口返回对象 res.send();
     } else {
-        // 罗列全部内容操作
+        // 接口返回对象 res.send();
     }
-});
+};
 
 
-router.route("/login").get(function(req, res){
-    res.render("login",{title:'User Login'});
-}).post(function(req,res){
-    var User = global.dbConn.getModel('user');  
-    var uname = req.body.uname;
-    User.findOne({name:uname},function(err, data){
-        if(err){
-            res.send(500);
-            console.log(err);
-        }else if(!data){
-            req.session.error = '用户名不存在';
-            res.send(404);
-            // res.redirect("/login");
-        }else{
-            if(req.body.upwd != data.password){
-                req.session.error = "密码错误";
-                res.send(404);
-                // res.redirect("/login");
-            }else{
-                req.session.user = data;
-                res.send(200);
-                // res.redirect("/home");
-            }
-        }
-    });
-});
-
-
-router.route("/register").get(function(req, res){ 
-    res.render("register",{title:'User register'});
-}).post(function(req, res){ 
-    var User = global.dbConn.getModel('user');
+exports.add = function(req, res, next) {
+    var userModel = global.dbConn.getModel('user');  
     var uname = req.body.uname;
     var upwd = req.body.upwd;
-    User.findOne({name: uname},function(err, data){
+    userModel.findOne({name: uname},function(err, data){
         if(err){ 
-            res.send(500);
-            req.session.error =  '网络异常错误！';
+            // 接口返回对象 res.send();
             console.log(err);
         }else if(data){ 
             req.session.error = '用户名已存在！';
-            res.send(500);
+            // 接口返回对象 res.send();
         }else{ 
-            User.create({ 
+            userModel.create({ 
                 name: uname,
                 password: upwd
             },function(err,data){ 
                 if (err) {
-                    res.send(500);
+                    // 接口返回对象 res.send();
                     console.log(err);
                 } else {
                     req.session.error = '用户名创建成功！';
-                    res.send(200);
+                    // 接口返回对象 res.send();
                 }
             });
         }
     });
-});
+};
 
 
-router.get("/home",function(req, res){ 
-    if(!req.session.user){
-        req.session.error = "请先登录";
-        res.redirect("/login");
-    }
-    res.render("home",{title:'Home'});
-});
+exports.list = function(req, res, next) {
+    var userModel = global.dbConn.getModel('user');  
+    var uname = req.body.uname;
+    userModel.findOne({name:uname},function(err, data){
+        if(err){
+            // 接口返回对象 res.send();
+            res.send(req.params);
+            console.log(err);
+        }else if(!data){
+            req.session.error = '用户名不存在';
+            // 接口返回对象 res.send();
+            res.send(req.params);
+        }else{
+            if(req.body.upwd != data.password){
+                req.session.error = "密码错误";
+                // 接口返回对象 res.send();
+                res.send(req.params);
+            }else{
+                req.session.user = data;
+                // 接口返回对象 res.send();
+                res.send(req.params);
+            }
+        }
+    });
+};
 
 
-router.get("/logout",function(req, res){
+exports.edit = function(req, res, next) {
+    var userModel = global.dbConn.getModel('user');  
+    var uname = req.body.uname;
+    userModel.findOne({name:uname},function(err, data){
+        if(err){
+            // 接口返回对象 res.send();
+            console.log(err);
+        }else if(!data){
+            req.session.error = '用户名不存在';
+            // 接口返回对象 res.send();
+        }else{
+            if(req.body.upwd != data.password){
+                req.session.error = "密码错误";
+                // 接口返回对象 res.send();
+            }else{
+                req.session.user = data;
+                // 接口返回对象 res.send();
+            }
+        }
+    });
+};
+
+
+exports.delete = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
-    res.redirect("/");
-});
-
-module.exports = router;
+    // 接口返回对象 res.send();
+};
