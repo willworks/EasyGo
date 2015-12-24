@@ -7,9 +7,12 @@
 exports.index = function(req, res, next) {
     if (!req.session.user) {
         req.session.error = "请先登录";
+        res.sendfile('app/index.html');
         // 接口返回对象 res.send();
     } else {
         // 接口返回对象 res.send();
+        // angular启动页
+        res.sendfile('app/index.html');
     }
 };
 

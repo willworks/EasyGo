@@ -28,14 +28,13 @@ module.exports = function (app) {
         next();
     });
     // ==============================================
-
+    app.set('view engine', 'html');// 路由可以省去文件后缀名
     app.use(logger('dev')); // 在控制台中，显示req请求的信息
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
 
-    // 静态资源路由，后期通过bower管理公共静态资源
-    app.use(express.static(path.join(root, 'public')));
-    app.use(favicon(root + '/public/favicon.ico'));
-    app.use(express.static(path.join(root, 'bower_components')));
+    // 设置Angular入口静态路由
+    app.use(express.static(path.join(root, 'app')));
+    app.use(favicon(root + '/app/favicon.ico'));
 };
