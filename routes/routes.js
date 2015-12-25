@@ -8,6 +8,7 @@ var mainCtrl = require('../controllers/mainCtrl'),
 module.exports = function (app) {
     // ===================设置路由===================
     // PS: :id 可以在 req.params.id获取到
+    //     POST的数据经过body-parser处理，可直接通过req.body.xxx获取
     // 登陆控制
     app.get('/', mainCtrl.index);
     app.post('/login', mainCtrl.login);
