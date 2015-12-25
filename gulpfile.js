@@ -19,12 +19,19 @@ var gulp = require('gulp'),//引入基础库
 //创建watch任务去检测html文件,其定义了当html改动之后，去调用一个gulp的Task
 //以下三个目录要一致，服务器目录，监测目录和重载目录
 gulp.task('watch', function () {
-  gulp.watch(['./static/*.html'], ['html']);// 监测目录
+  // 监听html
+  gulp.watch('./app/*.html', ['html']);
+  // 监听css
+  gulp.watch('./app/assets/css/*.css', ['css']);
+  // 监听img
+  gulp.watch('./app/assets/img/**/*', ['img']);
+  // 监听js
+  gulp.watch('./app/assets/js/*.js', ['js']);
 });
 
 //使用connect启动一个Web服务器
 gulp.task('server', function() {
-  gulp.src('./static/')
+  gulp.src('./app/')
     .pipe(webserver({
       livereload: true,
       port: 8080, //端口号
@@ -34,7 +41,22 @@ gulp.task('server', function() {
 });
 
 gulp.task('html', function () {
-  gulp.src('./static/*.html') //重新加载目录
+  gulp.src('./app/*.html')
+  .pipe(livereload(server));
+});
+
+gulp.task('css', function () {
+  gulp.src('./app/assets/css/*.css')
+  .pipe(livereload(server));
+});
+
+gulp.task('img', function () {
+  gulp.src('./app/assets/img/**/*')
+  .pipe(livereload(server));
+});
+
+gulp.task('js', function () {
+  gulp.src('./app/assets/js/*.js')
   .pipe(livereload(server));
 });
 
