@@ -36,5 +36,5 @@ module.exports = function (app) {
 
     // 设置Angular入口静态路由
     app.use(express.static(path.join(root, 'app')));
-    app.use(favicon(root + '/app/favicon.ico'));
+    app.use(favicon(root + '/app/assets/favicon.ico'));
 };
