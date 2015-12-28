@@ -1,22 +1,20 @@
 var app = angular.module('app',['ngRoute']);  
 app.config(['$routeProvider',function ($routeProvider) {  
     $routeProvider  
-        .when('/', {  
+        .when('/list', {  
             name: "首页",
-            controller: 'IndexCtrl',
-            controllerUrl: '/module/index/index_ctrl.js',
-            templateUrl: '/module/index/index_tpl.html'
+            controller: 'indexCtrl',
+            controllerUrl: './module/index/index_ctrl.js',
+            templateUrl: './module/index/index_tpl.html'
         })  
         .when('/list/:id', {  
             name: "首页",
-            controller: 'IndexCtrl',
-            controllerUrl: '/module/index/index_ctrl.js',
-            templateUrl: '/module/index/index_tpl.html'
+            redirectTo: '/list'
         })  
         .otherwise({  
             name: "404",
-            controller: '404',
-            controllerUrl: '/module/index/index_ctrl.js',
-            templateUrl: '/module/index/index_tpl.html'
+            controller: '404Ctrl',
+            controllerUrl: '/module/404/404_ctrl.js',
+            templateUrl: './module/404/404_tpl.html'
         });  
 }]);  
