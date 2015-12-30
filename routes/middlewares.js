@@ -5,6 +5,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session');
+// PS：session与cookie是分开保存的.但是session中的数据经过加密处理后默认保存在一个cookie中.因此在使用session中间件之前必须使用cookieParser中间件
 
 module.exports = function (app) {
     // ===================登陆校验===================
@@ -15,7 +16,7 @@ module.exports = function (app) {
             maxAge: 1000*60*30
         }
     }));
-    // session验证登陆
+    // 拦截器,存储req.session数据，注意要写在路由的前面
     app.use(function(req,res,next){ 
         // app.locals 是一个函数对象，程序内所有页面模板都能访问这个对象，可以用它保存全局配置变量供页面模板使用。
         res.locals.user = req.session.user;
