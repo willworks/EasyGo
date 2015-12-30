@@ -16,14 +16,15 @@ module.exports = function (app) {
             maxAge: 1000*60*30
         }
     }));
-    // 拦截器,存储req.session数据，注意要写在路由的前面
+    // 拦截器,存储req.session数据用于返回给客户端，防止session请求时候新建实例丢失数据，所以注意要写在路由的前面
     app.use(function(req,res,next){ 
-        // app.locals 是一个函数对象，程序内所有页面模板都能访问这个对象，可以用它保存全局配置变量供页面模板使用。
+        // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
         res.locals.user = req.session.user;
         var err = req.session.error;
         delete req.session.error;
         res.locals.message = "";
         if(err){ 
+            // message可以直接在客户端获取
             res.locals.message = err;
         }
         next();
