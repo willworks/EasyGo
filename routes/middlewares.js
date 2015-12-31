@@ -13,18 +13,30 @@ module.exports = function (app) {
     app.use(session({ 
         secret: 'secret',
         cookie:{ 
-            maxAge: 1000*60*30
+            maxAge: 1000*60*30 // 毫秒
         }
     }));
-    // 拦截器,存储req.session数据用于返回给客户端，防止session请求时候新建实例丢失数据，所以注意要写在路由的前面
-    app.use(function(req,res,next){ 
+
+    /*
+     * 登录拦截器，在请求未流向路由前先进行判断
+     */
+    app.use(function (req, res, next) {
+        var url = req.originalUrl;
+        console.log(req.originalUrl);
+        if (url != "/login" && !req.session.user) {
+            return res.redirect("/login");
+        }
+        next();
+    });
+
+    // 存储req.session到res.locals，模板引擎可以直接获取res.locals的数据进行渲染
+    app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
         res.locals.user = req.session.user;
         var err = req.session.error;
         delete req.session.error;
         res.locals.message = "";
         if(err){ 
-            // message可以直接在客户端获取
             res.locals.message = err;
         }
         next();
