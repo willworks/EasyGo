@@ -21,9 +21,7 @@ module.exports = function (app) {
      * 登录拦截器，在请求未流向路由前先进行判断
      */
     app.use(function (req, res, next) {
-        var url = req.originalUrl;
-        console.log(req.originalUrl);
-        if (url != "/login" && !req.session.user) {
+        if (req.originalUrl != "/login" && !req.session.user) {
             return res.redirect("/login");
         }
         next();
