@@ -17,6 +17,10 @@ module.exports = function (app) {
         }
     }));
 
+    // 设置Angular入口静态路由
+    app.use(express.static(path.join(root, 'app')));
+    app.use(favicon(root + '/app/assets/favicon.ico'));
+
     /*
      * 登录拦截器，在请求未流向路由前先进行判断
      */
@@ -45,8 +49,4 @@ module.exports = function (app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
-
-    // 设置Angular入口静态路由
-    app.use(express.static(path.join(root, 'app')));
-    app.use(favicon(root + '/app/assets/favicon.ico'));
 };
