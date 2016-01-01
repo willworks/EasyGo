@@ -29,7 +29,8 @@ module.exports = function (app) {
      */
     app.use(function (req, res, next) {
         if (req.originalUrl != "/login" && !req.session.user) {
-            return res.send('请先登录！');
+            req.session.error = "please login first!";
+            return res.send('please login first!');
         }
         next();
     });

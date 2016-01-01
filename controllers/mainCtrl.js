@@ -15,15 +15,8 @@
  */
 
 exports.index = function(req, res, next) {
-    if (!req.session.user) {
-        req.session.error = "请先登录";
-        res.sendfile('app/index.html');
-        // 接口返回对象 res.send();
-    } else {
-        // 接口返回对象 res.send();
-        // angular启动页
-        res.sendfile('app/index.html');
-    }
+    // 整个Angular的入口路由，服务端其他路由均为API路由，页面跳转控制路由在Angular内
+    res.sendfile('app/index.html');
 };
 
 
@@ -33,18 +26,18 @@ exports.login = function(req, res, next) {
     var upwd = req.body.upwd;
     userModel.findOne({name:uname},function(err, data){
         if(err){
-            // 接口返回对象 res.send();
+            res.send(err);
             console.log(err);
         }else if(!data){
             req.session.error = '用户名不存在';
-            // 接口返回对象 res.send();
+            res.send('用户名不存在!');
         }else{
             if(upwd != data.password){
                 req.session.error = "密码错误";
-                // 接口返回对象 res.send();
+                res.send('密码错误！');
             }else{
                 req.session.user = data;
-                // 接口返回对象 res.send();
+                res.send('登陆成功！');
             }
         }
     });
@@ -54,5 +47,5 @@ exports.login = function(req, res, next) {
 exports.logout = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
-    // 接口返回对象 res.send();
+    res.send('退出成功！');
 };
