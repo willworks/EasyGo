@@ -20,7 +20,7 @@ global.db = mongoose.connect("mongodb://localhost:27017/EasyGo");
 // __dirname为当前命令所在路径
 global.root = __dirname;
 
-// 所有请求会先经过中间件app.use处理，再传到路由app.http-verb等，next()用于确保请求进入下个路由
+// 中间件入口文件
 middlewares(app);
 
 // 自定义路由入口文件
