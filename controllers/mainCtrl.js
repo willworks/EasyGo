@@ -47,5 +47,6 @@ exports.login = function(req, res, next) {
 exports.logout = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
+    res.clearCookie('username');
     res.send('退出成功！');
 };

@@ -14,6 +14,7 @@ module.exports = function (app) {
     // 设置Angular入口静态路由
     app.use(express.static(path.join(root, 'app')));
     app.use(favicon(root + '/app/assets/favicon.ico'));
+    app.use(cookieParser()); // 对象化req.cookies传过来的cookie
 
     // =========================登陆校验=========================
     // session生命周期设置
@@ -47,11 +48,46 @@ module.exports = function (app) {
         }
         next();
     });
+
+    // 存储req.session到res.cookie，可以在客户端通过读取cookie的方法获取部分用户信息
+    /*  附加获取方法
+        var allcookies = document.cookie;    
+        function getCookie(cookie_name)  {  
+        var allcookies = document.cookie;  
+        var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度  
+        // 如果找到了索引，就代表cookie存在，反之，就说明不存在。  
+        if (cookie_pos != -1) {  
+        // 把cookie_pos放在值的开始，只要给值加1即可。  
+        cookie_pos += cookie_name.length + 1;
+        var cookie_end = allcookies.indexOf(";", cookie_pos);      
+        if (cookie_end == -1) {  
+        cookie_end = allcookies.length;  
+        }  
+        var value = unescape(allcookies.substring(cookie_pos, cookie_end)); //这里就可以得到你想要的cookie的值了
+        }  
+        return value;  
+        }  
+        console.log(getCookie("username"));
+     */
+    app.use(function (req, res, next) { 
+        // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
+        if (req.session.user) {
+            res.cookie('username', req.session.user.name);
+        }
+        var err = req.session.error;
+        delete req.session.error;
+        res.cookie.message = "";
+        if(err){ 
+            res.cookie.message = err;
+        }
+        next();
+    });
+
+    // PS：是在服务端把用户信息渲染好，还是存在cookie，有待商榷
     // ==========================================================
     
-    app.set('view engine', 'html');// 路由可以省去文件后缀名
+    app.set('view engine', 'html'); // 路由可以省去文件后缀名
     app.use(logger('dev')); // 在控制台中，显示req请求的信息
-    app.use(bodyParser.json());
+    app.use(bodyParser.json()); // 处理http body内容
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(cookieParser());
 };
