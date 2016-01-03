@@ -7,6 +7,12 @@ app.config(['$routeProvider',function ($routeProvider) {
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html'
         })  
+        .when('/login', {  
+            name: "登陆",
+            controller: 'loginCtrl',
+            controllerUrl: './module/login/login_ctrl.js',
+            templateUrl: './module/login/login_tpl.html'
+        })  
         .when('/list/:id', {  
             name: "首页",
             redirectTo: '/list'

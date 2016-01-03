@@ -30,14 +30,18 @@ module.exports = function (app) {
      */
     app.use(function (req, res, next) {
         if (req.originalUrl != "/" && req.originalUrl != "/login" && !req.session.user) {
-            req.session.error = "please login first!";
-            // 对于未登录的重定向到Angular登陆路由
-            return res.send('please login first!');
+            // 客户端根据返回的code，对于未登录采取重定向处理
+            return res.send({
+                "code":"0",
+                "msg":"Not logged in",
+                "data":""
+            });
         }
         next();
     });
 
-    // 存储req.session到res.locals，模板引擎可以直接获取res.locals的数据进行渲染
+    /*
+    // 存储req.session到res.locals，模板引擎可以直接获取res.locals的数据进行渲染，由于不使用后端渲染，故此处注释
     app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
         res.locals.user = req.session.user;
@@ -49,41 +53,36 @@ module.exports = function (app) {
         }
         next();
     });
+    */
 
     // 存储req.session到res.cookie，可以在客户端通过读取cookie的方法获取部分用户信息
-    /*  附加获取方法
-        var allcookies = document.cookie;    
-        function getCookie(cookie_name)  {  
-        var allcookies = document.cookie;  
-        var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度  
-        // 如果找到了索引，就代表cookie存在，反之，就说明不存在。  
-        if (cookie_pos != -1) {  
-        // 把cookie_pos放在值的开始，只要给值加1即可。  
-        cookie_pos += cookie_name.length + 1;
-        var cookie_end = allcookies.indexOf(";", cookie_pos);      
-        if (cookie_end == -1) {  
-        cookie_end = allcookies.length;  
-        }  
-        var value = unescape(allcookies.substring(cookie_pos, cookie_end)); //这里就可以得到你想要的cookie的值了
-        }  
-        return value;  
-        }  
-        console.log(getCookie("username"));
-    
+    /* 附加获取方法
+    var allcookies = document.cookie;    
+    function getCookie(cookie_name)  {  
+    var allcookies = document.cookie;  
+    var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度  
+    // 如果找到了索引，就代表cookie存在，反之，就说明不存在。  
+    if (cookie_pos != -1) {  
+    // 把cookie_pos放在值的开始，只要给值加1即可。  
+    cookie_pos += cookie_name.length + 1;
+    var cookie_end = allcookies.indexOf(";", cookie_pos);      
+    if (cookie_end == -1) {  
+    cookie_end = allcookies.length;  
+    }  
+    var value = unescape(allcookies.substring(cookie_pos, cookie_end)); //这里就可以得到你想要的cookie的值了
+    }  
+    return value;  
+    }  
+    console.log(getCookie("username"));
+    */
     app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
         if (req.session.user) {
             res.cookie('username', req.session.user.name);
         }
-        var err = req.session.error;
-        delete req.session.error;
-        res.cookie.message = "";
-        if(err){ 
-            res.cookie.message = err;
-        }
         next();
     });
-    */
+
     // ==========================================================
     
     app.use(logger('dev')); // 在控制台中，显示req请求的信息
