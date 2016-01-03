@@ -16,7 +16,7 @@
 
 exports.index = function(req, res, next) {
     // 整个Angular的入口路由，服务端其他路由均为API路由，页面跳转控制路由在Angular内
-    res.sendfile('app/index.html');
+    res.sendfile('./app/app.html');
 };
 
 
@@ -48,5 +48,4 @@ exports.logout = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
     res.clearCookie('username');
-    res.send('退出成功！');
 };

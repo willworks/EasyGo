@@ -29,8 +29,9 @@ module.exports = function (app) {
      * 登录拦截器，在请求未流向路由前先进行判断
      */
     app.use(function (req, res, next) {
-        if (req.originalUrl != "/login" && !req.session.user) {
+        if (req.originalUrl != "/" && req.originalUrl != "/login" && !req.session.user) {
             req.session.error = "please login first!";
+            // 对于未登录的重定向到Angular登陆路由
             return res.send('please login first!');
         }
         next();
@@ -68,7 +69,7 @@ module.exports = function (app) {
         return value;  
         }  
         console.log(getCookie("username"));
-     */
+    
     app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
         if (req.session.user) {
@@ -82,11 +83,9 @@ module.exports = function (app) {
         }
         next();
     });
-
-    // PS：是在服务端把用户信息渲染好，还是存在cookie，有待商榷
+    */
     // ==========================================================
     
-    app.set('view engine', 'html'); // 路由可以省去文件后缀名
     app.use(logger('dev')); // 在控制台中，显示req请求的信息
     app.use(bodyParser.json()); // 处理http body内容
     app.use(bodyParser.urlencoded({ extended: true }));

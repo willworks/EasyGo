@@ -1,7 +1,7 @@
-var app = angular.module('app',['ngRoute']);  
+var app = angular.module('app',['ngRoute', 'mgcrea.ngStrap']);  
 app.config(['$routeProvider',function ($routeProvider) {  
     $routeProvider  
-        .when('/list', {  
+        .when('/', {  
             name: "首页",
             controller: 'indexCtrl',
             controllerUrl: './module/index/index_ctrl.js',

@@ -7,10 +7,10 @@ var mainCtrl = require('../controllers/mainCtrl'),
 
 module.exports = function (app) {
     // ===================设置路由===================
-    // PS: :id 可以在 req.params.id获取到
-    //     POST的数据经过body-parser处理，可直接通过req.body.xxx获取
-    //     #anchor 锚点可以通过window.location.hash获取
-    //     Angular的路由形式为"/#"，可以防止浏览器刷新页面或者请求数据
+    // :id 可以在 req.params.id获取到
+    // POST的数据经过body-parser处理，可直接通过req.body.xxx获取
+    // #anchor 锚点可以通过window.location.hash获取
+    // Angular的路由形式为"/#"，可以防止浏览器刷新页面或者请求数据
     
     // 登陆控制
     app.get('/', mainCtrl.index);
@@ -47,8 +47,8 @@ module.exports = function (app) {
 
     // ==============================================
 
-    // 通过通配符处理没有经过路由的所有404页面，必须放在上边所有路由最后
+    // 通过通配符处理没有经过路由的所有404页面，重定向到Angular处理路由，必须放在上边所有路由最后
     app.get('*', function(req, res){
-        res.send('404');
+        res.redirect('/#/error');
     });
 };
