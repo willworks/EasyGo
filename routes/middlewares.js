@@ -29,14 +29,15 @@ module.exports = function (app) {
      * 登录拦截器，在请求未流向路由前先进行判断
      */
     app.use(function (req, res, next) {
-        // 登入登出不采取登陆拦截，直接指向路由
-        if (req.originalUrl != "/login" && req.originalUrl != "/logout" && !req.session.user) {
+        // 登入登出以及angular app入口不采取登陆拦截，直接指向路由
+        if (req.originalUrl != "/" && req.originalUrl != "/login" && req.originalUrl != "/logout" && !req.session.user) {
             // 客户端根据返回的code，对于未登录采取重定向处理
             return res.send({
                 "code":"0",
                 "msg":"Not logged in",
                 "data":""
             });
+            // PS：客户端跳转逻辑，每次打开一个页面，view必须先请求，至于请求的时候，根据code进行跳转，服务端不做任何操作处分cookie为用户名
         }
         next();
     });
