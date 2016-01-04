@@ -17,6 +17,12 @@ app.config(['$routeProvider',function ($routeProvider) {
             name: "首页",
             redirectTo: '/list'
         })  
+        .when('/404', {  
+            name: "404",
+            controller: '404Ctrl',
+            controllerUrl: '/module/404/404_ctrl.js',
+            templateUrl: './module/404/404_tpl.html'
+        })
         .otherwise({  
             name: "404",
             controller: '404Ctrl',

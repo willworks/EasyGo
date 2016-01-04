@@ -29,7 +29,8 @@ module.exports = function (app) {
      * 登录拦截器，在请求未流向路由前先进行判断
      */
     app.use(function (req, res, next) {
-        if (req.originalUrl != "/" && req.originalUrl != "/login" && !req.session.user) {
+        // 登入登出不采取登陆拦截，直接指向路由
+        if (req.originalUrl != "/login" && req.originalUrl != "/logout" && !req.session.user) {
             // 客户端根据返回的code，对于未登录采取重定向处理
             return res.send({
                 "code":"0",
@@ -58,20 +59,20 @@ module.exports = function (app) {
     // 存储req.session到res.cookie，可以在客户端通过读取cookie的方法获取部分用户信息
     /* 附加获取方法
     var allcookies = document.cookie;    
-    function getCookie(cookie_name)  {  
-    var allcookies = document.cookie;  
-    var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度  
-    // 如果找到了索引，就代表cookie存在，反之，就说明不存在。  
-    if (cookie_pos != -1) {  
-    // 把cookie_pos放在值的开始，只要给值加1即可。  
-    cookie_pos += cookie_name.length + 1;
-    var cookie_end = allcookies.indexOf(";", cookie_pos);      
-    if (cookie_end == -1) {  
-    cookie_end = allcookies.length;  
-    }  
-    var value = unescape(allcookies.substring(cookie_pos, cookie_end)); //这里就可以得到你想要的cookie的值了
-    }  
-    return value;  
+    function getCookie(cookie_name) {  
+        var allcookies = document.cookie;  
+        var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度  
+        // 如果找到了索引，就代表cookie存在，反之，就说明不存在。  
+        if (cookie_pos != -1) {
+            // 把cookie_pos放在值的开始，只要给值加1即可。  
+            cookie_pos += cookie_name.length + 1;
+            var cookie_end = allcookies.indexOf(";", cookie_pos);      
+            if (cookie_end == -1) {  
+                cookie_end = allcookies.length;  
+            }  
+            var value = unescape(allcookies.substring(cookie_pos, cookie_end));
+        }  
+        return value;  
     }  
     console.log(getCookie("username"));
     */

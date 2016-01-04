@@ -26,18 +26,34 @@ exports.login = function(req, res, next) {
     var upwd = req.body.upwd;
     userModel.findOne({name:uname},function(err, data){
         if(err){
-            res.send(err);
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
             console.log(err);
         }else if(!data){
             req.session.error = '用户名不存在';
-            res.send('用户名不存在!');
+            res.send({
+                "code":"-1",
+                "msg":"User not exist",
+                "data":""
+            });
         }else{
             if(upwd != data.password){
                 req.session.error = "密码错误";
-                res.send('密码错误！');
+                res.send({
+                    "code":"-2",
+                    "msg":"Password incorrect",
+                    "data":""
+                });
             }else{
                 req.session.user = data;
-                res.send('登陆成功！');
+                res.send({
+                    "code":"1",
+                    "msg":"Login success",
+                    "data":""
+                });
             }
         }
     });
@@ -48,4 +64,10 @@ exports.logout = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
     res.clearCookie('username');
+    // 客户端根据返回结果进行跳转回登陆页面
+    res.send({
+        "code":"1",
+        "msg":"Logout success",
+        "data":""
+    });
 };

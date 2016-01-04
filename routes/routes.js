@@ -47,8 +47,8 @@ module.exports = function (app) {
 
     // ==============================================
 
-    // 通过通配符处理没有经过路由的所有404页面，重定向到Angular处理路由，必须放在上边所有路由最后
+    // 必须放在上边所有路由最后，通过通配符处理没有经过路由的所有404页面，重定向到Angular err handler 处理路由
     app.get('*', function(req, res){
-        res.sendfile('./app/app.html');
+        res.redirect('/#/404');
     });
 };
