@@ -41,8 +41,7 @@
 #### 请求
 | Route | HTTP Verb | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| /login | POST | uname&upwd | 登陆接口 |
-| /logout | GET |  | 登出接口 |
+|  |  |  | 登陆接口 |
 
 #### 返回
 | Code | Msg | Data | Description |
@@ -57,7 +56,7 @@
 #### 请求
 | Route | HTTP Verb | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| /login | POST | uname&upwd | 登陆接口 |
+|  |  |  |  |
 
 #### 返回
 | Code | Msg | Data | Description |
@@ -72,7 +71,7 @@
 #### 请求
 | Route | HTTP Verb | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| /login | POST | uname&upwd | 登陆接口 |
+|  |  |  |  |
 
 #### 返回
 | Code | Msg | Data | Description |
@@ -87,7 +86,7 @@
 #### 请求
 | Route | HTTP Verb | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| /login | POST | uname&upwd | 登陆接口 |
+|  |  |  |  |
 
 #### 返回
 | Code | Msg | Data | Description |
