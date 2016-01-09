@@ -7,6 +7,10 @@ EasyGo is a co-working-system for office approval
  - run npm install (as root/Administrator) & bower install
  - run npm start
 
+### MongoDB
+
+ - before you run MongDB, you should first focus on the config in app.js 
+
 ### static resource
 
- - run gulp
+ - run gulp (now use browser-sync to reload resources automatically)
