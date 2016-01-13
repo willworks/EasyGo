@@ -8,7 +8,6 @@
  * Copyright (c) 2015 Kevin Zhong
  */
 
-//引入插件
 var gulp = require('gulp'),//引入基础库
     browserSync = require('browser-sync');//browser-sync服务器刷新
 
