@@ -5,6 +5,7 @@ EasyGo is a co-working-system for office approval
 >npm ERR! Please try running this command again as root/Administrator.
 
  - run npm install (as root/Administrator) & bower install
+ - run mongoDB
  - run npm start
 
 ### MongoDB
