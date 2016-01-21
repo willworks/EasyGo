@@ -13,10 +13,6 @@ app.config(['$routeProvider',function ($routeProvider) {
             controllerUrl: './module/login/login_ctrl.js',
             templateUrl: './module/login/login_tpl.html'
         })  
-        .when('/list/:id', {  
-            name: "首页",
-            redirectTo: '/list'
-        })  
         .when('/404', {  
             name: "404",
             controller: '404Ctrl',
