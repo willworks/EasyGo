@@ -1,3 +1,3 @@
-app.controller('loginCtrl',function($scope) {  
-	$scope.title = "login";
+app.controller('loginCtrl',function($rootScope) {  
+	$rootScope.title = "Login Page";
 }); 
