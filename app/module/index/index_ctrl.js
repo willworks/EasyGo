@@ -1,2 +1,3 @@
-app.controller('indexCtrl',function($scope) {  
-}); 
+app.controller('indexCtrl', ['$scope', function($scope){
+    $scope.title = "Home Page";
+}])
