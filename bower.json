@@ -29,6 +29,7 @@
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.6",
     "angular": "~1.4.8",
-    "angular-route": "~1.4.8"
+    "angular-route": "~1.4.8",
+    "seajs": "~2.3.0"
   }
 }
