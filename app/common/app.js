@@ -19,12 +19,12 @@ define(function(require, exports, module) {
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html'
         })  
-        .when('/login', {  
-            name: "登陆",
-            controller: 'loginCtrl',
-            controllerUrl: './module/login/login_ctrl.js',
-            templateUrl: './module/login/login_tpl.html'
-        })  
+        // .when('/login', {  
+        //     name: "登陆",
+        //     controller: 'loginCtrl',
+        //     controllerUrl: './module/login/login_ctrl.js',
+        //     templateUrl: './module/login/login_tpl.html'
+        // })  
         // .when('/user', {
         //     name:"查看用户列表",
         //     controller: 'userListCtrl',
