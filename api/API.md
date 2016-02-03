@@ -1,5 +1,6 @@
 # 接口文档
 
+http[s]://{domain}/api/{release}/{resource}/{resource_id}?{query_string}
 
 ### 登陆接口
 

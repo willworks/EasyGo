@@ -1,3 +1,5 @@
+// 所有请求会先经过中间件app.use处理，再传到路由app.http-verb等，next()用于确保请求进入下个路由
+
 var express = require('express'),
     path = require('path'),
     favicon = require('serve-favicon'),
@@ -24,10 +26,20 @@ module.exports = function (app) {
             maxAge: 1000*60*30 // 毫秒
         }
     }));
-    // PS:所有请求会先经过中间件app.use处理，再传到路由app.http-verb等，next()用于确保请求进入下个路由
+
+    // 在cookie插入登陆标记
+    app.use(function (req, res, next) { 
+        // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
+        if (req.session.user) {
+            res.cookie('username', req.session.user.name);
+        }
+        next();
+    });
+    // ==========================================================
+    
     /*
-     * 登录拦截器，在请求未流向路由前先进行判断
-     */
+    // =======================待以后使用=========================
+    // 登录拦截器，在请求未流向路由前先进行判断
     app.use(function (req, res, next) {
         // 登入登出以及angular app入口不采取登陆拦截，直接指向路由
         if (req.originalUrl != "/" && req.originalUrl != "/login" && req.originalUrl != "/logout" && !req.session.user) {
@@ -42,7 +54,6 @@ module.exports = function (app) {
         next();
     });
 
-    /*
     // 存储req.session到res.locals，模板引擎可以直接获取res.locals的数据进行渲染，由于不使用后端渲染，故此处注释
     app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
@@ -76,17 +87,10 @@ module.exports = function (app) {
         return value;  
     }  
     console.log(getCookie("username"));
-    */
-    app.use(function (req, res, next) { 
-        // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
-        if (req.session.user) {
-            res.cookie('username', req.session.user.name);
-        }
-        next();
-    });
 
     // ==========================================================
-    
+    */
+
     app.use(logger('dev')); // 在控制台中，显示req请求的信息
     app.use(bodyParser.json()); // 处理http body内容
     app.use(bodyParser.urlencoded({ extended: true }));

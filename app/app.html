@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html ng-app="app">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,14 +17,20 @@
         <link href="./assets/styles/main.css" rel="stylesheet">
     </head>
     <body ng-view>
-        <!-- JavaScript Bin -->
-        <script src="./bower_components/angular/angular.min.js"></script>
-        <script src="./bower_components/angular-route/angular-route.min.js"></script>
-        <script src="./bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="./bower_components/seajs/dist/sea.js"></script>
-        <!-- seajs lazyload & angular scripts-->
-        <script src="./common/config.js"></script>
-        
-    </body>
+            <!-- JavaScript Bin -->
+            <script src="./bower_components/angular/angular.min.js"></script>
+            <script src="./bower_components/angular-route/angular-route.min.js"></script>
+            <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+            <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+            <!-- Angular scripts -->
+            <script src="./common/app.js"></script>
+            <script src="./module/index/index_ctrl.js"></script>
+            <script src="./module/login/login_ctrl.js"></script>
+            <script src="./module/user/user_list_ctrl.js"></script>
+            <script src="./module/user/user_detail_ctrl.js"></script>
+            <script src="./module/apply/apply_list_ctrl.js"></script>
+            <script src="./module/apply/apply_detail_ctrl.js"></script>
+            <script src="./module/notice/notice_list_ctrl.js"></script>
+            <script src="./module/notice/notice_detail_ctrl.js"></script>
+        </body>
 </html>
