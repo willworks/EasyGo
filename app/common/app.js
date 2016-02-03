@@ -1,14 +1,15 @@
+"use strict";
+
 /**
  * 程序主入口
  */
 define(function(require, exports, module) {
 
-    // require('common/app_config');
-    // require('common/service/util');
-    // require('common/filter/filter');
-    // require('file-upload');
+    // require('common/directive');
+    // require('common/service');
+    // require('common/filter');
 
-    var app = angular.module('app', ['ngRoute']);
+    var app = angular.module('app', ['ngRoute', 'angular-lazyload']);
 
     //注册路由
     app.config(['$routeProvider', function($routeProvider) {
@@ -69,10 +70,11 @@ define(function(require, exports, module) {
         });
     }]);
 
-    app.run(['$rootScope', '$window', '$http',
-        function($rootScope, $window, $http) {
-            // //初始化按需加载
-            // app.register = $lazyload.register;
+    app.run(['$rootScope', '$lazyload', '$window', '$http',
+        function($rootScope, $lazyload, $window, $http) {
+            //初始化按需加载
+            $lazyload.init(app);
+            app.register = $lazyload.register;
 
             // 点击body事件
             $rootScope.clickBody = function(){
