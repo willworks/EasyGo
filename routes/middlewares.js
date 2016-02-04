@@ -27,6 +27,35 @@ module.exports = function (app) {
         }
     }));
 
+
+    // 登录拦截器，在请求未流向路由前先进行判断
+    /*
+    登陆测试代码
+    var xmlhttp = new XMLHttpRequest();
+    var user = 'uname=123&upwd=123';
+    xmlhttp.open('POST','http://localhost:3000/api/v1.0/login',true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send(user);
+     */
+    app.use(function (req, res, next) {
+        // console.log(req.originalUrl.split('/'));
+        // 登入登出以及angular app入口不采取登陆拦截，直接指向路由
+        if (req.originalUrl != "/" && req.originalUrl != "/api/v1.0/login" && req.originalUrl != "/api/v1.0/logout") {
+            // api接口强制使用验证，其余流过到模糊匹配进行错误处理
+            if (req.originalUrl.split('/')[1] == "api" && !req.session.user){
+                // 客户端根据返回的code，对于未登录采取重定向处理
+                return res.send({
+                    "code":"0",
+                    "msg":"Not logged in",
+                    "data":""
+                });
+                // PS：客户端跳转逻辑，每次打开一个页面，view必须先请求，至于请求的时候，根据code进行跳转，服务端不做任何操作处分cookie为用户名
+            }
+        }
+        next();
+    });
+
+
     // 在cookie插入登陆标记
     app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
@@ -36,24 +65,13 @@ module.exports = function (app) {
         next();
     });
     // ==========================================================
-    
+
+    app.use(logger('dev')); // 在控制台中，显示req请求的信息
+    app.use(bodyParser.json()); // 处理http body内容
+    app.use(bodyParser.urlencoded({ extended: true }));
+
     /*
     // =======================待以后使用=========================
-    // 登录拦截器，在请求未流向路由前先进行判断
-    app.use(function (req, res, next) {
-        // 登入登出以及angular app入口不采取登陆拦截，直接指向路由
-        if (req.originalUrl != "/" && req.originalUrl != "/login" && req.originalUrl != "/logout" && !req.session.user) {
-            // 客户端根据返回的code，对于未登录采取重定向处理
-            return res.send({
-                "code":"0",
-                "msg":"Not logged in",
-                "data":""
-            });
-            // PS：客户端跳转逻辑，每次打开一个页面，view必须先请求，至于请求的时候，根据code进行跳转，服务端不做任何操作处分cookie为用户名
-        }
-        next();
-    });
-
     // 存储req.session到res.locals，模板引擎可以直接获取res.locals的数据进行渲染，由于不使用后端渲染，故此处注释
     app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
@@ -90,8 +108,4 @@ module.exports = function (app) {
 
     // ==========================================================
     */
-
-    app.use(logger('dev')); // 在控制台中，显示req请求的信息
-    app.use(bodyParser.json()); // 处理http body内容
-    app.use(bodyParser.urlencoded({ extended: true }));
 };
