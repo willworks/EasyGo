@@ -7,35 +7,42 @@ define(function(require, exports, module) {
 
 	module.exports = function(app) {
 
-		app.factory("authenticationSvc", function($http, $q, $window) {
+		app.register.factory('authenticationSvc', function($http, $q, $window) {
 			var userInfo;
 
-			function login(userName, password) {
+			function login(uname, upwd) {
 				var deferred = $q.defer();
 
-				$http.post("/api/login", {
-					userName: userName,
-					password: password
+				$http.post("/api/v1.0/login", {
+					uname: uname,
+					upwd: upwd
 				})
 				.then(
-				function(res) {
-					userInfo = {
-						accessToken: res.data.access_token,
-						userName: res.data.userName
-					};
-					$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-					deferred.resolve(userInfo);
-				}, 
-				
-				function(err) {
-					deferred.reject(err);
-				});
+					function(res) {
+						userInfo = {
+							accessToken: res.data.access_token,
+							uname: res.data.uname
+						};
+						$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+						deferred.resolve(userInfo);
+					}, 
+
+					function(err) {
+						deferred.reject(err);
+					}
+				);
 
 				return deferred.promise;
 			}
 
+			function getUserInfo() {
+			    //return userInfo;
+			    alert(123);
+			}
+
 			return {
-				login: login
+				login: login,
+				getUserInfo: getUserInfo
 			};
 		});
 

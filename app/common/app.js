@@ -5,9 +5,8 @@
  */
 define(function(require, exports, module) {
 
-    // require('common/directive');
-    // require('common/service');
-    // require('common/filter');
+    require('common/service/networkSvc');
+    require('common/service/authenticationSvc');
 
     var app = angular.module('app', ['ngRoute', 'angular-lazyload']);
 
@@ -21,7 +20,17 @@ define(function(require, exports, module) {
             name: "首页",
             controller: 'indexCtrl',
             controllerUrl: './module/index/index_ctrl.js',
-            templateUrl: './module/index/index_tpl.html'
+            templateUrl: './module/index/index_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+					var userInfo = authenticationSvc.getUserInfo();
+					if (userInfo) {
+						return $q.when(userInfo);
+					} else {
+						return $q.reject({ authenticated: false });
+					}
+                }]
+            }
         })  
         .when('/login', {  
             name: "登陆",
