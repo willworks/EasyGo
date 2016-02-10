@@ -22,14 +22,14 @@ define(function(require, exports, module) {
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html',
             resolve: {
-                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
-					var userInfo = authenticationSvc.getUserInfo();
-					if (userInfo) {
-						return $q.when(userInfo);
-					} else {
-						return $q.reject({ authenticated: false });
-					}
-                }]
+     //            auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+					// var userInfo = authenticationSvc.getUserInfo();
+					// if (userInfo) {
+					// 	return $q.when(userInfo);
+					// } else {
+					// 	return $q.reject({ authenticated: false });
+					// }
+     //            }]
             }
         })  
         .when('/login', {  
