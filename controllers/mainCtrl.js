@@ -52,7 +52,9 @@ exports.login = function(req, res, next) {
                 res.send({
                     "code":"1",
                     "msg":"Login success",
-                    "data":""
+                    "data":{
+                        "uname":uname
+                    }
                 });
             }
         }

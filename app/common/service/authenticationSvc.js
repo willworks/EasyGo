@@ -20,7 +20,6 @@ define(function(require, exports, module) {
 				.then(
 					function(res) {
 						userInfo = {
-							accessToken: res.data.access_token,
 							uname: res.data.uname
 						};
 						$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
@@ -36,8 +35,7 @@ define(function(require, exports, module) {
 			}
 
 			function getUserInfo() {
-			    //return userInfo;
-			    alert(123);
+			    return userInfo;
 			}
 
 			return {

@@ -9,6 +9,16 @@ define(function(require, exports, module) {
 
         app.register.factory('networkSvc', function($http) {
 
+            function getLogin(uname, upwd){
+                $http.post("/api/v1.0/login", {
+                    uname: uname,
+                    upwd: upwd
+                })
+                .success(function(data){
+                    alert(data.data.uname);
+                });
+            }
+
             function getList(resource) {
                 var url = 'api/v1.0/' + resource;
                 console.log(url);
@@ -28,6 +38,7 @@ define(function(require, exports, module) {
             }
 
             return {
+                getLogin : getLogin,
                 getList : getList,
                 getDeatil : getDeatil
             };
