@@ -20,17 +20,7 @@ define(function(require, exports, module) {
             name: "首页",
             controller: 'indexCtrl',
             controllerUrl: './module/index/index_ctrl.js',
-            templateUrl: './module/index/index_tpl.html',
-     //        resolve: {
-     //            userInfo: ["$q", "authenticationSvc", function($q, authenticationSvc) {
-					// var userInfo = authenticationSvc.getUserInfo();
-					// if (userInfo) {
-					// 	return $q.when(userInfo);
-					// } else {
-					// 	return $q.reject({ authenticated: false });
-					// }
-     //            }]
-     //        }
+            templateUrl: './module/index/index_tpl.html'
         })  
         .when('/login', {  
             name: "登陆",
@@ -88,11 +78,21 @@ define(function(require, exports, module) {
             // 监听route变化
 			$rootScope.$on("$routeChangeSuccess", function(userInfo) {
 				console.log(userInfo);
+	            resolve: {
+	                userInfo: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+						var userInfo = authenticationSvc.getUserInfo();
+						if (userInfo) {
+							return $q.when(userInfo);
+						} else {
+							$location.path("/login");
+						}
+	                }]
+	            }
 			});
 
 			// $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
 			// 	if (eventObj.authenticated === false) {
-			// 		$location.path("/login");
+			// 		
 			// 	}
 			// });
         }
