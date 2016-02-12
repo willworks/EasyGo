@@ -12,7 +12,7 @@ define(function(require, exports, module) {
         
         app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, authenticationSvc) {
             $rootScope.title = "EasyGo";
-            networkSvc.getLogin('123', '123');
+            networkSvc.getLogin('123', '1231');
             authenticationSvc.getUserInfo();
         });
     }

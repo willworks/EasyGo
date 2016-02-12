@@ -21,8 +21,8 @@ define(function(require, exports, module) {
             controller: 'indexCtrl',
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html',
-            resolve: {
-     //            auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+     //        resolve: {
+     //            userInfo: ["$q", "authenticationSvc", function($q, authenticationSvc) {
 					// var userInfo = authenticationSvc.getUserInfo();
 					// if (userInfo) {
 					// 	return $q.when(userInfo);
@@ -30,7 +30,7 @@ define(function(require, exports, module) {
 					// 	return $q.reject({ authenticated: false });
 					// }
      //            }]
-            }
+     //        }
         })  
         .when('/login', {  
             name: "登陆",
@@ -79,21 +79,22 @@ define(function(require, exports, module) {
         });
     }]);
 
-    app.run(['$rootScope', '$lazyload', '$window', '$http',
-        function($rootScope, $lazyload, $window, $http) {
+    app.run(['$rootScope', '$lazyload', '$window', '$http', '$location',
+        function($rootScope, $lazyload, $window, $http, $location) {
             //初始化按需加载
             $lazyload.init(app);
             app.register = $lazyload.register;
 
-            // 点击body事件
-            $rootScope.clickBody = function(){
-                $rootScope.$broadcast('clickBody');
-            }
+            // 监听route变化
+			$rootScope.$on("$routeChangeSuccess", function(userInfo) {
+				console.log(userInfo);
+			});
 
-            // 滚动事件
-            jQuery(window).scroll(function(){
-                $rootScope.$broadcast('scroll');
-            });
+			// $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
+			// 	if (eventObj.authenticated === false) {
+			// 		$location.path("/login");
+			// 	}
+			// });
         }
     ]);
 

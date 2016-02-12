@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 	module.exports = function(app) {
 
 		app.register.factory('authenticationSvc', function($http, $q, $window) {
-			var userInfo;
+			var userInfo = 1;
 
 			function login(uname, upwd) {
 				var deferred = $q.defer();
@@ -36,6 +36,7 @@ define(function(require, exports, module) {
 
 			function getUserInfo() {
 			    return userInfo;
+			    //alert(123);
 			}
 
 			return {
