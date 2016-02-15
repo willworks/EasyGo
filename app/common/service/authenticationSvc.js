@@ -8,11 +8,9 @@ define(function(require, exports, module) {
 	module.exports = function(app) {
 
 		app.register.factory('authenticationSvc', function($http, $q, $window) {
-			var userInfo = 1;
-
+			var userInfo;
 			function login(uname, upwd) {
-				var deferred = $q.defer();
-
+				var deferred = $q.defer(); // 声明承诺
 				$http.post("/api/v1.0/login", {
 					uname: uname,
 					upwd: upwd
@@ -25,18 +23,15 @@ define(function(require, exports, module) {
 						$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
 						deferred.resolve(userInfo);
 					}, 
-
 					function(err) {
 						deferred.reject(err);
 					}
 				);
-
 				return deferred.promise;
 			}
 
 			function getUserInfo() {
 			    return userInfo;
-			    //alert(123);
 			}
 
 			return {

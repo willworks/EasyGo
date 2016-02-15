@@ -15,6 +15,7 @@ define(function(require, exports, module) {
                     upwd: upwd
                 })
                 .success(function(data){
+                    // 登陆成功之后服务端会返回uname(token)
                     alert(data.data.uname);
                 });
             }

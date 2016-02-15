@@ -70,29 +70,19 @@ define(function(require, exports, module) {
     }]);
 
     app.run(['$rootScope', '$lazyload', '$window', '$http', '$location',
-        function($rootScope, $lazyload, $window, $http, $location) {
+        function($rootScope, $lazyload, $window, $http, $location, authenticationSvc) {
             //初始化按需加载
             $lazyload.init(app);
             app.register = $lazyload.register;
 
             // 监听route变化
-			$rootScope.$on("$routeChangeSuccess", function(userInfo) {
-				console.log(userInfo);
-	            resolve: {
-	                userInfo: ["$q", "authenticationSvc", function($q, authenticationSvc) {
-						var userInfo = authenticationSvc.getUserInfo();
-						if (userInfo) {
-							return $q.when(userInfo);
-						} else {
-							$location.path("/login");
-						}
-	                }]
-	            }
+			$rootScope.$on("$routeChangeSuccess", function(authenticationSvc) {
+				alert(authenticationSvc.getUserInfo());
 			});
 
 			// $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
 			// 	if (eventObj.authenticated === false) {
-			// 		
+			// 		$location.path("/login");
 			// 	}
 			// });
         }
