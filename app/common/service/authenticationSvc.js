@@ -8,7 +8,9 @@ define(function(require, exports, module) {
 	module.exports = function(app) {
 
 		app.register.factory('authenticationSvc', function($http, $q, $window) {
+
 			var userInfo;
+			
 			function login(uname, upwd) {
 				var deferred = $q.defer(); // 声明承诺
 				$http.post("/api/v1.0/login", {

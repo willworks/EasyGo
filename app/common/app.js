@@ -7,11 +7,12 @@ define(function(require, exports, module) {
 
     require('common/service/networkSvc');
     require('common/service/authenticationSvc');
+    require('common/service/util');
 
-    var app = angular.module('app', ['ngRoute', 'angular-lazyload']);
+    var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'util']);
 
     //注册路由
-    app.config(['$routeProvider', function($routeProvider) {
+    app.config(['$routeProvider', function($routeProvider, util) {
         $routeProvider
         .when('/', {  
             redirectTo: '/index'
@@ -22,8 +23,16 @@ define(function(require, exports, module) {
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html',
             resolve: {
+                // auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                //     var userInfo = authenticationSvc.getUserInfo();
+                //     if (userInfo) {
+                //         return $q.when(userInfo);
+                //     } else {
+                //         return $q.reject({ authenticated: false });
+                //     }
+                // }]
                 auth: function(){
-                    return 1234;
+                    alert(123);
                 }
             }
         })  
@@ -74,8 +83,8 @@ define(function(require, exports, module) {
         });
     }]);
 
-    app.run(['$rootScope', '$lazyload', '$window', '$http', '$location',
-        function($rootScope, $lazyload, $window, $http, $location, authenticationSvc) {
+    app.run(['$rootScope', '$lazyload', '$window', '$http', '$location', 'util',
+        function($rootScope, $lazyload, $window, $http, $location, authenticationSvc, util) {
             //初始化按需加载
             $lazyload.init(app);
             app.register = $lazyload.register;
@@ -84,6 +93,8 @@ define(function(require, exports, module) {
 			$rootScope.$on("$routeChangeSuccess", function(authenticationSvc) {
 				//alert(authenticationSvc.getUserInfo());
 			});
+
+            util.test();
 
 			// $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
 			// 	if (eventObj.authenticated === false) {
