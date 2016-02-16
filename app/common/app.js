@@ -31,9 +31,10 @@ define(function(require, exports, module) {
                 //         return $q.reject({ authenticated: false });
                 //     }
                 // }]
-                auth: function(){
-                    alert(123);
-                }
+                auth: ['util', function(util){
+                    var val = util.test();
+                    return val;
+                }]
             }
         })  
         .when('/login', {  
@@ -94,7 +95,7 @@ define(function(require, exports, module) {
 				//alert(authenticationSvc.getUserInfo());
 			});
 
-            util.test();
+            //util.test();
 
 			// $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
 			// 	if (eventObj.authenticated === false) {
