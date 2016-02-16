@@ -20,7 +20,12 @@ define(function(require, exports, module) {
             name: "首页",
             controller: 'indexCtrl',
             controllerUrl: './module/index/index_ctrl.js',
-            templateUrl: './module/index/index_tpl.html'
+            templateUrl: './module/index/index_tpl.html',
+            resolve: {
+                auth: function(){
+                    return 1234;
+                }
+            }
         })  
         .when('/login', {  
             name: "登陆",
@@ -77,7 +82,7 @@ define(function(require, exports, module) {
 
             // 监听route变化
 			$rootScope.$on("$routeChangeSuccess", function(authenticationSvc) {
-				alert(authenticationSvc.getUserInfo());
+				//alert(authenticationSvc.getUserInfo());
 			});
 
 			// $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
