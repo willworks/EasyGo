@@ -5,46 +5,60 @@
  */
 define(function(require, exports, module) {
 
-	module.exports = function(app) {
+    var authenticationSvc = angular.module('authenticationSvc', []);
 
-		app.register.factory('authenticationSvc', function($http, $q, $window) {
+    authenticationSvc.factory('authenticationSvc', ['$http', '$q', '$window', function($http, $q, $window) {
 
-			var userInfo;
-			
-			function login(uname, upwd) {
-				var deferred = $q.defer(); // 声明承诺
-				$http.post("/api/v1.0/login", {
-					uname: uname,
-					upwd: upwd
-				})
-				.then(
+    	var userInfo;
+
+        return {
+
+        	login : function(uname, upwd) {
+        		var deferred = $q.defer(); // 声明承诺
+        		$http.post("/api/v1.0/login", {
+        			uname: uname,
+        			upwd: upwd
+        		})
+        		.then(
+        			function(res) {
+        				userInfo = {
+        					uname: res.data.data.uname
+        				};
+        				$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+        				deferred.resolve(userInfo);
+        			}, 
+        			function(err) {
+        				deferred.reject(err);
+        			}
+        		);
+        		return deferred.promise;
+        	},
+
+			logout : function() {
+				var deferred = $q.defer();
+				$http.get("/api/v1.0/logout")
+                .then(
 					function(res) {
-						userInfo = {
-							uname: res.data.uname
-						};
-						$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-						deferred.resolve(userInfo);
+						$window.sessionStorage["userInfo"] = null;
+						userInfo = null;
+						deferred.resolve(res);
 					}, 
 					function(err) {
 						deferred.reject(err);
 					}
 				);
 				return deferred.promise;
-			}
+			},
 
-			function getUserInfo() {
-			    return userInfo;
-			}
+        	getUserInfo : function() {
+        	    return userInfo;
+        	}
 
-			return {
-				login: login,
-				getUserInfo: getUserInfo
-			};
-		});
+        };
 
-	}
+    }]);
+
+    module.exports = authenticationSvc;
 
 })
-
-
 

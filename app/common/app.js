@@ -5,14 +5,14 @@
  */
 define(function(require, exports, module) {
 
+    // 引入的service需要在主模块注入才能提供给其他的controllor使用
     require('common/service/networkSvc');
     require('common/service/authenticationSvc');
-    require('common/service/util');
 
-    var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'util']);
+    var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'authenticationSvc', 'networkSvc']);
 
     //注册路由
-    app.config(['$routeProvider', function($routeProvider, util) {
+    app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
         .when('/', {  
             redirectTo: '/index'
@@ -23,17 +23,14 @@ define(function(require, exports, module) {
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html',
             resolve: {
-                // auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
-                //     var userInfo = authenticationSvc.getUserInfo();
-                //     if (userInfo) {
-                //         return $q.when(userInfo);
-                //     } else {
-                //         return $q.reject({ authenticated: false });
-                //     }
-                // }]
-                auth: ['util', function(util){
-                    var val = util.test();
-                    return val;
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = {uname:123};
+                    console.log(userInfo);
+                    if (userInfo) {
+                        return $q.when({ authenticated: true });
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
                 }]
             }
         })  
@@ -84,24 +81,23 @@ define(function(require, exports, module) {
         });
     }]);
 
-    app.run(['$rootScope', '$lazyload', '$window', '$http', '$location', 'util',
-        function($rootScope, $lazyload, $window, $http, $location, authenticationSvc, util) {
+    app.run(['$rootScope', '$lazyload', '$window', '$http', '$location',
+        function($rootScope, $lazyload, $window, $http, $location) {
             //初始化按需加载
             $lazyload.init(app);
             app.register = $lazyload.register;
 
             // 监听route变化
-			$rootScope.$on("$routeChangeSuccess", function(authenticationSvc) {
-				//alert(authenticationSvc.getUserInfo());
+            $rootScope.$on("$routeChangeSuccess", function(event, current, previous, eventObj) {
+                console.log(eventObj);
+            });
+            
+			$rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
+				if (eventObj.authenticated === false) {
+                    alert('请先登录！');
+					$location.path("/login");
+				}
 			});
-
-            //util.test();
-
-			// $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
-			// 	if (eventObj.authenticated === false) {
-			// 		$location.path("/login");
-			// 	}
-			// });
         }
     ]);
 

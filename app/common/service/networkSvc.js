@@ -1,15 +1,19 @@
 'use strict';
 
 /**
- * 请求方法封装
+ * 用户登录信息校验
  */
 define(function(require, exports, module) {
-    
-    module.exports = function(app) {
 
-        app.register.factory('networkSvc', function($http) {
+    var networkSvc = angular.module('networkSvc', []);
 
-            function getLogin(uname, upwd){
+    networkSvc.factory('networkSvc', ['$http', '$q', '$window', function($http, $q, $window) {
+
+        var userInfo;
+
+        return {
+            
+            getLogin : function(uname, upwd){
                 $http.post("/api/v1.0/login", {
                     uname: uname,
                     upwd: upwd
@@ -18,18 +22,18 @@ define(function(require, exports, module) {
                     // 登陆成功之后服务端会返回uname(token)
                     alert(data.data.uname);
                 });
-            }
+            },
 
-            function getList(resource) {
+            getList : function(resource) {
                 var url = 'api/v1.0/' + resource;
                 console.log(url);
                 $http.get(url)
                 .success(function(data){
                     alert(data.msg);
                 });
-            }
+            },
 
-            function getDeatil(resource, resource_id) {
+            getDeatil : function(resource, resource_id) {
                 var url = 'api/v1.0/' + resource + '/' + resource_id;
                 console.log(url);
                 $http.get(url)
@@ -38,15 +42,11 @@ define(function(require, exports, module) {
                 });
             }
 
-            return {
-                getLogin : getLogin,
-                getList : getList,
-                getDeatil : getDeatil
-            };
-        });
+        };
 
-    }
+    }]);
+
+    module.exports = networkSvc;
 
 })
-
 
