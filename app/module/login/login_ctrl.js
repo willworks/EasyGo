@@ -13,8 +13,10 @@ define(function(require, exports, module) {
         app.register.controller('loginCtrl', function($scope, $http, $rootScope, networkSvc, authenticationSvc) {
             $rootScope.title = "Login Page";
             $scope.name = "Lo Page";
+            // 登陆操作
             authenticationSvc.login(123,123);
-            //authenticationSvc.logout();
+            // 注销操作
+            authenticationSvc.logout();
         });
     }
 });

@@ -24,10 +24,10 @@ define(function(require, exports, module) {
             templateUrl: './module/index/index_tpl.html',
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
-                    var userInfo = {uname:123};
+                    var userInfo = authenticationSvc.getUserInfo();
                     console.log(userInfo);
                     if (userInfo) {
-                        return $q.when({ authenticated: true });
+                        return $q.when(userInfo);
                     } else {
                         return $q.reject({ authenticated: false });
                     }
@@ -44,37 +44,103 @@ define(function(require, exports, module) {
             name:"查看用户列表",
             controller: 'userListCtrl',
             controllerUrl: './module/user/user_list_ctrl.js',
-            templateUrl: './module/user/user_list_tpl.html'
+            templateUrl: './module/user/user_list_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    console.log(userInfo);
+                    if (userInfo) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }]
+            }
         })
         .when('/user/:id', {
             name:"查看用户详细信息",
             controller: 'userDetailCtrl',
             controllerUrl: './module/user/user_detail_ctrl.js',
-            templateUrl: './module/user/user_detail_tpl.html'
+            templateUrl: './module/user/user_detail_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    console.log(userInfo);
+                    if (userInfo) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }]
+            }
         })
         .when('/apply', {
             name:"指向到用户的申请列表",
             controller: 'applyListCtrl',
             controllerUrl: './module/apply/apply_list_ctrl.js',
-            templateUrl: './module/apply/apply_list_tpl.html'
+            templateUrl: './module/apply/apply_list_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    console.log(userInfo);
+                    if (userInfo) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }]
+            }
         })
         .when('/apply/:id', {
             name:"具体申请信息",
             controller: 'applyDetailCtrl',
             controllerUrl: './module/apply/apply_detail_ctrl.js',
-            templateUrl: './module/apply/apply_detail_tpl.html'
+            templateUrl: './module/apply/apply_detail_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    console.log(userInfo);
+                    if (userInfo) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }]
+            }
         })
         .when('/notice', {
             name:"发送到用户的通知列表",
             controller: 'noticeListCtrl',
             controllerUrl: './module/notice/notice_list_ctrl.js',
-            templateUrl: './module/notice/notice_list_tpl.html'
+            templateUrl: './module/notice/notice_list_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    console.log(userInfo);
+                    if (userInfo) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }]
+            }
         })
         .when('/notice/:id', {
             name:"通知的具体内容",
             controller: 'noticeDetailCtrl',
             controllerUrl: './module/notice/notice_detail_ctrl.js',
-            templateUrl: './module/notice/notice_detail_tpl.html'
+            templateUrl: './module/notice/notice_detail_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    console.log(userInfo);
+                    if (userInfo) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }]
+            }
         })
         .otherwise({
             redirectTo: '/index'
@@ -88,8 +154,8 @@ define(function(require, exports, module) {
             app.register = $lazyload.register;
 
             // 监听route变化
-            $rootScope.$on("$routeChangeSuccess", function(event, current, previous, eventObj) {
-                console.log(eventObj);
+            $rootScope.$on("$routeChangeSuccess", function(userInfo) {
+                console.log(userInfo);
             });
             
 			$rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
@@ -98,6 +164,7 @@ define(function(require, exports, module) {
 					$location.path("/login");
 				}
 			});
+
         }
     ]);
 

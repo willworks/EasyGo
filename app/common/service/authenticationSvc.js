@@ -11,6 +11,14 @@ define(function(require, exports, module) {
 
     	var userInfo;
 
+    	// 防止刷新的时候服务将会失去现有状态
+		function init() {
+			if ($window.sessionStorage["userInfo"]) {
+				userInfo = JSON.parse($window.sessionStorage["userInfo"]);
+			}
+		}
+        init();
+
         return {
 
         	login : function(uname, upwd) {
@@ -55,6 +63,7 @@ define(function(require, exports, module) {
         	}
 
         };
+
 
     }]);
 
