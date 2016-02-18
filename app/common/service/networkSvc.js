@@ -9,8 +9,6 @@ define(function(require, exports, module) {
 
     networkSvc.factory('networkSvc', ['$http', '$q', '$window', function($http, $q, $window) {
 
-        var userInfo;
-
         return {
             
             getLogin : function(uname, upwd){

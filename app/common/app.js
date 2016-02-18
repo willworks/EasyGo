@@ -23,9 +23,9 @@ define(function(require, exports, module) {
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html',
             resolve: {
-                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                auth: ["$q", "authenticationSvc", "$log", function($q, authenticationSvc, $log) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    console.log(userInfo);
+                    $log.log('index' + userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -48,7 +48,7 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    console.log(userInfo);
+                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -65,7 +65,7 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    console.log(userInfo);
+                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -82,7 +82,7 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    console.log(userInfo);
+                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -99,7 +99,7 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    console.log(userInfo);
+                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -116,7 +116,7 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    console.log(userInfo);
+                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -133,7 +133,7 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    console.log(userInfo);
+                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -147,21 +147,23 @@ define(function(require, exports, module) {
         });
     }]);
 
-    app.run(['$rootScope', '$lazyload', '$window', '$http', '$location',
-        function($rootScope, $lazyload, $window, $http, $location) {
+    app.run(['$rootScope', '$lazyload', '$window', '$http', '$location', '$log',
+        function($rootScope, $lazyload, $window, $http, $location, $log) {
             //初始化按需加载
             $lazyload.init(app);
             app.register = $lazyload.register;
 
             // 监听route变化
+            // BUG:无法显示$q.when()传递的值
             $rootScope.$on("$routeChangeSuccess", function(userInfo) {
-                console.log(userInfo);
+                $log.log(userInfo);
             });
             
 			$rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
 				if (eventObj.authenticated === false) {
                     alert('请先登录！');
 					$location.path("/login");
+                    $log.log(eventObj);
 				}
 			});
 

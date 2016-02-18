@@ -2,14 +2,14 @@
     <form class="form-signin" ng-submit="submit()">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input ng-model="uname" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input ng-model="uname" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus ng-model='uname'>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input ng-model="upwd" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input ng-model="upwd" type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model='upwd'>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='login()'>Sign in</button>
     </form>
 </div> 

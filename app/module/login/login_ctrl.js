@@ -10,13 +10,19 @@ define(function(require, exports, module) {
         require('common/service/networkSvc');
         require('common/service/authenticationSvc');
         
-        app.register.controller('loginCtrl', function($scope, $http, $rootScope, networkSvc, authenticationSvc) {
+        app.register.controller('loginCtrl', function($scope, $http, $rootScope, networkSvc, authenticationSvc, $location, $log) {
             $rootScope.title = "Login Page";
-            $scope.name = "Lo Page";
-            // 登陆操作
-            authenticationSvc.login(123,123);
-            // 注销操作
-            authenticationSvc.logout();
+
+            $scope.login = function () {
+                // 登陆操作
+                //authenticationSvc.login($scope.uname,$scope.upwd)
+                authenticationSvc.login(123,123)
+                .then(function(res){
+                    $log.log(res);
+                    $location.path("/index");
+                });
+            }
+
         });
     }
 });
