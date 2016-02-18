@@ -33,7 +33,7 @@ define(function(require, exports, module) {
         					uname: res.data.data.uname
         				};
         				$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-        				deferred.resolve(userInfo);
+        				deferred.resolve(res);
         				// deferred.resolve('login success');
         			}, 
         			function(err) {

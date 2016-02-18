@@ -15,11 +15,11 @@ define(function(require, exports, module) {
 
             $scope.login = function () {
                 // 登陆操作
-                //authenticationSvc.login($scope.uname,$scope.upwd)
-                authenticationSvc.login(123,123)
+                authenticationSvc.login($scope.uname,$scope.upwd)
+                //authenticationSvc.login(123,123)
                 .then(function(res){
                     $log.log(res);
-                    $location.path("/index");
+                    //$location.path("/index");
                 });
             }
 
