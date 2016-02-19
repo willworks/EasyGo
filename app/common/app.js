@@ -25,7 +25,7 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", "$log", function($q, authenticationSvc, $log) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log('index' + userInfo);
+                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -155,10 +155,13 @@ define(function(require, exports, module) {
 
             // 监听route变化
             // BUG:无法显示$q.when()传递的值
+
+            // 路由resolve
             $rootScope.$on("$routeChangeSuccess", function(userInfo) {
                 $log.log(userInfo);
             });
             
+            // 路由reject
 			$rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
 				if (eventObj.authenticated === false) {
                     alert('请先登录！');

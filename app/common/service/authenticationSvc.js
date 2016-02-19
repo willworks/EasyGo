@@ -34,7 +34,6 @@ define(function(require, exports, module) {
         				};
         				$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
         				deferred.resolve(res);
-        				// deferred.resolve('login success');
         			}, 
         			function(err) {
         				deferred.reject(err);

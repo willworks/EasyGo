@@ -1,15 +1,19 @@
-<div class="container"  ng-controller="loginCtrl">
-    <form class="form-signin" ng-submit="submit()">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input ng-model="uname" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus ng-model='uname'>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input ng-model="upwd" type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model='upwd'>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
+<div class="container">
+    <form class="form-signin">
+        <h2 class="form-signin-heading">Please login in</h2>
+
+        <div class="alert" role="alert" ng-show="infoShow" ng-class="{true: 'alert-success', false: 'alert-danger'}[infoSuccess]">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          {{info}}
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='login()'>Sign in</button>
+
+        <input ng-model="uname" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input ng-model="upwd" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+        <div class="checkbox">
+            <label><input type="checkbox" value="remember-me"> Remember me</label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='login()'>login in</button>
     </form>
 </div> 
