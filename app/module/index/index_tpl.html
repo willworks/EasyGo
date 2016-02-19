@@ -1,32 +1,29 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="">EasyGo</a>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0)">EasyGo</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="">{{uname}}</a></li>
+                <li><a href="javascript:void(0)" ng-click='logout()'>退出</a></li>
+            </ul>
+        </div>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="">{{uname}}</a></li>
-        <li><a href="javascript:void(0)" ng-click='logout()'>退出</a></li>
-      </ul>
-    </div>
-  </div>
 </nav>
+
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="">团队通知<span class="sr-only">(current)</span></a></li>
-        <li><a href="">申请发起</a></li>
-        <li><a href="">我的申请</a></li>
-        <li><a href="">我的审批</a></li>
-        <li><a href="">发布通知</a></li>
+        <li ng-repeat="nav in navs" ng-click="clickNavBtn(nav.index)" ng-class="{active:navInitIndex == nav.index}"><a>{{nav.name}}</a></li>
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

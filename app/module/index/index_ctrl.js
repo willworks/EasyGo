@@ -21,6 +21,21 @@ define(function(require, exports, module) {
             }
 
             $scope.uname = authenticationSvc.getUserInfo().uname;
+
+            $scope.navInitIndex = 0;
+            $scope.navs = [
+                {'name' : '团队通知','index' : '0','param' : 'all'},
+                {'name' : '申请发起','index' : '1','param' : 'pending'},
+                {'name' : '我的申请','index' : '2','param' : 'unstart'},
+                {'name' : '我的审批','index' : '3','param' : 'passed'},
+                {'name' : '发布通知','index' : '4','param' : 'failed'},
+            ];
+
+
+            $scope.clickNavBtn = function(index){
+                $scope.navInitIndex = index;
+                console.log($scope.navInitIndex);
+            }
         });
     }
 });
