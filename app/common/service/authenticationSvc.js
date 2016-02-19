@@ -12,9 +12,10 @@ define(function(require, exports, module) {
     	var userInfo;
 
     	// 防止刷新的时候服务将会失去现有状态
+    	// sessionStorage仅仅在当前会话/窗口有效，而localStorage则可以跟cookie一样，但是区别在于cookie会在客户端和服务器来回传递而stroage不会
 		function init() {
-			if ($window.sessionStorage["userInfo"]) {
-				userInfo = JSON.parse($window.sessionStorage["userInfo"]);
+			if ($window.localStorage["userInfo"]) {
+				userInfo = JSON.parse($window.localStorage["userInfo"]);
 			}
 		}
         init();
@@ -32,7 +33,7 @@ define(function(require, exports, module) {
         				userInfo = {
         					uname: res.data.data.uname
         				};
-        				$window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+        				$window.localStorage["userInfo"] = JSON.stringify(userInfo);
         				deferred.resolve(res);
         			}, 
         			function(err) {
@@ -47,7 +48,7 @@ define(function(require, exports, module) {
 				$http.get("/api/v1.0/logout")
                 .then(
 					function(res) {
-						$window.sessionStorage["userInfo"] = null;
+						$window.localStorage["userInfo"] = null;
 						userInfo = null;
 						deferred.resolve(res);
 					}, 

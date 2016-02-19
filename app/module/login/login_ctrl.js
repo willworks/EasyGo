@@ -56,9 +56,6 @@ define(function(require, exports, module) {
             // 注册操作
             $scope.signin = function (){}
 
-
-
-
         });
     }
 });

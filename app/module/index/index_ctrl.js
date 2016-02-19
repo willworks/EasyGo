@@ -14,11 +14,13 @@ define(function(require, exports, module) {
         app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc) {
             $rootScope.title = "EasyGo";
 
+            // 登出操作
             $scope.logout = function () {
-                // 登出操作
                 authenticationSvc.logout();
                 $location.path("/login");
             }
+
+            $scope.uname = authenticationSvc.getUserInfo().uname;
         });
     }
 });
