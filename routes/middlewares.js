@@ -60,6 +60,7 @@ module.exports = function (app) {
     app.use(function (req, res, next) { 
         // 这部步骤用于持续保证每次访问刷新本地跟服务端身份信息
         if (req.session.user) {
+            // console.log(req.session.user.name);
             res.cookie('username', req.session.user.name);
         }
         next();

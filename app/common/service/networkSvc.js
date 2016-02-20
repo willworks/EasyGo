@@ -10,25 +10,20 @@ define(function(require, exports, module) {
     networkSvc.factory('networkSvc', ['$http', '$q', '$window', function($http, $q, $window) {
 
         return {
-            
-            getLogin : function(uname, upwd){
-                $http.post("/api/v1.0/login", {
-                    uname: uname,
-                    upwd: upwd
-                })
-                .success(function(data){
-                    // 登陆成功之后服务端会返回uname(token)
-                    alert(data.data.uname);
-                });
-            },
 
             getList : function(resource) {
+                var deferred = $q.defer(); // 声明承诺
                 var url = 'api/v1.0/' + resource;
-                console.log(url);
                 $http.get(url)
-                .success(function(data){
-                    alert(data.msg);
-                });
+                .then(
+                    function(res) {
+                        deferred.resolve(res);
+                    }, 
+                    function(err) {
+                        deferred.reject(err);
+                    }
+                );
+                return deferred.promise;
             },
 
             getDeatil : function(resource, resource_id) {

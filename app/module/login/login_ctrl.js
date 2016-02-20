@@ -44,12 +44,13 @@ define(function(require, exports, module) {
                                 $scope.infoSuccess = false;
                                 break;
                         }
-                    }),
+                    },
                     // authenticationSvc.login() reject接口
                     function(err){
                         $scope.info = '失败了，程序猿在奋力为你解决';
                         $scope.infoSuccess = false;
                     }
+                )
             }
 
 

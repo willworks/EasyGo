@@ -27,7 +27,6 @@ module.exports = {
 		delete_flag:{type:String,required:true}
 	},
 	notice:{
-		id:{type:String,required:true},
 		title:{type:String,required:true},
 		content:{type:String,required:true},
 		applicant_id:{type:String,required:true},

@@ -11,8 +11,20 @@ define(function(require, exports, module) {
         require('common/service/authenticationSvc');
 
         // auth为路由改变时的登陆标记
-        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc) {
+        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log) {
             $rootScope.title = "EasyGo";
+
+            var loginPromise = networkSvc.getList('notice');
+            loginPromise.then(
+                function(res){
+                    alert('需要加入loading');
+                    $log.log(res.data);
+                },
+                // authenticationSvc.login() reject接口
+                function(err){
+                    $log.log(err);
+                }
+            )
 
             // 登出操作
             $scope.logout = function () {
