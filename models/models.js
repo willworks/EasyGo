@@ -1,25 +1,19 @@
 // 数据模型
+// mongodb自带_id
 module.exports = { 
 	user:{ 
-		id:{type:String,required:true},
 		name:{type:String,required:true},
 		password:{type:String,required:true},
-		sex:{type:String,required:true},
-		email:{type:String,required:true},
-		phone:{type:String,required:true},
-		position:{type:String,required:true},
 		depart_id:{type:String,required:true},
 		delete_flag:{type:String,required:true}
 	},
 	depart:{
-		id:{type:String,required:true},
 		name:{type:String,required:true},
 		leader_id:{type:String,required:true},
 		depart_upper_id:{type:String,required:true},
 		delete_flag:{type:String,required:true}
 	},
 	apply:{
-		id:{type:String,required:true},
 		title:{type:String,required:true},
 		content:{type:String,required:true},
 		applicant_id:{type:String,required:true},

@@ -15,7 +15,6 @@ define(function(require, exports, module) {
         app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log) {
 
 
-
             // 服务端和客户端的双重校验
             // 每个页面加载前执行确认接口权限
             authenticationSvc.isLogin()
@@ -111,3 +110,4 @@ define(function(require, exports, module) {
         });
     }
 });
+

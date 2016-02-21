@@ -8,8 +8,9 @@ define(function(require, exports, module) {
     // 引入的service需要在主模块注入才能提供给其他的controllor使用
     require('common/service/networkSvc');
     require('common/service/authenticationSvc');
+    require('common/service/devSvc');
 
-    var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'authenticationSvc', 'networkSvc']);
+    var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'authenticationSvc', 'networkSvc', 'devSvc']);
 
     //注册路由
     //resolve用于客户端的校验，而authenticationSvc.islogin()用于确认服务端的校验情况
@@ -125,6 +126,22 @@ define(function(require, exports, module) {
             controller: 'noticeDetailCtrl',
             controllerUrl: './module/notice/notice_detail_ctrl.js',
             templateUrl: './module/notice/notice_detail_tpl.html',
+            resolve: {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    if (userInfo) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }]
+            }
+        })
+        .when('/dev', {
+            name:"开发管理界面",
+            controller: 'devCtrl',
+            controllerUrl: './module/dev/dev_ctrl.js',
+            templateUrl: './module/dev/dev_tpl.html',
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();

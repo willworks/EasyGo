@@ -1,0 +1,62 @@
+<div class="container">
+    <!-- 用户管理 -->
+    <form class="form-signin">
+        <h2 class="form-signin-heading">添加用户</h2>
+        <div class="alert" role="alert" ng-show="user_infoShow" ng-class="{true: 'alert-success', false: 'alert-danger'}[user_infoSuccess]">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{user_info}}
+        </div>
+        <input ng-model="user_title" id="inputEmail" class="form-control" placeholder="title" required autofocus>
+        <input ng-model="user_content" id="inputPassword" class="form-control" placeholder="content" required>
+        <input ng-model="user_depart_id" id="inputPassword" class="form-control" placeholder="depart_id" required>
+        <div class="checkbox"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='addUser()'>addUser</button>
+    </form>
+
+    <!-- 部门管理 -->
+    <form class="form-signin">
+        <h2 class="form-signin-heading">添加部门</h2>
+        <div class="alert" role="alert" ng-show="depart_infoShow" ng-class="{true: 'alert-success', false: 'alert-danger'}[depart_infoSuccess]">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{depart_info}}
+        </div>
+        <input ng-model="depart_title" id="inputEmail" class="form-control" placeholder="title" required autofocus>
+        <input ng-model="leader_id" id="inputPassword" class="form-control" placeholder="content" required>
+        <input ng-model="depart_upper_id" id="inputPassword" class="form-control" placeholder="depart_id" required>
+        <div class="checkbox"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='addDepart()'>addDepart</button>
+    </form>
+
+    <!-- 申请管理 -->
+    <form class="form-signin">
+        <h2 class="form-signin-heading">添加申请</h2>
+        <div class="alert" role="alert" ng-show="apply_infoShow" ng-class="{true: 'alert-success', false: 'alert-danger'}[apply_infoSuccess]">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{apply_info}}
+        </div>
+        <input ng-model="apply_title" id="inputEmail" class="form-control" placeholder="title" required autofocus>
+        <input ng-model="apply_content" id="inputPassword" class="form-control" placeholder="content" required>
+        <input ng-model="apply_recipient_id" id="inputPassword" class="form-control" placeholder="recipient_id" required>
+        <div class="checkbox"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='addApply()'>addApply</button>
+    </form>
+
+
+    <!-- 通知管理 -->
+    <form class="form-signin">
+        <h2 class="form-signin-heading">添加通知</h2>
+        <div class="alert" role="alert" ng-show="notice_infoShow" ng-class="{true: 'alert-success', false: 'alert-danger'}[notice_infoSuccess]">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{notice_info}}
+        </div>
+        <input ng-model="notice_title" id="inputEmail" class="form-control" placeholder="title" required autofocus>
+        <input ng-model="notice_content" id="inputPassword" class="form-control" placeholder="content" required>
+        <input ng-model="notice_recipient_id" id="inputPassword" class="form-control" placeholder="recipient_id" required>
+        <div class="checkbox"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='addNotice()'>addNotice</button>
+    </form>
+</div> 
