@@ -15,7 +15,6 @@ http[s]://{domain}/api/{release}/{resource}/{resource_id}?{query_string}
 | Code | Msg | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
 | 1 | Login success |  | 登陆成功 |
-| 0 | Err |  | 未定义错误，由服务端返回 |
 | -1 | User not exist |  | 账号不存在 |
 | -2 | Password incorrect |  | 密码错误 |
 
@@ -47,7 +46,7 @@ http[s]://{domain}/api/{release}/{resource}/{resource_id}?{query_string}
 #### 返回
 | Code | Msg | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| 0 | Not logged in |  | 未登录 |
+| -99 | Not logged in |  | 未登录 |
 
 
 ### 部门管理接口
@@ -62,7 +61,7 @@ http[s]://{domain}/api/{release}/{resource}/{resource_id}?{query_string}
 #### 返回
 | Code | Msg | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| 0 | Not logged in |  | 未登录 |
+| -99 | Not logged in |  | 未登录 |
 
 
 ### 工单管理接口
@@ -77,7 +76,7 @@ http[s]://{domain}/api/{release}/{resource}/{resource_id}?{query_string}
 #### 返回
 | Code | Msg | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| 0 | Not logged in |  | 未登录 |
+| -99 | Not logged in |  | 未登录 |
 
 
 ### 通知管理接口
@@ -92,4 +91,4 @@ http[s]://{domain}/api/{release}/{resource}/{resource_id}?{query_string}
 #### 返回
 | Code | Msg | Data | Description |
 |:-------------:|:-------------|:-------------|:-------------|
-| 0 | Not logged in |  | 未登录 |
+| -99 | Not logged in |  | 未登录 |

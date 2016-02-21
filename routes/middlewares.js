@@ -45,7 +45,7 @@ module.exports = function (app) {
             if (req.originalUrl.split('/')[1] == "api" && !req.session.user){
                 // 客户端根据返回的code，对于未登录采取重定向处理
                 return res.send({
-                    "code":"0",
+                    "code":"-99",
                     "msg":"Not logged in",
                     "data":""
                 });

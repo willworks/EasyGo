@@ -62,6 +62,16 @@ exports.login = function(req, res, next) {
 };
 
 
+exports.isLogin = function(req, res, next) {
+    // 校验登陆状态
+    res.send({
+        "code":"1",
+        "msg":"Is login in",
+        "data":""
+    });
+};
+
+
 exports.logout = function(req, res, next) {
     req.session.user = null;
     req.session.error = null;
@@ -73,3 +83,4 @@ exports.logout = function(req, res, next) {
         "data":""
     });
 };
+

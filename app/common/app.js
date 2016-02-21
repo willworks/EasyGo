@@ -12,6 +12,7 @@ define(function(require, exports, module) {
     var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'authenticationSvc', 'networkSvc']);
 
     //注册路由
+    //resolve用于客户端的校验，而authenticationSvc.islogin()用于确认服务端的校验情况
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
         .when('/', {  
@@ -23,9 +24,8 @@ define(function(require, exports, module) {
             controllerUrl: './module/index/index_ctrl.js',
             templateUrl: './module/index/index_tpl.html',
             resolve: {
-                auth: ["$q", "authenticationSvc", "$log", function($q, authenticationSvc, $log) {
+                auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -48,7 +48,6 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -65,7 +64,6 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -82,7 +80,6 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -99,7 +96,6 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -116,7 +112,6 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -133,7 +128,6 @@ define(function(require, exports, module) {
             resolve: {
                 auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
                     var userInfo = authenticationSvc.getUserInfo();
-                    $log.log(userInfo);
                     if (userInfo) {
                         return $q.when(userInfo);
                     } else {
@@ -164,9 +158,8 @@ define(function(require, exports, module) {
             // 路由reject
 			$rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
 				if (eventObj.authenticated === false) {
-                    alert('请先登录！');
+                    alert('请先登录');
 					$location.path("/login");
-                    $log.log(eventObj);
 				}
 			});
 

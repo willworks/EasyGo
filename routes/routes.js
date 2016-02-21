@@ -18,6 +18,7 @@ module.exports = function (app) {
     // 登陆接口
     app.post('/api/v1.0/login', mainCtrl.login);
     app.get('/api/v1.0/logout', mainCtrl.logout);
+    app.get('/api/v1.0/isLogin', mainCtrl.isLogin);
 
     // 用户接口
     app.get('/api/v1.0/user', userCtrl.index);

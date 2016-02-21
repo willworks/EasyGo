@@ -10,6 +10,7 @@ define(function(require, exports, module) {
     networkSvc.factory('networkSvc', ['$http', '$q', '$window', function($http, $q, $window) {
 
         return {
+            // getList & getDeatil 一般返回res.code有-99 0和1，这里处理-99和1，其余算为default
 
             getList : function(resource) {
                 var deferred = $q.defer(); // 声明承诺
@@ -21,18 +22,30 @@ define(function(require, exports, module) {
                     }, 
                     function(err) {
                         deferred.reject(err);
+                    },
+                    function(proc) {
+                        deferred.notify('processing');
                     }
                 );
                 return deferred.promise;
             },
 
             getDeatil : function(resource, resource_id) {
+                var deferred = $q.defer(); // 声明承诺
                 var url = 'api/v1.0/' + resource + '/' + resource_id;
-                console.log(url);
                 $http.get(url)
-                .success(function(data){
-                    alert(data.msg);
-                });
+                .then(
+                    function(res) {
+                        deferred.resolve(res);
+                    }, 
+                    function(err) {
+                        deferred.reject(err);
+                    },
+                    function(proc) {
+                        deferred.notify('processing');
+                    }
+                );
+                return deferred.promise;
             }
 
         };
