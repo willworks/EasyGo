@@ -5,4 +5,6 @@
 
 .sub-header {
 	margin-top: 12px;
+	border-bottom: 0px;
+	padding-bottom: 30px;
 }

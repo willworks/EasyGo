@@ -24,6 +24,31 @@ define(function(require, exports, module) {
             		// -------------混乱数据区-------------
             		$rootScope.title = "EasyGo";
             		$scope.uname = authenticationSvc.getUserInfo().uname;
+                    // 左边nav选项
+                    $scope.navInitIndex = 0;
+                    $scope.navs = [
+                        {'name' : '团队通知','index' : '0','param' : 'all'},
+                        {'name' : '申请发起','index' : '1','param' : 'pending'},
+                        {'name' : '我的申请','index' : '2','param' : 'unstart'},
+                        {'name' : '我的审批','index' : '3','param' : 'passed'},
+                        {'name' : '发布通知','index' : '4','param' : 'failed'},
+                    ];
+                    $scope.clickNavBtn = function(index){
+                        $scope.navInitIndex = index;
+                        console.log($scope.navInitIndex);
+                    }
+                    // tab切换
+                    $scope.tabInitIndex = 0;
+                    $scope.tabs = [
+                        {'name' : '未读','index' : '0','param' : 'all'},
+                        {'name' : '已读','index' : '1','param' : 'pending'},
+                        {'name' : '我的通知','index' : '2','param' : 'unstart'},
+                    ];
+
+                    $scope.clickTabBtn = function(index){
+                        $scope.tabInitIndex = index;
+                        console.log($scope.tabInitIndex);
+                    }
             		// -------------混乱数据区-------------
             		
 
@@ -42,19 +67,7 @@ define(function(require, exports, module) {
             		                break;
             		            case '1':
                                     $log.log(res.data.data);
-            		                // 左边nav选项
-            		                $scope.navInitIndex = 0;
-            		                $scope.navs = [
-            		                    {'name' : '团队通知','index' : '0','param' : 'all'},
-            		                    {'name' : '申请发起','index' : '1','param' : 'pending'},
-            		                    {'name' : '我的申请','index' : '2','param' : 'unstart'},
-            		                    {'name' : '我的审批','index' : '3','param' : 'passed'},
-            		                    {'name' : '发布通知','index' : '4','param' : 'failed'},
-            		                ];
-            		                $scope.clickNavBtn = function(index){
-            		                    $scope.navInitIndex = index;
-            		                    console.log($scope.navInitIndex);
-            		                }
+
             		                break;
             		            default:
             		                $scope.info = '失败了，程序猿在奋力为你解决';
