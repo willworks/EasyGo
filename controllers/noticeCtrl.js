@@ -8,9 +8,9 @@ xmlhttp.send(notice);
 
 exports.index = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
-    var recipient_id = req.session.user._id;
+    var applicant_id = req.session.user._id;
 
-    noticeModel.find({recipient_id: recipient_id},function(err, data){
+    noticeModel.find({applicant_id: applicant_id},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -32,21 +32,13 @@ exports.index = function(req, res, next) {
 
 exports.add = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
-
     var title = req.body.title;
     var content = req.body.content;
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
     var delete_flag = 'false';
-
-    noticeModel.create({ 
-        title : title,
-        content : content,
-        applicant_id : applicant_id,
-        recipient_id : recipient_id,
-        delete_flag : delete_flag
-    },function(err,data){ 
-        if (err) {
+    noticeModel.findOne({title: title},function(err, data){
+        if(err){ 
             // 接口返回对象 res.send();
             res.send({
                 "code":"0",
@@ -54,11 +46,38 @@ exports.add = function(req, res, next) {
                 "data":""
             });
             console.log(err);
-        } else {
+        }else if(data){ 
+            // 对应title已经有数据
+            req.session.error = '通知已存在';
+            // 接口返回对象 res.send();
             res.send({
-                "code":"1",
-                "msg":"success",
-                "data":data
+                "code":"2",
+                "msg":"exist",
+                "data":""
+            });
+        }else{ 
+            noticeModel.create({ 
+                'title' : title,
+                'content' : content,
+                'applicant_id' : applicant_id,
+                'recipient_id' : recipient_id,
+                'delete_flag' : delete_flag
+            },function(err,data){ 
+                if (err) {
+                    // 接口返回对象 res.send();
+                    res.send({
+                        "code":"0",
+                        "msg":err,
+                        "data":""
+                    });
+                    console.log(err);
+                } else {
+                    res.send({
+                        "code":"1",
+                        "msg":"success",
+                        "data":data
+                    });
+                }
             });
         }
     });

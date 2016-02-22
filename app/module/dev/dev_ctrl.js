@@ -41,8 +41,8 @@ define(function(require, exports, module) {
             $scope.addDepart = function (){
                 var data = {
                     name : $scope.depart_name,
-                    leader_id : $scope.depart_leader_id,
-                    depart_upper_id : $scope.depart_depart_upper_id
+                    leader_id : $scope.leader_id,
+                    depart_upper_id : $scope.depart_upper_id
                 }
                 devSvc.add('depart',data)
                 .then(

@@ -41,6 +41,7 @@ define(function(require, exports, module) {
             		                alert('失败了，程序猿在奋力为你解决');
             		                break;
             		            case '1':
+                                    $log.log(res.data.data);
             		                // 左边nav选项
             		                $scope.navInitIndex = 0;
             		                $scope.navs = [
@@ -62,6 +63,7 @@ define(function(require, exports, module) {
             		    },
             		    // networkSvc.getList() reject接口
             		    function(err){
+                            alert('失败了，程序猿在奋力为你解决');
             		        $log.log(err);
             		    },
             		    // networkSvc.getList() notify接口
@@ -84,27 +86,28 @@ define(function(require, exports, module) {
 			// 登出操作
 			$scope.logout = function () {
 			    authenticationSvc.logout()
-			    	.then(
-		    			// authenticationSvc.logout() resolve接口
-		    		    function(res){
-		    		        switch(res.data.code){
-		    		            case '1':
-		    		            	$location.path("/login");
-		    		                break;
-		    		            default:
-			    		            alert('失败了，程序猿在奋力为你解决');
-			    		            break;
-		    		        }
-		    		    },
-		    		    // authenticationSvc.logout() reject接口
-		    		    function(err){
-		    		        $log.log(err);
-		    		    },
-		    		    // authenticationSvc.logout() notify接口
-		    		    function(proc){
-		    		        // loading
-		    		    }
-			    	);
+		    	.then(
+	    			// authenticationSvc.logout() resolve接口
+	    		    function(res){
+	    		        switch(res.data.code){
+	    		            case '1':
+	    		            	$location.path("/login");
+	    		                break;
+	    		            default:
+		    		            alert('失败了，程序猿在奋力为你解决');
+		    		            break;
+	    		        }
+	    		    },
+	    		    // authenticationSvc.logout() reject接口
+	    		    function(err){
+                        alert('失败了，程序猿在奋力为你解决');
+	    		        $log.log(err);
+	    		    },
+	    		    // authenticationSvc.logout() notify接口
+	    		    function(proc){
+	    		        // loading
+	    		    }
+		    	);
 			}
 
         });
