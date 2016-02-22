@@ -80,9 +80,6 @@ define(function(require, exports, module) {
             );
 
 
-
-
-
 			// 登出操作
 			$scope.logout = function () {
 			    authenticationSvc.logout()
