@@ -21,6 +21,7 @@ module.exports = function (app) {
     app.get('/api/v1.0/isLogin', mainCtrl.isLogin);
 
     // 用户接口
+    // 需要插入部门id
     app.get('/api/v1.0/user', userCtrl.index);
     app.post('/api/v1.0/user/add', userCtrl.add);
     app.get('/api/v1.0/user/:id', userCtrl.list);

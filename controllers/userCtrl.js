@@ -134,10 +134,11 @@ exports.edit = function(req, res, next) {
 
 exports.delete = function(req, res, next) {
     var userModel = global.dbConn.getModel('user'); 
-    var name = req.body.name;
+    // console.log(req.params.id);
+    var id = req.params.id;
     var delete_flag = 'true';
 
-    userModel.findOneAndUpdate({"name": name}, {"delete_flag": delete_flag}, {new: true}, function(err){
+    userModel.findOneAndUpdate({"_id": id}, {"delete_flag": delete_flag}, {new: true}, function(err){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({

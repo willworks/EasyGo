@@ -132,7 +132,26 @@ exports.edit = function(req, res, next) {
 
 
 exports.delete = function(req, res, next) {
-    req.session.user = null;
-    req.session.error = null;
-    // 接口返回对象 res.send();
+    var applyModel = global.dbConn.getModel('apply'); 
+    // console.log(req.params.id);
+    var id = req.params.id;
+    var delete_flag = 'true';
+
+    applyModel.findOneAndUpdate({"_id": id}, {"delete_flag": delete_flag}, {new: true}, function(err){
+        if(err){ 
+            // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
+            console.log(err);
+        }else{ 
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":""
+            });
+        }
+    });
 };
