@@ -19,7 +19,14 @@ exports.index = function(req, res, next) {
                 "data":""
             });
             console.log(err);
-        } else { 
+        }else if(!data){
+            req.session.error = '通知不存在';
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
+        }else{ 
             res.send({
                 "code":"1",
                 "msg":"success",
@@ -86,23 +93,31 @@ exports.add = function(req, res, next) {
 
 
 exports.list = function(req, res, next) {
-    var noticeModel = global.dbConn.getModel('user');  
-    var uname = req.body.uname;
-    noticeModel.findOne({name:uname},function(err, data){
+    var noticeModel = global.dbConn.getModel('notice');  
+    var id = req.params.id;
+
+    noticeModel.findOne({"_id": id},function(err, data){
         if(err){
             // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
             console.log(err);
         }else if(!data){
             req.session.error = '通知不存在';
-            // 接口返回对象 res.send();
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
         }else{
-            if(req.body.upwd != data.password){
-                req.session.error = "密码错误";
-                // 接口返回对象 res.send();
-            }else{
-                req.session.user = data;
-                // 接口返回对象 res.send();
-            }
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":data
+            });
         }
     });
 };
@@ -116,7 +131,7 @@ exports.edit = function(req, res, next) {
     var params = req.body;
     var delete_flag = 'true';
 
-    noticeModel.findOneAndUpdate({"_id": id}, params, {new: true}, function(err){
+    noticeModel.findOneAndUpdate({"_id": id}, params, {new: false}, function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -125,11 +140,18 @@ exports.edit = function(req, res, next) {
                 "data":""
             });
             console.log(err);
+        }else if(!data){
+            req.session.error = '通知不存在';
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
         }else{ 
             res.send({
                 "code":"1",
                 "msg":"success",
-                "data":""
+                "data":data
             });
         }
     });
@@ -142,7 +164,7 @@ exports.delete = function(req, res, next) {
     var id = req.params.id;
     var delete_flag = 'true';
 
-    noticeModel.findOneAndUpdate({"_id": id}, {"delete_flag": delete_flag}, {new: true}, function(err){
+    noticeModel.findOneAndUpdate({"_id": id}, {"delete_flag": delete_flag}, {new: false}, function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -151,11 +173,18 @@ exports.delete = function(req, res, next) {
                 "data":""
             });
             console.log(err);
+        }else if(!data){
+            req.session.error = '申请不存在';
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
         }else{ 
             res.send({
                 "code":"1",
                 "msg":"success",
-                "data":""
+                "data":data
             });
         }
     });
