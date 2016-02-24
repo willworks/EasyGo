@@ -110,23 +110,28 @@ exports.list = function(req, res, next) {
 
 
 exports.edit = function(req, res, next) {
-    var userModel = global.dbConn.getModel('user');  
-    var uname = req.body.uname;
-    userModel.findOne({name:uname},function(err, data){
-        if(err){
+    var userModel = global.dbConn.getModel('user'); 
+    // console.log(req.params.id);
+    // console.log(req.body);
+    var id = req.params.id;
+    var params = req.body;
+    var delete_flag = 'true';
+
+    userModel.findOneAndUpdate({"_id": id}, params, {new: true}, function(err){
+        if(err){ 
             // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
             console.log(err);
-        }else if(!data){
-            req.session.error = '用户名不存在';
-            // 接口返回对象 res.send();
-        }else{
-            if(req.body.upwd != data.password){
-                req.session.error = "密码错误";
-                // 接口返回对象 res.send();
-            }else{
-                req.session.user = data;
-                // 接口返回对象 res.send();
-            }
+        }else{ 
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":""
+            });
         }
     });
 };

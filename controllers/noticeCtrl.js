@@ -109,23 +109,28 @@ exports.list = function(req, res, next) {
 
 
 exports.edit = function(req, res, next) {
-    var noticeModel = global.dbConn.getModel('user');  
-    var uname = req.body.uname;
-    noticeModel.findOne({name:uname},function(err, data){
-        if(err){
+    var noticeModel = global.dbConn.getModel('notice'); 
+    // console.log(req.params.id);
+    // console.log(req.body);
+    var id = req.params.id;
+    var params = req.body;
+    var delete_flag = 'true';
+
+    noticeModel.findOneAndUpdate({"_id": id}, params, {new: true}, function(err){
+        if(err){ 
             // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
             console.log(err);
-        }else if(!data){
-            req.session.error = '通知不存在';
-            // 接口返回对象 res.send();
-        }else{
-            if(req.body.upwd != data.password){
-                req.session.error = "密码错误";
-                // 接口返回对象 res.send();
-            }else{
-                req.session.user = data;
-                // 接口返回对象 res.send();
-            }
+        }else{ 
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":""
+            });
         }
     });
 };
