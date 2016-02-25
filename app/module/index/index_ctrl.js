@@ -66,7 +66,8 @@ define(function(require, exports, module) {
             		                alert('失败了，程序猿在奋力为你解决');
             		                break;
             		            case '1':
-                                    $log.log(res.data.data);
+                                    $scope.notice = res.data.data;
+                                    $log.log($scope.notice);
 
             		                break;
             		            default:

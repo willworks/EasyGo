@@ -43,17 +43,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1,001</td>
-                            <td>Lorem</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                        </tr>
-                        <tr>
-                            <td>1,002</td>
-                            <td>amet</td>
-                            <td>consectetur</td>
-                            <td>adipiscing</td>
+                        <tr ng-repeat="notice in notice">
+                            <td>{{notice._id}}</td>
+                            <td>{{notice.title}}</td>
+                            <td>{{notice.content}}</td>
+                            <td>{{notice.title}}</td>
                         </tr>
                     </tbody>
                 </table>
