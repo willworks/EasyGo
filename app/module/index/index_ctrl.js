@@ -12,7 +12,7 @@ define(function(require, exports, module) {
         require('common/service/authenticationSvc');
 
         // auth为路由改变时的登陆标记
-        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log) {
+        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal) {
 
 
             // 服务端和客户端的双重校验
@@ -49,6 +49,8 @@ define(function(require, exports, module) {
                         $scope.tabInitIndex = index;
                         console.log($scope.tabInitIndex);
                     }
+
+
             		// -------------混乱数据区-------------
             		
 
@@ -68,6 +70,10 @@ define(function(require, exports, module) {
             		            case '1':
                                     $scope.notice = res.data.data;
                                     $log.log($scope.notice);
+
+                                    // http://mgcrea.github.io/angular-strap/
+                                    // Show a basic modal from a controller
+                                    var myModal = $modal({title: 'My Title', content: 'My Content', show: true});
 
             		                break;
             		            default:

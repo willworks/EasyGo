@@ -1,3 +1,22 @@
+<style>
+.modal-backdrop.am-fade {
+    opacity: .5;
+    transition: opacity .15s linear;
+    &.ng-enter {
+        opacity: 0;
+        &.ng-enter-active {
+            opacity: .5;
+        }
+    }
+    &.ng-leave {
+        opacity: .5;
+        &.ng-leave-active {
+            opacity: 0;
+        }
+    }
+}
+</style>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -21,6 +40,13 @@
 
 <div class="container-fluid">
     <div class="row">
+        <!-- Button to trigger a default modal with a scope as an object {title:'', content:'', etc.} -->
+        <button type="button" class="btn btn-lg btn-primary" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">Click to toggle modal
+            <br>
+            <small>(using an object)</small>
+        </button>
+
+    
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li ng-repeat="nav in navs" ng-click="clickNavBtn(nav.index)" ng-class="{active:navInitIndex == nav.index}"><a>{{nav.name}}</a></li>
