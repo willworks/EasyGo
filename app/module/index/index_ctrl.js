@@ -24,9 +24,20 @@ define(function(require, exports, module) {
             		// -------------混乱数据区-------------
             		$rootScope.title = "EasyGo";
             		$scope.uname = authenticationSvc.getUserInfo().uname;
-                    // 左边nav选项
+                    // 顶部nav选项
                     $scope.navInitIndex = 0;
                     $scope.navs = [
+                        {'name' : '团队','index' : '0','param' : 'all'},
+                        {'name' : '申请','index' : '1','param' : 'pending'},
+                        {'name' : '通知','index' : '2','param' : 'unstart'},
+                    ];
+                    $scope.clickNavBtn = function(index){
+                        $scope.navInitIndex = index;
+                        console.log($scope.navInitIndex);
+                    }
+                    // 左边nav选项
+                    $scope.snavInitIndex = 0;
+                    $scope.snavs = [
                         {'name' : '团队通知','index' : '0','param' : 'all'},
                         {'name' : '申请发起','index' : '1','param' : 'pending'},
                         {'name' : '我的申请','index' : '2','param' : 'unstart'},
