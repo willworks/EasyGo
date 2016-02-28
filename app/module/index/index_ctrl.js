@@ -43,11 +43,9 @@ define(function(require, exports, module) {
                     // 左边nav选项
                     $scope.snavInitIndex = 0;
                     $scope.snavs = [
-                        {'name' : '团队通知','index' : '0','param' : 'all'},
-                        {'name' : '申请发起','index' : '1','param' : 'pending'},
-                        {'name' : '我的申请','index' : '2','param' : 'unstart'},
-                        {'name' : '我的审批','index' : '3','param' : 'passed'},
-                        {'name' : '发布通知','index' : '4','param' : 'failed'},
+                        {'name' : '团队管理','index' : '0','param' : 'depart'},
+                        {'name' : '申请管理','index' : '1','param' : 'apply'},
+                        {'name' : '通知管理','index' : '2','param' : 'notice'},
                     ];
                     $scope.clickSNavBtn = function(index){
                         $scope.snavInitIndex = index;
@@ -57,10 +55,45 @@ define(function(require, exports, module) {
 
                     // tab切换
                     $scope.tabInitIndex = 0;
+                    $scope._tabs = {
+                    	'notice' : [{'name' : '未读通知','index' : '0','param' : 'unread'},
+                        {'name' : '已读通知','index' : '1','param' : 'read'},
+                        {'name' : '我的通知','index' : '2','param' : 'mine'}],
+
+                    	'apply' : [{'name' : '未读申请','index' : '0','param' : 'unread'},
+                        {'name' : '已读申请','index' : '1','param' : 'read'},
+                        {'name' : '我的申请','index' : '2','param' : 'mine'}],
+
+                    	'depart' : [{'name' : '未读部门','index' : '0','param' : 'unread'},
+                        {'name' : '已读部门','index' : '1','param' : 'read'},
+                        {'name' : '我的部门','index' : '2','param' : 'mine'}],
+	                };
+
                     $scope.tabs = [
-                        {'name' : '未读','index' : '0','param' : 'unread'},
-                        {'name' : '已读','index' : '1','param' : 'read'},
+                        {'name' : '未读通知','index' : '0','param' : 'unread'},
+                        {'name' : '已读通知','index' : '1','param' : 'read'},
                         {'name' : '我的通知','index' : '2','param' : 'mine'},
+                    ];
+
+                    $scope.userNavs = [
+	                    {'name' : '1','index' : '0','param' : 'all'},
+	                    {'name' : '2','index' : '1','param' : 'pending'},
+	                    {'name' : '3','index' : '2','param' : 'unstart'}
+                    ];
+                    $scope.departNavs = [
+	                    {'name' : '4','index' : '0','param' : 'all'},
+	                    {'name' : '5','index' : '1','param' : 'pending'},
+	                    {'name' : '6','index' : '2','param' : 'unstart'}
+                    ];
+                    $scope.applyNavs = [
+	                    {'name' : '7','index' : '0','param' : 'all'},
+	                    {'name' : '8','index' : '1','param' : 'pending'},
+	                    {'name' : '9','index' : '2','param' : 'unstart'}
+                    ];
+                    $scope.noticeNavs = [
+                    	{'name' : '未读','index' : '0','param' : 'all'},
+                    	{'name' : '11','index' : '1','param' : 'pending'},
+                    	{'name' : '12','index' : '2','param' : 'unstart'}
                     ];
                     $scope.clickTabBtn = function(index){
                         $scope.tabInitIndex = index;
