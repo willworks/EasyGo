@@ -24,17 +24,22 @@ define(function(require, exports, module) {
             		// -------------混乱数据区-------------
             		$rootScope.title = "EasyGo";
             		$scope.uname = authenticationSvc.getUserInfo().uname;
+
+
                     // 顶部nav选项
                     $scope.navInitIndex = 0;
                     $scope.navs = [
-                        {'name' : '团队','index' : '0','param' : 'all'},
-                        {'name' : '申请','index' : '1','param' : 'pending'},
-                        {'name' : '通知','index' : '2','param' : 'unstart'},
+                    	{'name' : $scope.uname,'index' : '0','param' : 'user'},
+                        {'name' : '团队管理','index' : '1','param' : 'depart'},
+                        {'name' : '申请管理','index' : '2','param' : 'apply'},
+                        {'name' : '通知管理','index' : '3','param' : 'notice'},
                     ];
                     $scope.clickNavBtn = function(index){
                         $scope.navInitIndex = index;
-                        console.log($scope.navInitIndex);
+                        console.log('nav ' + $scope.navInitIndex);
                     }
+
+
                     // 左边nav选项
                     $scope.snavInitIndex = 0;
                     $scope.snavs = [
@@ -44,21 +49,22 @@ define(function(require, exports, module) {
                         {'name' : '我的审批','index' : '3','param' : 'passed'},
                         {'name' : '发布通知','index' : '4','param' : 'failed'},
                     ];
-                    $scope.clickNavBtn = function(index){
-                        $scope.navInitIndex = index;
-                        console.log($scope.navInitIndex);
+                    $scope.clickSNavBtn = function(index){
+                        $scope.snavInitIndex = index;
+                        console.log('snav ' + $scope.snavInitIndex);
                     }
+
+
                     // tab切换
                     $scope.tabInitIndex = 0;
                     $scope.tabs = [
-                        {'name' : '未读','index' : '0','param' : 'all'},
-                        {'name' : '已读','index' : '1','param' : 'pending'},
-                        {'name' : '我的通知','index' : '2','param' : 'unstart'},
+                        {'name' : '未读','index' : '0','param' : 'unread'},
+                        {'name' : '已读','index' : '1','param' : 'read'},
+                        {'name' : '我的通知','index' : '2','param' : 'mine'},
                     ];
-
                     $scope.clickTabBtn = function(index){
                         $scope.tabInitIndex = index;
-                        console.log($scope.tabInitIndex);
+                        console.log('tab ' + $scope.tabInitIndex);
                     }
 
 
