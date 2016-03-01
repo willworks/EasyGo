@@ -123,7 +123,7 @@ define(function(require, exports, module) {
 
                                     // http://mgcrea.github.io/angular-strap/
                                     // Show a basic modal from a controller
-                                    var myModal = $modal({title: 'My Title', content: 'My Content', show: true});
+                                    // var myModal = $modal({title: 'My Title', content: 'My Content', show: true});
 
             		                break;
             		            default:
