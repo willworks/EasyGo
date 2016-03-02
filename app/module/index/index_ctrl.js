@@ -10,6 +10,7 @@ define(function(require, exports, module) {
     	
         require('common/service/networkSvc');
         require('common/service/authenticationSvc');
+        require('common/directive/table')(app);
 
         // auth为路由改变时的登陆标记
         app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal) {
@@ -27,6 +28,7 @@ define(function(require, exports, module) {
 
 
                     // 顶部nav选项
+                    /*
                     $scope.navInitIndex = 0;
                     $scope.navs = [
                     	{'name' : $scope.uname,'index' : '0','param' : 'user'},
@@ -38,6 +40,7 @@ define(function(require, exports, module) {
                         $scope.navInitIndex = index;
                         console.log('nav ' + $scope.navInitIndex);
                     }
+                    */
 
 
                     // 左边nav选项
