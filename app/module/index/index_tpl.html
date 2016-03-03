@@ -48,7 +48,12 @@
             <small>(using an object)</small>
         </button> -->
 
-    
+	    <add minor class="col-md-2 col-md-offset-3">
+	      <div >次数: {{ count }}</div>
+	      <figure></figure>
+	    </add>
+
+	    
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li ng-repeat="snav in snavs" ng-click="clickSNavBtn(snav.index)" ng-class="{active:snavInitIndex == snav.index}"><a>{{snav.name}}</a></li>
@@ -57,7 +62,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ul class="nav nav-tabs" role="tablist">
                 <li ng-repeat="tab in tabs" ng-click="clickTabBtn(tab.index)" ng-class="{active:tabInitIndex == tab.index}"><a>{{tab.name}}</a></li>
-                <button type="button" class="btn btn-primary pull-right" ng-click="showtable(material.url_path,material.ext)">新增</button>
+                <button type="button" class="btn btn-primary pull-right">新增</button>
 
 
                   <div class="col-sm-3 pull-right">
@@ -86,7 +91,7 @@
                             <td>{{notice.title}}</td>
                             <td>{{notice.content}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info">查看</button>
+                                <button type="button" class="btn btn-sm btn-info" ng-click="showtable(notice)">查看</button>
                                 <button type="button" class="btn btn-sm btn-danger">删除</button>
                             </td>
                         </tr>

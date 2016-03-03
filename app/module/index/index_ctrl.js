@@ -8,9 +8,9 @@ define(function(require, exports, module) {
 	
     module.exports = function(app) {
     	
+    	require('common/directive/table');
         require('common/service/networkSvc');
         require('common/service/authenticationSvc');
-        require('common/directive/table')(app);
 
         // auth为路由改变时的登陆标记
         app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal) {
@@ -123,6 +123,7 @@ define(function(require, exports, module) {
             		            case '1':
                                     $scope.notice = res.data.data;
                                     $log.log($scope.notice);
+
 
                                     // http://mgcrea.github.io/angular-strap/
                                     // Show a basic modal from a controller
