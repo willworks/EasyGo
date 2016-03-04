@@ -16,6 +16,24 @@
     }
 }
 
+
+
+.expander {
+    border: 1px solid black;
+    width: 250px;
+}
+
+.expander>.title {
+    background-color: black;
+    color: white;
+    padding: .1em .3em;
+    cursor: pointer;
+}
+
+.expander>.body {
+    padding: .1em .3em;
+}
+
 </style>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -48,13 +66,13 @@
             <small>(using an object)</small>
         </button> -->
 
-	    <add minor class="col-md-2 col-md-offset-3">
-	      <div >次数: {{ count }}</div>
-	      <figure></figure>
-	    </add>
-
 	    
         <div class="col-sm-3 col-md-2 sidebar">
+
+        <expander class='expander' expander-title='title'>
+            {{text}}
+        </expander>
+
             <ul class="nav nav-sidebar">
                 <li ng-repeat="snav in snavs" ng-click="clickSNavBtn(snav.index)" ng-class="{active:snavInitIndex == snav.index}"><a>{{snav.name}}</a></li>
             </ul>

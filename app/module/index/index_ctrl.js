@@ -124,6 +124,9 @@ define(function(require, exports, module) {
                                     $scope.notice = res.data.data;
                                     $log.log($scope.notice);
 
+                                    
+                                    $scope.title = '点击展开';
+                                    $scope.text = '这里是内部的内容。';
 
                                     // http://mgcrea.github.io/angular-strap/
                                     // Show a basic modal from a controller
