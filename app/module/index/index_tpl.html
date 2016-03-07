@@ -16,24 +16,6 @@
     }
 }
 
-
-
-.expander {
-    border: 1px solid black;
-    width: 250px;
-}
-
-.expander>.title {
-    background-color: black;
-    color: white;
-    padding: .1em .3em;
-    cursor: pointer;
-}
-
-.expander>.body {
-    padding: .1em .3em;
-}
-
 </style>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -60,19 +42,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- Button to trigger a default modal with a scope as an object {title:'', content:'', etc.} -->
-<!--         <button type="button" class="btn btn-lg btn-primary" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">Click to toggle modal
-            <br>
-            <small>(using an object)</small>
-        </button> -->
-
-	    
         <div class="col-sm-3 col-md-2 sidebar">
-
-        <expander class='expander' expander-title='title'>
-            {{text}}
-        </expander>
-
             <ul class="nav nav-sidebar">
                 <li ng-repeat="snav in snavs" ng-click="clickSNavBtn(snav.index)" ng-class="{active:snavInitIndex == snav.index}"><a>{{snav.name}}</a></li>
             </ul>
@@ -81,17 +51,16 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li ng-repeat="tab in tabs" ng-click="clickTabBtn(tab.index)" ng-class="{active:tabInitIndex == tab.index}"><a>{{tab.name}}</a></li>
                 <button type="button" class="btn btn-primary pull-right">新增</button>
-
-
-                  <div class="col-sm-3 pull-right">
+                <div class="col-sm-3 pull-right">
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search for...">
-                      <span class="input-group-btn">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
                         <button class="btn btn-primary" type="button">搜索</button>
-                      </span>
+                    </span>
                     </div><!-- /input-group -->
-                  </div><!-- /.col-lg-6 -->
+                </div><!-- /.col-lg-6 -->
             </ul>
+
             <!-- 数据渲染区directive -->
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -109,7 +78,7 @@
                             <td>{{notice.title}}</td>
                             <td>{{notice.content}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info" ng-click="showtable(notice)">查看</button>
+                                <button type="button" class="btn btn-sm btn-info" ng-click="showModal(notice._id)">查看</button>
                                 <button type="button" class="btn btn-sm btn-danger">删除</button>
                             </td>
                         </tr>
@@ -119,3 +88,5 @@
         </div>
     </div>
 </div>
+
+<!-- <div popup-img is-popup-show="isPopupShow" show-popup-img="showPopupImg"></div> -->

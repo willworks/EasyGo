@@ -1,16 +1,13 @@
 <div class="container">
     <form class="form-signin">
         <h2 class="form-signin-heading">Please login in</h2>
-
         <div class="alert" role="alert" ng-show="infoShow" ng-class="{true: 'alert-success', false: 'alert-danger'}[infoSuccess]">
-          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-          <span class="sr-only">Error:</span>
-          {{info}}
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span>
+			{{info}}
         </div>
-
         <input ng-model="uname" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <input ng-model="upwd" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
         <div class="checkbox">
             <label><input type="checkbox" value="remember-me"> Remember me</label>
         </div>

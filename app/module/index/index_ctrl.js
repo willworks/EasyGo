@@ -8,12 +8,11 @@ define(function(require, exports, module) {
 	
     module.exports = function(app) {
     	
-    	require('common/directive/table');
         require('common/service/networkSvc');
         require('common/service/authenticationSvc');
 
         // auth为路由改变时的登陆标记
-        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal) {
+        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $alert) {
 
 
             // 服务端和客户端的双重校验
@@ -50,58 +49,44 @@ define(function(require, exports, module) {
                         {'name' : '申请管理','index' : '1','param' : 'apply'},
                         {'name' : '通知管理','index' : '2','param' : 'notice'},
                     ];
-                    $scope.clickSNavBtn = function(index){
-                        $scope.snavInitIndex = index;
-                        console.log('snav ' + $scope.snavInitIndex);
-                    }
-
-
                     // tab切换
                     $scope.tabInitIndex = 0;
                     $scope._tabs = {
-                    	'notice' : [{'name' : '未读通知','index' : '0','param' : 'unread'},
-                        {'name' : '已读通知','index' : '1','param' : 'read'},
-                        {'name' : '我的通知','index' : '2','param' : 'mine'}],
+                        'notice' : [
+                            {'name' : '未读通知','index' : '0','param' : 'unread'},
+                            {'name' : '已读通知','index' : '1','param' : 'read'},
+                            {'name' : '我的通知','index' : '2','param' : 'mine'}
+                        ],
 
-                    	'apply' : [{'name' : '未读申请','index' : '0','param' : 'unread'},
-                        {'name' : '已读申请','index' : '1','param' : 'read'},
-                        {'name' : '我的申请','index' : '2','param' : 'mine'}],
+                        'apply' : [
+                            {'name' : '未读申请','index' : '0','param' : 'unread'},
+                            {'name' : '已读申请','index' : '1','param' : 'read'},
+                            {'name' : '我的申请','index' : '2','param' : 'mine'}
+                        ],
 
-                    	'depart' : [{'name' : '未读部门','index' : '0','param' : 'unread'},
-                        {'name' : '已读部门','index' : '1','param' : 'read'},
-                        {'name' : '我的部门','index' : '2','param' : 'mine'}],
-	                };
-
-                    $scope.tabs = [
-                        {'name' : '未读通知','index' : '0','param' : 'unread'},
-                        {'name' : '已读通知','index' : '1','param' : 'read'},
-                        {'name' : '我的通知','index' : '2','param' : 'mine'},
-                    ];
-
-                    $scope.userNavs = [
-	                    {'name' : '1','index' : '0','param' : 'all'},
-	                    {'name' : '2','index' : '1','param' : 'pending'},
-	                    {'name' : '3','index' : '2','param' : 'unstart'}
-                    ];
-                    $scope.departNavs = [
-	                    {'name' : '4','index' : '0','param' : 'all'},
-	                    {'name' : '5','index' : '1','param' : 'pending'},
-	                    {'name' : '6','index' : '2','param' : 'unstart'}
-                    ];
-                    $scope.applyNavs = [
-	                    {'name' : '7','index' : '0','param' : 'all'},
-	                    {'name' : '8','index' : '1','param' : 'pending'},
-	                    {'name' : '9','index' : '2','param' : 'unstart'}
-                    ];
-                    $scope.noticeNavs = [
-                    	{'name' : '未读','index' : '0','param' : 'all'},
-                    	{'name' : '11','index' : '1','param' : 'pending'},
-                    	{'name' : '12','index' : '2','param' : 'unstart'}
-                    ];
-                    $scope.clickTabBtn = function(index){
-                        $scope.tabInitIndex = index;
-                        console.log('tab ' + $scope.tabInitIndex);
+                        'depart' : [
+                            {'name' : '未读部门','index' : '0','param' : 'unread'},
+                            {'name' : '已读部门','index' : '1','param' : 'read'},
+                            {'name' : '我的部门','index' : '2','param' : 'mine'}
+                        ],
+                    };
+                    $scope.clickSNavBtn = function(index){
+                        $scope.snavInitIndex = index;
+                        console.log($scope.snavs[$scope.snavInitIndex].param);
+                        var param = $scope.snavs[$scope.snavInitIndex].param;
+                        console.log($scope._tabs[param]);
+                        $scope.tab = $scope._tabs[param][name];
+                        // $scope.tabs = [
+                        //     {'name' : '未读通知','index' : '0','param' : 'unread'},
+                        //     {'name' : '已读通知','index' : '1','param' : 'read'},
+                        //     {'name' : '我的通知','index' : '2','param' : 'mine'},
+                        // ];
+                        $scope.clickTabBtn = function(index){
+                            $scope.tabInitIndex = index;
+                            console.log('tab ' + $scope.tabInitIndex);
+                        }
                     }
+
 
 
             		// -------------混乱数据区-------------
@@ -124,13 +109,10 @@ define(function(require, exports, module) {
                                     $scope.notice = res.data.data;
                                     $log.log($scope.notice);
 
-                                    
-                                    $scope.title = '点击展开';
-                                    $scope.text = '这里是内部的内容。';
-
                                     // http://mgcrea.github.io/angular-strap/
-                                    // Show a basic modal from a controller
-                                    // var myModal = $modal({title: 'My Title', content: 'My Content', show: true});
+                                    $scope.showModal = function(notice_id) {
+                                        $modal({title: notice_id, content: notice_id, show: true}).show;
+                                    };
 
             		                break;
             		            default:
