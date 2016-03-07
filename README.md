@@ -16,6 +16,10 @@ EasyGo is a co-working-system for office approval
 
  - run gulp (now use browser-sync to reload resources automatically)
 
+### AngualrStrap
+
+ - Show when some event occurs (use $promise property to ensure the template has been loaded)
+
 ### Technology stack
 
  - Node

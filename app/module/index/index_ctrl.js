@@ -41,7 +41,6 @@ define(function(require, exports, module) {
                     }
                     */
 
-
                     // 左边nav选项
                     $scope.snavInitIndex = 0;
                     $scope.snavs = [
@@ -49,9 +48,10 @@ define(function(require, exports, module) {
                         {'name' : '申请管理','index' : '1','param' : 'apply'},
                         {'name' : '通知管理','index' : '2','param' : 'notice'},
                     ];
-                    // tab切换
+
+                    // 右侧tab切换
                     $scope.tabInitIndex = 0;
-                    $scope._tabs = {
+                    $scope.allTabs = {
                         'notice' : [
                             {'name' : '未读通知','index' : '0','param' : 'unread'},
                             {'name' : '已读通知','index' : '1','param' : 'read'},
@@ -70,25 +70,18 @@ define(function(require, exports, module) {
                             {'name' : '我的部门','index' : '2','param' : 'mine'}
                         ],
                     };
-                    $scope.clickSNavBtn = function(index){
-                        $scope.snavInitIndex = index;
-                        console.log($scope.snavs[$scope.snavInitIndex].param);
-                        var param = $scope.snavs[$scope.snavInitIndex].param;
-                        console.log($scope._tabs[param]);
-                        $scope.tab = $scope._tabs[param][name];
-                        // $scope.tabs = [
-                        //     {'name' : '未读通知','index' : '0','param' : 'unread'},
-                        //     {'name' : '已读通知','index' : '1','param' : 'read'},
-                        //     {'name' : '我的通知','index' : '2','param' : 'mine'},
-                        // ];
-                        $scope.clickTabBtn = function(index){
-                            $scope.tabInitIndex = index;
-                            console.log('tab ' + $scope.tabInitIndex);
-                        }
+                    $scope.tabs = $scope.allTabs[$scope.snavs[$scope.snavInitIndex].param];
+
+                    // 点击左侧snav联动tab
+                    $scope.clickSNavBtn = function(navIndex){
+                        $scope.snavInitIndex = navIndex;
+                        $scope.tabInitIndex = 0;
+                        $scope.tabs = $scope.allTabs[$scope.snavs[$scope.snavInitIndex].param];
                     }
-
-
-
+                    $scope.clickTabBtn = function(tabIndex){
+                        $scope.tabInitIndex = tabIndex;
+                        console.log('tab ' + $scope.tabInitIndex);
+                    }
             		// -------------混乱数据区-------------
             		
 
@@ -110,10 +103,17 @@ define(function(require, exports, module) {
                                     $log.log($scope.notice);
 
                                     // http://mgcrea.github.io/angular-strap/
-                                    $scope.showModal = function(notice_id) {
+                                    $scope.showDetail = function(notice_id) {
                                         $modal({title: notice_id, content: notice_id, show: true}).show;
                                     };
 
+                                    $scope.deleteItem = function(notice_id) {
+                                        $modal({title: notice_id, content: notice_id, show: true}).show;
+                                    };
+
+                                    $scope.addItem = function(notice_id) {
+                                        $modal({title: notice_id, content: notice_id, show: true}).show;
+                                    };
             		                break;
             		            default:
             		                $scope.info = '失败了，程序猿在奋力为你解决';

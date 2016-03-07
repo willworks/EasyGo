@@ -1,22 +1,4 @@
-<style>
-.modal-backdrop.am-fade {
-    opacity: .5;
-    transition: opacity .15s linear;
-    &.ng-enter {
-        opacity: 0;
-        &.ng-enter-active {
-            opacity: .5;
-        }
-    }
-    &.ng-leave {
-        opacity: .5;
-        &.ng-leave-active {
-            opacity: 0;
-        }
-    }
-}
 
-</style>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -49,8 +31,8 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ul class="nav nav-tabs" role="tablist">
-                <li ng-repeat="tab in tabs" ng-click="clickTabBtn(tab.index)" ng-class="{active:tabInitIndex == tab.index}"><a>{{tab.name}}</a></li>
-                <button type="button" class="btn btn-primary pull-right">新增</button>
+                <li ng-repeat="tab in tabs track by $index" ng-click="clickTabBtn(tab.index)" ng-class="{active:tabInitIndex == tab.index}"><a>{{tab.name}}</a></li>
+                <button type="button" class="btn btn-primary pull-right" data-animation="am-fade-and-slide-top" bs-modal="modal">新增</button>
                 <div class="col-sm-3 pull-right">
                     <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">
@@ -78,8 +60,8 @@
                             <td>{{notice.title}}</td>
                             <td>{{notice.content}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info" ng-click="showModal(notice._id)">查看</button>
-                                <button type="button" class="btn btn-sm btn-danger">删除</button>
+                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail(notice._id)">查看</button>
+                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItem(notice._id)">删除</button>
                             </td>
                         </tr>
                     </tbody>
