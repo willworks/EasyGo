@@ -20,7 +20,7 @@ define(function(require, exports, module) {
             .then(
             	// 安全路由确认客户端已经登陆，isLogin()确认服务器端登陆
             	function(){
-            		// -------------混乱数据区-------------
+            		// -------------------------混乱数据区-------------------------
             		$rootScope.title = "ApplyList Page";
             		$scope.uname = authenticationSvc.getUserInfo().uname;
 
@@ -72,7 +72,7 @@ define(function(require, exports, module) {
                         $scope.tabInitIndex = tabIndex;
                         console.log('tab ' + $scope.tabInitIndex);
                     }
-            		// -------------混乱数据区-------------
+            		// -------------------------混乱数据区-------------------------
             		
 
             		// 页面加载请求数据

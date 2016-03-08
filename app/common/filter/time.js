@@ -12,9 +12,6 @@ define(function(require, exports, module) {
 				return '现在时间: ' + time;
 			}
 		})
-
 	}
-	
-
-
 })
+

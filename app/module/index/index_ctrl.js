@@ -10,21 +10,22 @@ define(function(require, exports, module) {
     	
         require('common/service/networkSvc');
         require('common/service/authenticationSvc');
+        //require('common/filter/filter');
+        require('common/filter/time')(app);
 
         // auth为路由改变时的登陆标记
-        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $alert) {
-
-
+        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $alert, time) {
+            
             // 服务端和客户端的双重校验
             // 每个页面加载前执行确认接口权限
             authenticationSvc.isLogin()
             .then(
             	// 安全路由确认客户端已经登陆，isLogin()确认服务器端登陆
             	function(){
-            		// -------------混乱数据区-------------
+            		// -------------------------混乱数据区-------------------------
             		$rootScope.title = "EasyGo";
             		$scope.uname = authenticationSvc.getUserInfo().uname;
-
+        
                     // 左边nav选项
                     $scope.navInitIndex = 0;
                     $scope.navs = [
@@ -73,7 +74,9 @@ define(function(require, exports, module) {
                         $scope.tabInitIndex = tabIndex;
                         console.log('tab ' + $scope.tabInitIndex);
                     }
-            		// -------------混乱数据区-------------
+
+                    console.log(1 + ' ' + time(12));
+            		// -------------------------混乱数据区-------------------------
             		
 
             		// 页面加载请求数据
