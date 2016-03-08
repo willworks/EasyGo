@@ -25,25 +25,9 @@ define(function(require, exports, module) {
             		$rootScope.title = "EasyGo";
             		$scope.uname = authenticationSvc.getUserInfo().uname;
 
-
-                    // 顶部nav选项
-                    /*
+                    // 左边nav选项
                     $scope.navInitIndex = 0;
                     $scope.navs = [
-                    	{'name' : $scope.uname,'index' : '0','param' : 'user'},
-                        {'name' : '团队管理','index' : '1','param' : 'depart'},
-                        {'name' : '申请管理','index' : '2','param' : 'apply'},
-                        {'name' : '通知管理','index' : '3','param' : 'notice'},
-                    ];
-                    $scope.clickNavBtn = function(index){
-                        $scope.navInitIndex = index;
-                        console.log('nav ' + $scope.navInitIndex);
-                    }
-                    */
-
-                    // 左边nav选项
-                    $scope.snavInitIndex = 0;
-                    $scope.snavs = [
                         {'name' : '团队管理','index' : '0','param' : 'depart'},
                         {'name' : '申请管理','index' : '1','param' : 'apply'},
                         {'name' : '通知管理','index' : '2','param' : 'notice'},
@@ -70,13 +54,16 @@ define(function(require, exports, module) {
                             {'name' : '我的部门','index' : '2','param' : 'mine'}
                         ],
                     };
-                    $scope.tabs = $scope.allTabs[$scope.snavs[$scope.snavInitIndex].param];
+                    $scope.tabs = $scope.allTabs[$scope.navs[$scope.navInitIndex].param];
 
-                    // 点击左侧snav联动tab
-                    $scope.clickSNavBtn = function(navIndex){
-                        $scope.snavInitIndex = navIndex;
+                    // 点击左侧nav联动tab
+                    $scope.clickNavBtn = function(navIndex){
+                        $scope.navInitIndex = navIndex;
                         $scope.tabInitIndex = 0;
-                        $scope.tabs = $scope.allTabs[$scope.snavs[$scope.snavInitIndex].param];
+                        console.log($scope.navs[$scope.navInitIndex].param);
+                        $scope.tabs = $scope.allTabs[$scope.navs[$scope.navInitIndex].param];
+                        $location.path("/" + $scope.navs[$scope.navInitIndex].param);
+
                     }
                     $scope.clickTabBtn = function(tabIndex){
                         $scope.tabInitIndex = tabIndex;
@@ -99,6 +86,10 @@ define(function(require, exports, module) {
             		                alert('失败了，程序猿在奋力为你解决');
             		                break;
             		            case '1':
+                                //=============================start 页面主逻辑位置=============================
+                                /*
+                                 * 页面渲染逻辑在这里，确保在请求逻辑搞定之后再开始
+                                 */
                                     $scope.notice = res.data.data;
                                     $log.log($scope.notice);
 
@@ -114,6 +105,7 @@ define(function(require, exports, module) {
                                     $scope.addItem = function(notice_id) {
                                         $modal({title: notice_id, content: notice_id, show: true}).show;
                                     };
+                                //=============================end 页面主逻辑位置=============================
             		                break;
             		            default:
             		                $scope.info = '失败了，程序猿在奋力为你解决';
