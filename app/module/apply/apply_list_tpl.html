@@ -52,13 +52,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="notice in notice">
-                            <td>{{notice._id}}</td>
-                            <td>{{notice.title}}</td>
-                            <td>{{notice.content}}</td>
+                        <tr ng-repeat="item in item">
+                            <td>{{item._id}}</td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.content}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail(notice._id)">查看</button>
-                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItem(notice._id)">删除</button>
+                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail(item._id)">查看</button>
+                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItem(item._id)">删除</button>
                             </td>
                         </tr>
                     </tbody>

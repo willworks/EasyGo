@@ -54,15 +54,19 @@ define(function(require, exports, module) {
                             {'name' : '我的部门','index' : '2','param' : 'mine'}
                         ],
                     };
-                    $scope.tabs = $scope.allTabs[$scope.navs[$scope.navInitIndex].param];
+                    // param为页面主要参数控制view
+                    $scope.param = $scope.navs[$scope.navInitIndex].param;
+                    $scope.tabs = $scope.allTabs[$scope.param];
+
 
                     // 点击左侧nav联动tab
                     $scope.clickNavBtn = function(navIndex){
                         $scope.navInitIndex = navIndex;
                         $scope.tabInitIndex = 0;
-                        console.log($scope.navs[$scope.navInitIndex].param);
-                        $scope.tabs = $scope.allTabs[$scope.navs[$scope.navInitIndex].param];
-                        $location.path("/" + $scope.navs[$scope.navInitIndex].param);
+                        // param为页面主要参数控制view
+                        $scope.param = $scope.navs[$scope.navInitIndex].param;
+                        $scope.tabs = $scope.allTabs[$scope.param];
+                        $location.path("/" + $scope.param);
 
                     }
                     $scope.clickTabBtn = function(tabIndex){
@@ -73,7 +77,7 @@ define(function(require, exports, module) {
             		
 
             		// 页面加载请求数据
-            		networkSvc.getList('notice')
+            		networkSvc.getList($scope.param)
             		.then(
             			// networkSvc.getList() resolve接口
             		    function(res){
@@ -90,20 +94,20 @@ define(function(require, exports, module) {
                                 /*
                                  * 页面渲染逻辑在这里，确保在请求逻辑搞定之后再开始
                                  */
-                                    $scope.notice = res.data.data;
-                                    $log.log($scope.notice);
+                                    $scope.item = res.data.data;
+                                    $log.log($scope.item);
 
                                     // http://mgcrea.github.io/angular-strap/
-                                    $scope.showDetail = function(notice_id) {
-                                        $modal({title: notice_id, content: notice_id, show: true}).show;
+                                    $scope.showDetail = function(item_id) {
+                                        $modal({title: item_id, content: item_id, show: true}).show;
                                     };
 
-                                    $scope.deleteItem = function(notice_id) {
-                                        $modal({title: notice_id, content: notice_id, show: true}).show;
+                                    $scope.deleteItem = function(item_id) {
+                                        $modal({title: item_id, content: item_id, show: true}).show;
                                     };
 
-                                    $scope.addItem = function(notice_id) {
-                                        $modal({title: notice_id, content: notice_id, show: true}).show;
+                                    $scope.addItem = function(item_id) {
+                                        $modal({title: item_id, content: item_id, show: true}).show;
                                     };
                                 //=============================end 页面主逻辑位置=============================
             		                break;
