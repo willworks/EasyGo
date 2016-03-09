@@ -10,11 +10,9 @@ define(function(require, exports, module) {
     	
         require('common/service/networkSvc');
         require('common/service/authenticationSvc');
-        //require('common/filter/filter');
-        require('common/filter/time')(app);
 
         // auth为路由改变时的登陆标记
-        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $alert, time) {
+        app.register.controller('indexCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $alert) {
             
             // 服务端和客户端的双重校验
             // 每个页面加载前执行确认接口权限
@@ -58,6 +56,8 @@ define(function(require, exports, module) {
                     // param为页面主要参数控制view
                     $scope.param = $scope.navs[$scope.navInitIndex].param;
                     $scope.tabs = $scope.allTabs[$scope.param];
+                    // -------------------------混乱数据区-------------------------
+
 
 
                     // 点击左侧nav联动tab
@@ -68,67 +68,66 @@ define(function(require, exports, module) {
                         $scope.param = $scope.navs[$scope.navInitIndex].param;
                         $scope.tabs = $scope.allTabs[$scope.param];
                         $location.path("/" + $scope.param);
-
+                        $scope.getList($scope.param)
                     }
+
                     $scope.clickTabBtn = function(tabIndex){
                         $scope.tabInitIndex = tabIndex;
                         console.log('tab ' + $scope.tabInitIndex);
                     }
 
-                    console.log(1 + ' ' + time(12));
-            		// -------------------------混乱数据区-------------------------
-            		
+                    $scope.getList = function(param){
+                        // 页面加载请求数据
+                        networkSvc.getList(param)
+                        .then(
+                            // networkSvc.getList() resolve接口
+                            function(res){
+                                switch(res.data.code){
+                                    case '-99':
+                                        alert('请先登录');
+                                        $location.path("/login");
+                                        break;
+                                    case '0':
+                                        alert('失败了，程序猿在奋力为你解决');
+                                        break;
+                                    case '1':
+                                    //=============================start 页面主逻辑位置=============================
+                                    /*
+                                     * 页面渲染逻辑在这里，确保在请求逻辑搞定之后再开始
+                                     */
+                                        $scope.item = res.data.data;
+                                        $log.log($scope.item);
 
-            		// 页面加载请求数据
-            		networkSvc.getList($scope.param)
-            		.then(
-            			// networkSvc.getList() resolve接口
-            		    function(res){
-            		        switch(res.data.code){
-            		            case '-99':
-            		                alert('请先登录');
-            		                $location.path("/login");
-            		                break;
-            		            case '0':
-            		                alert('失败了，程序猿在奋力为你解决');
-            		                break;
-            		            case '1':
-                                //=============================start 页面主逻辑位置=============================
-                                /*
-                                 * 页面渲染逻辑在这里，确保在请求逻辑搞定之后再开始
-                                 */
-                                    $scope.item = res.data.data;
-                                    $log.log($scope.item);
+                                        // http://mgcrea.github.io/angular-strap/
+                                        $scope.showDetail = function(item_id) {
+                                            $modal({title: item_id, content: item_id, show: true}).show;
+                                        };
 
-                                    // http://mgcrea.github.io/angular-strap/
-                                    $scope.showDetail = function(item_id) {
-                                        $modal({title: item_id, content: item_id, show: true}).show;
-                                    };
+                                        $scope.deleteItem = function(item_id) {
+                                            $modal({title: item_id, content: item_id, show: true}).show;
+                                        };
 
-                                    $scope.deleteItem = function(item_id) {
-                                        $modal({title: item_id, content: item_id, show: true}).show;
-                                    };
-
-                                    $scope.addItem = function(item_id) {
-                                        $modal({title: item_id, content: item_id, show: true}).show;
-                                    };
-                                //=============================end 页面主逻辑位置=============================
-            		                break;
-            		            default:
-            		                $scope.info = '失败了，程序猿在奋力为你解决';
-            		                break;
-            		        }
-            		    },
-            		    // networkSvc.getList() reject接口
-            		    function(err){
-                            alert('失败了，程序猿在奋力为你解决');
-            		        $log.log(err);
-            		    },
-            		    // networkSvc.getList() notify接口
-            		    function(proc){
-            		        // loading
-            		    }
-            		);
+                                        $scope.addItem = function(item_id) {
+                                            $modal({title: item_id, content: item_id, show: true}).show;
+                                        };
+                                    //=============================end 页面主逻辑位置=============================
+                                        break;
+                                    default:
+                                        $scope.info = '失败了，程序猿在奋力为你解决';
+                                        break;
+                                }
+                            },
+                            // networkSvc.getList() reject接口
+                            function(err){
+                                alert('失败了，程序猿在奋力为你解决');
+                                $log.log(err);
+                            },
+                            // networkSvc.getList() notify接口
+                            function(proc){
+                                // loading
+                            }
+                        );
+                    }
             	},
             	// 客户端以及登陆而服务器端未登录
             	function(){
@@ -136,7 +135,6 @@ define(function(require, exports, module) {
             		$location.path("/login");
             	}
             );
-
 
 			// 登出操作
 			$scope.logout = function () {

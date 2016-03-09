@@ -9,7 +9,6 @@ define(function(require, exports, module) {
     require('common/service/networkSvc');
     require('common/service/authenticationSvc');
     require('common/service/devSvc');
-    require('common/filter/filter');
 
     var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'ngAnimate', 'authenticationSvc', 'networkSvc', 'devSvc', 'mgcrea.ngStrap']);
 
