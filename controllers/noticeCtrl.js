@@ -1,6 +1,6 @@
 /*
 var xmlhttp = new XMLHttpRequest();
-var notice = "title=222&content=222&recipient_id=['5672592b4c970f202517dedb','56714c62725ef0741119966e']";
+var notice = "title=222&content=222&recipient_id=[{'userId':'5672592b4c970f202517dedb','read':false},{'userId':'56714c62725ef0741119966e','read':true}]";
 xmlhttp.open('POST','http://localhost:3000/api/v1.0/notice/add',true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(notice);
@@ -10,7 +10,7 @@ exports.index = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
     var applicant_id = req.session.user._id;
 
-    noticeModel.find({applicant_id: applicant_id},function(err, data){
+    noticeModel.find({'recipient_id':{$exists: true}},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
