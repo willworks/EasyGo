@@ -1,6 +1,6 @@
 /*
 var xmlhttp = new XMLHttpRequest();
-var notice = "title=222&content=222&recipient_id=[{'userId':'5672592b4c970f202517dedb','read':false},{'userId':'56714c62725ef0741119966e','read':true}]";
+var notice = "title=223223342&content=222&recipient_id={'userId':'5672592b4c970f202517dedb','read':false},{'userId':'56714c62725ef0741119966e','read':true}";
 xmlhttp.open('POST','http://localhost:3000/api/v1.0/notice/add',true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(notice);
@@ -43,6 +43,7 @@ exports.add = function(req, res, next) {
     var content = req.body.content;
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
+    console.log(recipient_id);
     var delete_flag = 'false';
     noticeModel.findOne({title: title},function(err, data){
         if(err){ 
@@ -63,11 +64,11 @@ exports.add = function(req, res, next) {
                 "data":""
             });
         }else{ 
+            console.log(req.body);
             noticeModel.create({ 
                 'title' : title,
                 'content' : content,
                 'applicant_id' : applicant_id,
-                'recipient_id' : recipient_id,
                 'delete_flag' : delete_flag
             },function(err,data){ 
                 if (err) {
@@ -79,6 +80,9 @@ exports.add = function(req, res, next) {
                     });
                     console.log(err);
                 } else {
+                    noticeModel.update({
+                        '$push':{'recipient_id':10} 
+                    });
                     res.send({
                         "code":"1",
                         "msg":"success",
