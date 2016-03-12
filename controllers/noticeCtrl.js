@@ -1,10 +1,11 @@
 /*
 var xmlhttp = new XMLHttpRequest();
-var notice = "title=223223342&content=222&recipient_id={'userId':'5672592b4c970f202517dedb','read':false},{'userId':'56714c62725ef0741119966e','read':true}";
+var notice = 'title=00111101211u0122i40&content=222&recipient_id={"userId":"5672592b202517dedb"},{"userId":"2517dedb"},{"userId":"5670f202517dedb"}';
 xmlhttp.open('POST','http://localhost:3000/api/v1.0/notice/add',true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(notice);
- */
+*/
+
 
 exports.index = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
@@ -43,8 +44,15 @@ exports.add = function(req, res, next) {
     var content = req.body.content;
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
-    console.log(recipient_id);
     var delete_flag = 'false';
+    console.log(recipient_id);
+
+    var recipient= recipient_id.split(",");
+    for(var i=0; i<recipient.length; i++) { 
+        recipient[i] = JSON.parse(recipient[i]);
+        console.log(recipient[i]);
+    } 
+    console.log(recipient);
     noticeModel.findOne({title: title},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
@@ -64,7 +72,6 @@ exports.add = function(req, res, next) {
                 "data":""
             });
         }else{ 
-            console.log(req.body);
             noticeModel.create({ 
                 'title' : title,
                 'content' : content,
@@ -80,14 +87,31 @@ exports.add = function(req, res, next) {
                     });
                     console.log(err);
                 } else {
-                    noticeModel.update({
-                        '$push':{'recipient_id':10} 
-                    });
-                    res.send({
-                        "code":"1",
-                        "msg":"success",
-                        "data":data
-                    });
+                    // mongooseModel.update(conditions, update, options, callback)
+                    noticeModel.update(
+                        {'_id':data._id}, 
+                        {'$push':{'recipient_id':{'$each': recipient}}},
+                        // {'$push':{'recipient_id':{'$each': [{'userId':'1111111'},{'userId':'1111112'},{'userId':'1111113'}]}}},
+                        {upsert : true},
+                        function(err, data){
+                            if (err) {
+                                // 不能更新子文档
+                                res.send({
+                                    "code":"3",
+                                    "msg":err,
+                                    "data":""
+                                });
+                                console.log(err);
+                            } else {
+                                res.send({
+                                    "code":"1",
+                                    "msg":"success",
+                                    "data":data
+                                });
+                            }
+                        }
+                    );
+
                 }
             });
         }

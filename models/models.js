@@ -1,9 +1,7 @@
 // 数据模型
-// mongodb自带_id
 
 /*
- bug tips 子文档插入==
- Cast to string failed
+ Bug tips : Sub Docs
  */
 module.exports = { 
 	user:{ 
@@ -28,21 +26,15 @@ module.exports = {
 		}],
 		delete_flag:{type:String,required:true}
 	},
+	// participant:{
+	// 	userId : {type:String,required:true},
+	// 	read : {type:String,required:true}
+	// }
 	// notice:{
 	// 	title:{type:String,required:true},
 	// 	content:{type:String,required:true},
 	// 	applicant_id:{type:String,required:true},
-	// 	recipient_id:[{
-	// 		userId : {type:String,required:true},
-	// 		read : {type:String,required:true},
-	// 	}],
+	// 	recipient_id:{type:Array,required:false},
 	// 	delete_flag:{type:String,required:true}
-	// },
-	notice:{
-		title:{type:String,required:true},
-		content:{type:String,required:true},
-		applicant_id:{type:String,required:true},
-		recipient_id:{type:Array,required:false},
-		delete_flag:{type:String,required:true}
-	}
+	// }
 };
