@@ -9,9 +9,10 @@ xmlhttp.send(notice);
 
 exports.index = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
-    var applicant_id = req.session.user._id;
+    var recipient_id = req.session.user._id;
 
-    noticeModel.find({'recipient_id':{$exists: true}},function(err, data){
+    // 查询子文档
+    noticeModel.find({'recipient_id.userId':recipient_id},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({

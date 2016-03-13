@@ -8,9 +8,10 @@ xmlhttp.send(apply);
 
 exports.index = function(req, res, next) {
     var applyModel = global.dbConn.getModel('apply');  
-    var applicant_id = req.session.user._id;
+    var recipient_id = req.session.user._id;
 
-    applyModel.find({applicant_id: applicant_id},function(err, data){
+    // 查询子文档
+    applyModel.find({'recipient_id.userId':recipient_id},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
