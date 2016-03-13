@@ -45,14 +45,15 @@ exports.add = function(req, res, next) {
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
     var delete_flag = 'false';
-    console.log(recipient_id);
 
+    // 格式化提交参数
     var recipient= recipient_id.split(",");
     for(var i=0; i<recipient.length; i++) { 
         recipient[i] = JSON.parse(recipient[i]);
-        console.log(recipient[i]);
+        recipient[i].read = "false";
     } 
-    console.log(recipient);
+
+    // 查询——创建——创建子文档
     noticeModel.findOne({title: title},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
@@ -96,12 +97,28 @@ exports.add = function(req, res, next) {
                         function(err, data){
                             if (err) {
                                 // 不能更新子文档
-                                res.send({
-                                    "code":"3",
-                                    "msg":err,
-                                    "data":""
-                                });
-                                console.log(err);
+                                noticeModel.remove(
+                                    {'_id':data._id},
+                                    function(err, data){
+                                        if(err){
+                                            // 更新不了子文档且删除失败
+                                            res.send({
+                                                "code":"1",
+                                                "msg":err,
+                                                "data":""
+                                            });
+                                            console.log(err);
+                                        } else {
+                                            // 更新不了子文档但删除成功
+                                            res.send({
+                                                "code":"3",
+                                                "msg":data,
+                                                "data":""
+                                            });
+                                            console.log(data);
+                                        }
+                                    });
+
                             } else {
                                 res.send({
                                     "code":"1",

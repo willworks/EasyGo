@@ -8,13 +8,9 @@ for(var m in models){
 };
 
 // Sub Docs
-// var participant = new mongoose.Schema({
-// 	userId : {type:String,required:true},
-// 	read : {type:String,required:true}
-// });
-
 var participant = new mongoose.Schema({
-	userId : {type:String,required:true}
+	userId : {type:String,required:true},
+	read : {type:String,required:true}
 });
 
 mongoose.model('notice',new Schema({
@@ -25,7 +21,14 @@ mongoose.model('notice',new Schema({
 	delete_flag:{type:String,required:true}
 }));
 
-// main
+mongoose.model('apply',new Schema({
+	title:{type:String,required:true},
+	content:{type:String,required:true},
+	applicant_id:{type:String,required:true},
+	recipient_id:[participant],
+	delete_flag:{type:String,required:true}
+}));
+
 module.exports = { 
 	getModel: function(type){ 
 		return _getModel(type);

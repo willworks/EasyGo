@@ -106,7 +106,12 @@ define(function(require, exports, module) {
                                     };
 
                                     $scope.addItem = function(item_id) {
-                                        $modal({title: item_id, content: item_id, show: true}).show;
+                                        $modal({
+                                            scope: $scope,
+                                            title : item_id, 
+                                            content : item_id, 
+                                            animation : "am-fade-and-slide-top",
+                                        }).show;
                                     };
                                 //=============================end 页面主逻辑位置=============================
             		                break;

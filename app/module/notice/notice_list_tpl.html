@@ -29,7 +29,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ul class="nav nav-tabs" role="tablist">
                 <li ng-repeat="tab in tabs track by $index" ng-click="clickTabBtn(tab.index)" ng-class="{active:tabInitIndex == tab.index}"><a>{{tab.name}}</a></li>
-                <button type="button" class="btn btn-primary pull-right" data-animation="am-fade-and-slide-top" bs-modal="modal">新增</button>
+                <button type="button" class="btn btn-primary pull-right" ng-click="addItem('123')">新增</button>
                 <div class="col-sm-3 pull-right">
                     <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">

@@ -1,6 +1,6 @@
 /*
 var xmlhttp = new XMLHttpRequest();
-var apply = "title=222&content=222&recipient_id=['5672592b4c970f202517dedb','56714c62725ef0741119966e']";
+var apply = 'title=010101111012111u0122i40&content=222&recipient_id={"userId":"5672592b202517dedb"},{"userId":"2517dedb"},{"userId":"5670f202517dedb"}';
 xmlhttp.open('POST','http://localhost:3000/api/v1.0/apply/add',true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(apply);
@@ -44,6 +44,15 @@ exports.add = function(req, res, next) {
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
     var delete_flag = 'false';
+
+    // 格式化提交参数
+    var recipient= recipient_id.split(",");
+    for(var i=0; i<recipient.length; i++) { 
+        recipient[i] = JSON.parse(recipient[i]);
+        recipient[i].read = "false";
+    } 
+
+    // 查询——创建——创建子文档
     applyModel.findOne({title: title},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
@@ -55,7 +64,7 @@ exports.add = function(req, res, next) {
             console.log(err);
         }else if(data){ 
             // 对应title已经有数据
-            req.session.error = '申请已存在';
+            req.session.error = '通知已存在';
             // 接口返回对象 res.send();
             res.send({
                 "code":"2",
@@ -67,7 +76,6 @@ exports.add = function(req, res, next) {
                 'title' : title,
                 'content' : content,
                 'applicant_id' : applicant_id,
-                'recipient_id' : recipient_id,
                 'delete_flag' : delete_flag
             },function(err,data){ 
                 if (err) {
@@ -79,11 +87,47 @@ exports.add = function(req, res, next) {
                     });
                     console.log(err);
                 } else {
-                    res.send({
-                        "code":"1",
-                        "msg":"success",
-                        "data":data
-                    });
+                    // mongooseModel.update(conditions, update, options, callback)
+                    applyModel.update(
+                        {'_id':data._id}, 
+                        {'$push':{'recipient_id':{'$each': recipient}}},
+                        // {'$push':{'recipient_id':{'$each': [{'userId':'1111111'},{'userId':'1111112'},{'userId':'1111113'}]}}},
+                        {upsert : true},
+                        function(err, data){
+                            if (err) {
+                                // 不能更新子文档
+                                applyModel.remove(
+                                    {'_id':data._id},
+                                    function(err, data){
+                                        if(err){
+                                            // 更新不了子文档且删除失败
+                                            res.send({
+                                                "code":"1",
+                                                "msg":err,
+                                                "data":""
+                                            });
+                                            console.log(err);
+                                        } else {
+                                            // 更新不了子文档但删除成功
+                                            res.send({
+                                                "code":"3",
+                                                "msg":data,
+                                                "data":""
+                                            });
+                                            console.log(data);
+                                        }
+                                    });
+
+                            } else {
+                                res.send({
+                                    "code":"1",
+                                    "msg":"success",
+                                    "data":data
+                                });
+                            }
+                        }
+                    );
+
                 }
             });
         }
