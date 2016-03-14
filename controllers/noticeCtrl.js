@@ -48,9 +48,10 @@ exports.add = function(req, res, next) {
     var delete_flag = 'false';
 
     // 格式化提交参数
-    var recipient= recipient_id.split(",");
-    for(var i=0; i<recipient.length; i++) { 
-        recipient[i] = JSON.parse(recipient[i]);
+    var recipient = [];
+    for(var i=0; i<recipient_id.length; i++) { 
+        recipient[i] = new Object();
+        recipient[i].userId = recipient_id[i];
         recipient[i].read = "false";
     } 
 

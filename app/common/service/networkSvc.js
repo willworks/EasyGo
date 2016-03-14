@@ -46,8 +46,25 @@ define(function(require, exports, module) {
                     }
                 );
                 return deferred.promise;
-            }
+            },
 
+            addItem : function(resource, data) {
+                var deferred = $q.defer(); // 声明承诺
+                var url = 'api/v1.0/' + resource + '/add'; 
+                $http.post(url, data)
+                .then(
+                    function(res) {
+                        deferred.resolve(res);
+                    }, 
+                    function(err) {
+                        deferred.reject(err);
+                    },
+                    function(proc) {
+                        deferred.notify('processing');
+                    }
+                );
+                return deferred.promise;
+            }
         };
 
     }]);

@@ -112,6 +112,14 @@ define(function(require, exports, module) {
                                             content : item_id, 
                                             animation : "am-fade-and-slide-top",
                                         }).show;
+                                        var arr = [1,2,3];
+                                        var data = {
+                                            "title":"第一12342个",
+                                            "content":"222",
+                                            // "recipient_id":'{"userId":"5672592b202517dedb"},{"userId":"56717300477a18140923c9e9"},{"userId":"5670f202517dedb"}'
+                                            "recipient_id":arr
+                                        };
+                                        networkSvc.addItem($scope.param,data);
                                     };
                                 //=============================end 页面主逻辑位置=============================
             		                break;
