@@ -23,7 +23,7 @@ module.exports = function (app) {
     app.use(session({ 
         secret: 'secret',
         cookie:{ 
-            maxAge: 1000*60*30 // 毫秒
+            maxAge: 1000*60*60 // 毫秒
         }
     }));
 

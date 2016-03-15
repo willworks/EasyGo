@@ -94,9 +94,8 @@ exports.add = function(req, res, next) {
                     noticeModel.update(
                         {'_id':data._id}, 
                         {'$push':{'recipient_id':{'$each': recipient}}},
-                        // {'$push':{'recipient_id':{'$each': [{'userId':'1111111'},{'userId':'1111112'},{'userId':'1111113'}]}}},
                         {upsert : true},
-                        function(err, data){
+                        function(err){
                             if (err) {
                                 // 不能更新子文档
                                 noticeModel.remove(
@@ -105,7 +104,7 @@ exports.add = function(req, res, next) {
                                         if(err){
                                             // 更新不了子文档且删除失败
                                             res.send({
-                                                "code":"1",
+                                                "code":"3",
                                                 "msg":err,
                                                 "data":""
                                             });

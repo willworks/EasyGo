@@ -11,7 +11,7 @@ define(function(require, exports, module) {
         require('common/service/authenticationSvc');
 
         // auth为路由改变时的登陆标记
-        app.register.controller('noticeListCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $alert) {
+        app.register.controller('noticeListCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $select, $alert) {
 
 
             // 服务端和客户端的双重校验
@@ -105,22 +105,93 @@ define(function(require, exports, module) {
                                         $modal({title: item_id, content: item_id, show: true}).show;
                                     };
 
-                                    $scope.addItem = function(item_id) {
-                                        $modal({
-                                            scope: $scope,
-                                            title : item_id, 
-                                            content : item_id, 
-                                            animation : "am-fade-and-slide-top",
-                                        }).show;
-                                        var arr = [1,2,3];
-                                        var data = {
-                                            "title":"第一12342个",
-                                            "content":"222",
-                                            // "recipient_id":'{"userId":"5672592b202517dedb"},{"userId":"56717300477a18140923c9e9"},{"userId":"5670f202517dedb"}'
-                                            "recipient_id":arr
-                                        };
-                                        networkSvc.addItem($scope.param,data);
+                                    $scope.dialog = {
+                                    	scope: $scope,
+                                    	title : ' ', 
+                                    	content : ' ', 
+                                    	recipient : "['5672592b4c970f202517dedb','5672592b4c970f202517dedb','5672592b4c970f202517dedb']",
+                                    	animation : "am-fade-and-slide-top",
+                                    	template : "common/directive/dialog.html"
                                     };
+
+                                    $scope.addItem = function(item_id) {
+                                        $modal($scope.dialog).show;
+                                    };
+
+                                    $scope.uploadItem = function (modal) {
+                                    	var data = {
+                                    	    "title":$scope.dialog.title,
+                                    	    "content":$scope.dialog.content,
+                                    	    "recipient_id":['5672592b4c970f202517dedb','5672592b4c970f202517dedb','5672592b4c970f202517dedb']
+                                    	};
+
+                                    	networkSvc.addItem($scope.param,data)
+                                    	.then(
+                        					// networkSvc.addItem() resolve接口
+                        				    function(res){
+                        				        switch(res.data.code){
+                        				            case '-99':
+                        				                alert('请先登录');
+                        				                $location.path("/login");
+                        				                break;
+                        				            case '1':
+                        				            	modal.$hide();
+                        				            	networkSvc.getList($scope.param)
+                        				            	.then(
+                        				            	    // networkSvc.getList() resolve接口
+                        				            	    function(res){
+                        				            	        switch(res.data.code){
+                        				            	            case '-99':
+                        				            	                alert('请先登录');
+                        				            	                $location.path("/login");
+                        				            	                break;
+                        				            	            case '0':
+                        				            	                alert('失败了，程序猿在奋力为你解决');
+                        				            	                break;
+                        				            	            case '1':
+                        				            	                $scope.item = res.data.data;
+                        				            	                break;
+                        				            	            default:
+                        				            	                alert('失败了，程序猿在奋力为你解决');
+                        				            	                break;
+                        				            	        }
+                        				            	    },
+                        				            	    // networkSvc.getList() reject接口
+                        				            	    function(err){
+                        				            	        alert('失败了，程序猿在奋力为你解决');
+                        				            	        $log.log(err);
+                        				            	    },
+                        				            	    // networkSvc.getList() notify接口
+                        				            	    function(proc){
+                        				            	        // loading
+                        				            	    }
+                        				            	);
+
+                        				            	// 将最新插入的数据插入到repeat数组里动态改变
+                        				            	// $scope.item.push(res.data.data);
+                        				                break;
+                        				            case '2':
+                        				            	alert('标题已经存在');
+                        				                break;
+                        				            case '3':
+                        				            	alert('数据插入失败');
+                        				                break;
+                        				            default:
+                        				                alert('失败了，程序猿在奋力为你解决');
+                        				                break;
+                        				        }
+                        				    },
+                        				    // networkSvc.addItem() reject接口
+                        				    function(err){
+                        		                alert('失败了，程序猿在奋力为你解决');
+                        				        $log.log(err);
+                        				    },
+                        				    // networkSvc.addItem() notify接口
+                        				    function(proc){
+                        				        // loading
+                        				    }
+                                    	);
+                                    }
                                 //=============================end 页面主逻辑位置=============================
             		                break;
             		            default:
