@@ -101,10 +101,6 @@ define(function(require, exports, module) {
                                         $modal({title: item_id, content: item_id, show: true}).show;
                                     };
 
-                                    $scope.deleteItem = function(item_id) {
-                                        $modal({title: item_id, content: item_id, show: true}).show;
-                                    };
-
                                     $scope.dialog = {
                                     	scope: $scope,
                                     	title : ' ', 
@@ -114,10 +110,12 @@ define(function(require, exports, module) {
                                     	template : "common/directive/dialog.html"
                                     };
 
+                                    // 弹出新增页面
                                     $scope.addItem = function(item_id) {
                                         $modal($scope.dialog).show;
                                     };
 
+                                    // 新增内容
                                     $scope.uploadItem = function (modal) {
                                     	var data = {
                                     	    "title":$scope.dialog.title,
@@ -190,6 +188,46 @@ define(function(require, exports, module) {
                         				    function(proc){
                         				        // loading
                         				    }
+                                    	);
+                                    }
+
+                                    $scope.deleteItem = function (index, item_id) {
+                                    	// console.log(index);
+                                    	// console.log(item_id);
+                                    	$modal({
+                                    		scope: $scope,
+                                    		title : '删除', 
+                                    		content : '删除', 
+                                			template : "common/directive/comfirm.html"
+                                		}).show;
+
+                                    	networkSvc.deleteItem($scope.param, item_id)
+                                    	.then(
+                			    			// networkSvc.deleteItem() resolve接口
+                			    		    function(res){
+                			    		        switch(res.data.code){
+                			    		        	case '-99':
+                			    		        	    alert('请先登录');
+                			    		        	    $location.path("/login");
+                			    		        	    break;
+                			    		            case '1':
+                			    		                // 删除数组实时更改
+                			    		            	$scope.item.splice(index,1);
+                			    		                break;
+                			    		            default:
+                				    		            alert('失败了，程序猿在奋力为你解决');
+                				    		            break;
+                			    		        }
+                			    		    },
+                			    		    // networkSvc.deleteItem() reject接口
+                			    		    function(err){
+                		                        alert('失败了，程序猿在奋力为你解决');
+                			    		        $log.log(err);
+                			    		    },
+                			    		    // networkSvc.deleteItem() notify接口
+                			    		    function(proc){
+                			    		        // loading
+                			    		    }
                                     	);
                                     }
                                 //=============================end 页面主逻辑位置=============================

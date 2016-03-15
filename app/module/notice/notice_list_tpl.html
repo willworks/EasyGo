@@ -52,13 +52,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in item">
+                        <tr ng-repeat="item in item track by $index">
                             <td>{{item._id}}</td>
                             <td>{{item.title}}</td>
                             <td>{{item.content}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail(item._id)">查看</button>
-                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItem(item._id)">删除</button>
+                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail($index, item._id)">查看</button>
+                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItem($index, item._id)">删除</button>
                             </td>
                         </tr>
                     </tbody>
