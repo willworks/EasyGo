@@ -6,3 +6,57 @@
 .nav-tabs {
 	margin-top: 12px;
 }
+
+.comfirm {
+	position: absolute;
+    z-index: 9991;
+    top: 40%;
+    width: 100%;
+}
+
+.comfirm .comfirm-title {
+	width: 300px;
+	margin: 0 auto;
+	background-color: #428BCA;
+
+}
+.comfirm .comfirm-content {
+	width: 300px;
+	margin: 0 auto;
+	background-color: #FFF;
+
+}
+.comfirm .comfirm-text {
+	font: 16px/100px Microsoft Yahei; 
+	text-align: center;
+}
+.comfirm .comfirm-button {
+	width: 300px;
+	margin: 0 auto;
+	background-color: #428BCA;
+	text-align: right;
+
+}
+.comfirm .comfirm-cancel {
+	color: #FFF;
+
+}
+.comfirm .comfirm-certain {
+	color: #a94442;
+
+}
+.comfirm .comfirm-close {
+	position: relative;
+	left: 200px;
+	color: #FFF;
+}
+
+.comfirm-mark {
+	width: 100%; 
+	height: 100%; 
+	position: fixed; 
+	left: 0; 
+	top: 0; 
+	background-color: rgba(0,0,0,0.5); 
+	z-index: 9990
+}

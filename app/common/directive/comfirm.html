@@ -1,15 +1,14 @@
-<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" ng-show="title">
-                <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" ng-bind="title"></h4>
-            </div>
-                <div class="modal-body" ng-bind="content">345345</div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
-                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
-            </div>
-        </div>
+<div class="comfirm" ng-show="popupOpen">
+    <div class="comfirm-title">
+        {{title ? title : '提示信息'}}
+        <a class="comfirm-close" href="javascript:void(0)" ng-click="cancle()">X</a>
+    </div>
+    <div class="comfirm-content">
+        <p class="comfirm-text">{{content}}</p>
+    </div>
+    <div class="comfirm-button">
+        <a class="comfirm-cancel" href="javascript:void(0)" ng-click="cancle()">取消</a>
+        <a class="comfirm-certain" href="javascript:void(0)" ng-click="certain()">确定</a>
     </div>
 </div>
+<div class="comfirm-mark" ng-show="popupOpen" ng-click="cancle()"></div>

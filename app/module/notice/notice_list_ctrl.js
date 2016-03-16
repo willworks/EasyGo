@@ -9,8 +9,6 @@ define(function(require, exports, module) {
     	
         require('common/service/networkSvc');
         require('common/service/authenticationSvc');
-        //require('common/directive/popup')(app);
-        require('common/directive/test');
 
         // auth为路由改变时的登陆标记
         app.register.controller('noticeListCtrl', function($scope, $http, $rootScope, networkSvc, $location, auth, authenticationSvc, $log, $modal, $select, $alert) {
