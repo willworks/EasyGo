@@ -6,13 +6,44 @@ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(notice);
 */
 
-
-exports.index = function(req, res, next) {
+exports.tome = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
     var recipient_id = req.session.user._id;
 
     // 查询子文档
     noticeModel.find({'recipient_id.userId':recipient_id},function(err, data){
+        if(err){ 
+            // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
+            console.log(err);
+        }else if(!data){
+            req.session.error = '通知不存在';
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
+        }else{ 
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":data
+            });
+        }
+    });
+};
+
+
+exports.fromme = function(req, res, next) {
+    var noticeModel = global.dbConn.getModel('notice');  
+    var applicant_id = req.session.user._id;
+
+    // 查询子文档
+    noticeModel.find({'applicant_id':applicant_id},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -138,7 +169,7 @@ exports.add = function(req, res, next) {
 };
 
 
-exports.list = function(req, res, next) {
+exports.detail = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
     var id = req.params.id;
 

@@ -8,7 +8,7 @@
 }
 
 .confirm {
-	position: absolute;
+	position: fixed;
 	height: 230px;
     z-index: 9991;
     top: 40%;

@@ -12,9 +12,9 @@ define(function(require, exports, module) {
         return {
             // getList & getDeatil 一般返回res.code有-99 0和1，这里处理-99和1，其余算为default
 
-            getList : function(resource) {
+            getList : function(resource, type) {
                 var deferred = $q.defer(); // 声明承诺
-                var url = 'api/v1.0/' + resource;
+                var url = 'api/v1.0/' + resource + '/' + type;
                 $http.get(url)
                 .then(
                     function(res) {

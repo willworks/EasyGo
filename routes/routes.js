@@ -43,9 +43,10 @@ module.exports = function (app) {
     app.delete('/api/v1.0/apply/:id/delete', applyCtrl.delete);
 
     // 通知接口
-    app.get('/api/v1.0/notice', noticeCtrl.index);
+    app.get('/api/v1.0/notice/fromme', noticeCtrl.fromme);
+    app.get('/api/v1.0/notice/tome', noticeCtrl.tome);
     app.post('/api/v1.0/notice/add', noticeCtrl.add);
-    app.get('/api/v1.0/notice/:id', noticeCtrl.list);
+    app.get('/api/v1.0/notice/:id', noticeCtrl.detail);
     app.put('/api/v1.0/notice/:id/edit', noticeCtrl.edit);
     app.delete('/api/v1.0/notice/:id/delete', noticeCtrl.delete);
     app.delete('/api/v1.0/notice/:id/read', noticeCtrl.read);
