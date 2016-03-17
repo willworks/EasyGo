@@ -235,3 +235,37 @@ exports.delete = function(req, res, next) {
         }
     });
 };
+
+
+exports.read = function(req, res, next) {
+    var noticeModel = global.dbConn.getModel('notice'); 
+    var recipient_id = req.session.user._id;
+    //var recipient_id = "5672592b4c970f202517dedb";
+    var id = req.params.id;
+    var delete_flag = 'true';
+
+    noticeModel.findOneAndUpdate({"_id": id,"recipient_id.userId":recipient_id}, {$set: { "recipient_id.$.read" : delete_flag }}, {new: false}, function(err, data){
+        if(err){ 
+            // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
+            console.log(err);
+        }else if(!data){
+            req.session.error = '申请不存在';
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
+        }else{ 
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":data
+            });
+        }
+    });
+};

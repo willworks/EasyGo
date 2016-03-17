@@ -48,6 +48,7 @@ module.exports = function (app) {
     app.get('/api/v1.0/notice/:id', noticeCtrl.list);
     app.put('/api/v1.0/notice/:id/edit', noticeCtrl.edit);
     app.delete('/api/v1.0/notice/:id/delete', noticeCtrl.delete);
+    app.delete('/api/v1.0/notice/:id/read', noticeCtrl.read);
 
     // ==============================================
 

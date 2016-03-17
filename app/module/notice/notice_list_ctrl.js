@@ -68,10 +68,6 @@ define(function(require, exports, module) {
                         $location.path("/" + $scope.param);
 
                     }
-                    $scope.clickTabBtn = function(tabIndex){
-                        $scope.tabInitIndex = tabIndex;
-                        console.log('tab ' + $scope.tabInitIndex);
-                    }
             		// -------------------------混乱数据区-------------------------
             		
 
@@ -93,6 +89,38 @@ define(function(require, exports, module) {
             		            /*
             		             * 页面渲染逻辑在这里，确保在请求逻辑搞定之后再开始
             		             */
+
+            		            	switch($scope.tabInitIndex){
+            		            		case 0:
+            		            			console.log(1);
+            		            			break;
+            		            		case 1:
+            		            			console.log(2);
+            		            			break;
+            		            		case 2:
+            		            			console.log(3);
+            		            			break;
+            		            		default:
+            		            			console.log(123);
+            		            			break;
+            		            	}
+									$scope.clickTabBtn = function(tabIndex){
+										$scope.tabInitIndex = tabIndex;
+										switch($scope.tabInitIndex){
+											case '0':
+												console.log(1);
+												break;
+											case '1':
+												console.log(2);
+												break;
+											case '2':
+												console.log(3);
+												break;
+											default:
+												console.log(123);
+												break;
+										}
+									}
                                     $scope.item = res.data.data;
                                     $log.log($scope.item);
 
@@ -102,7 +130,7 @@ define(function(require, exports, module) {
                                     	scope: $scope,
                                     	title : ' ', 
                                     	content : ' ', 
-                                    	recipient : "['5672592b4c970f202517dedb','5672592b4c970f202517dedb','5672592b4c970f202517dedb']",
+                                    	recipient : "['5672592b4c970f202517dedb','1','2']",
                                     	animation : "am-fade-and-slide-top",
                                     	template : "common/directive/dialog.html"
                                     };
@@ -117,7 +145,7 @@ define(function(require, exports, module) {
                                     	var data = {
                                     	    "title":$scope.dialog.title,
                                     	    "content":$scope.dialog.content,
-                                    	    "recipient_id":['5672592b4c970f202517dedb','5672592b4c970f202517dedb','5672592b4c970f202517dedb']
+                                    	    "recipient_id":['5672592b4c970f202517dedb','1','2']
                                     	};
 
                                     	networkSvc.addItem($scope.param,data)
