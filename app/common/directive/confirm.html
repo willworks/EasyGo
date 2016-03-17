@@ -1,0 +1,13 @@
+<div class="confirm" ng-show="confirmOpen">
+    <div class="confirm-title">
+        {{title ? title : '提示信息'}}
+    </div>
+    <div class="confirm-content">
+        <p class="confirm-text">{{content}}</p>
+    </div>
+    <div class="confirm-button">
+        <a class="confirm-cancel" href="javascript:void(0)" ng-click="cancle()">取消</a>
+        <a class="confirm-certain" href="javascript:void(0)" ng-click="certain()">确定</a>
+    </div>
+</div>
+<div class="confirm-mark" ng-show="confirmOpen" ng-click="cancle()"></div>

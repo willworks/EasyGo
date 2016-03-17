@@ -97,10 +97,6 @@ define(function(require, exports, module) {
                                     $log.log($scope.item);
 
                                     // http://mgcrea.github.io/angular-strap/
-                                    $scope.showDetail = function(item_id) {
-                                        // $modal({title: item_id, content: item_id, show: true}).show;
-                                        $scope.popDelOpen = true;
-                                    };
 
                                     $scope.dialog = {
                                     	scope: $scope,
@@ -112,12 +108,12 @@ define(function(require, exports, module) {
                                     };
 
                                     // 弹出新增页面
-                                    $scope.addItem = function(item_id) {
+                                    $scope.addItemPanel = function() {
                                         $modal($scope.dialog).show;
                                     };
 
                                     // 新增内容
-                                    $scope.uploadItem = function (modal) {
+                                    $scope.addItem = function (modal) {
                                     	var data = {
                                     	    "title":$scope.dialog.title,
                                     	    "content":$scope.dialog.content,
@@ -192,17 +188,20 @@ define(function(require, exports, module) {
                                     	);
                                     }
 
-                                    $scope.deleteItem = function (index, item_id) {
-                                    	// console.log(index);
-                                    	// console.log(item_id);
-                                    	$modal({
-                                    		scope: $scope,
-                                    		title : '删除', 
-                                    		content : '删除', 
-                                			template : "common/directive/comfirm.html"
-                                		}).show;
+                                    $scope.showDetail = function(item_id) {
+                                    	alert('开发中');
+                                    };
 
-                                    	networkSvc.deleteItem($scope.param, item_id)
+                                    $scope.deleteItemPanel = function (index, item_id) {
+                                    	$scope.confirm = true;
+                                    	$scope.data = {
+                                    		'index' : index,
+                                    		'item' : item_id
+                                    	}
+                                    }
+
+                                    $scope.deleteItem = function () {
+                                    	networkSvc.deleteItem($scope.param, $scope.data.item)
                                     	.then(
                 			    			// networkSvc.deleteItem() resolve接口
                 			    		    function(res){
@@ -213,7 +212,8 @@ define(function(require, exports, module) {
                 			    		        	    break;
                 			    		            case '1':
                 			    		                // 删除数组实时更改
-                			    		            	$scope.item.splice(index,1);
+                			    		            	$scope.item.splice($scope.data.index,1);
+                			    		            	$scope.confirm = false;
                 			    		                break;
                 			    		            default:
                 				    		            alert('失败了，程序猿在奋力为你解决');
@@ -231,6 +231,7 @@ define(function(require, exports, module) {
                 			    		    }
                                     	);
                                     }
+
                                 //=============================end 页面主逻辑位置=============================
             		                break;
             		            default:

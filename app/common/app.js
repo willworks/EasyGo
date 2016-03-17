@@ -9,9 +9,9 @@ define(function(require, exports, module) {
     require('common/service/networkSvc');
     require('common/service/authenticationSvc');
     require('common/service/devSvc');
-    require('common/directive/comfirm');
+    require('common/directive/confirm');
 
-    var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'ngAnimate', 'authenticationSvc', 'networkSvc', 'devSvc', 'mgcrea.ngStrap', 'comfirm']);
+    var app = angular.module('app', ['ngRoute', 'angular-lazyload', 'ngAnimate', 'authenticationSvc', 'networkSvc', 'devSvc', 'mgcrea.ngStrap', 'confirm']);
 
     //注册路由
     //resolve用于客户端的校验，而authenticationSvc.islogin()用于确认服务端的校验情况

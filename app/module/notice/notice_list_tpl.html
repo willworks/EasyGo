@@ -29,7 +29,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ul class="nav nav-tabs" role="tablist">
                 <li ng-repeat="tab in tabs track by $index" ng-click="clickTabBtn(tab.index)" ng-class="{active:tabInitIndex == tab.index}"><a>{{tab.name}}</a></li>
-                <button type="button" class="btn btn-primary pull-right" ng-click="addItem('123123123')">新增</button>
+                <button type="button" class="btn btn-primary pull-right" ng-click="addItemPanel()">新增</button>
                 <div class="col-sm-3 pull-right">
                     <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">
@@ -57,8 +57,8 @@
                             <td>{{item.title}}</td>
                             <td>{{item.content}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail($index, item._id)">查看</button>
-                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItem($index, item._id)">删除</button>
+                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail()">查看</button>
+                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItemPanel($index, item._id)">删除</button>
                             </td>
                         </tr>
                     </tbody>
@@ -67,5 +67,5 @@
         </div>
     </div>
 </div>
-<!-- comfirm弹窗 -->
-<div comfirm popup-content="确定要删除？" popup-open="popDelOpen" popup-save="delete"></div>
+<!-- confirm弹窗 -->
+<div confirm confirm-content="确定要删除？" confirm-open="confirm" confirm-result="deleteItem"></div>
