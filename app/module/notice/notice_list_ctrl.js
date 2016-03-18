@@ -66,8 +66,10 @@ define(function(require, exports, module) {
                         $scope.param = $scope.navs[$scope.navInitIndex].param;
                         $scope.tabs = $scope.allTabs[$scope.param];
                         $location.path("/" + $scope.param);
-
                     }
+
+                    $scope.selectedIcons = [];
+                    $scope.icons = [{"value":"Gear"},{"value":"Globe"},{"value":"Heart"},{"value":"Camera"}];
             		// -------------------------混乱数据区-------------------------
             		
 

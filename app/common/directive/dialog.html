@@ -13,8 +13,12 @@
 
 				<h4>内容</h4>
 				<input type="textarea" ng-model="dialog.content" class="form-control"/>
-			</div>
 
+				<button type="button" class="btn btn-default" ng-model="selectedIcons" data-multiple="1" bs-options="icon.value for icon in icons" bs-select>
+				  Action <span class="caret"></span>
+				</button>
+
+			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" ng-click="$hide()">关闭</button> 
 				<button type="button" class="btn btn-primary" ng-click="addItem(this)">新建</button>

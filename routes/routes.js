@@ -36,11 +36,13 @@ module.exports = function (app) {
     app.delete('/api/v1.0/depart/:id/delete', departCtrl.delete);
 
     // 申请接口
-    app.get('/api/v1.0/apply', applyCtrl.index);
+    app.get('/api/v1.0/apply/fromme', applyCtrl.fromme);
+    app.get('/api/v1.0/apply/tome', applyCtrl.tome);
     app.post('/api/v1.0/apply/add', applyCtrl.add);
-    app.get('/api/v1.0/apply/:id', applyCtrl.list);
+    app.get('/api/v1.0/apply/:id', applyCtrl.detail);
     app.put('/api/v1.0/apply/:id/edit', applyCtrl.edit);
     app.delete('/api/v1.0/apply/:id/delete', applyCtrl.delete);
+    app.delete('/api/v1.0/apply/:id/read', applyCtrl.read);
 
     // 通知接口
     app.get('/api/v1.0/notice/fromme', noticeCtrl.fromme);

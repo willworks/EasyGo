@@ -1,17 +1,49 @@
 /*
 var xmlhttp = new XMLHttpRequest();
-var apply = 'title=010101111012111u0122i40&content=222&recipient_id={"userId":"5672592b202517dedb"},{"userId":"2517dedb"},{"userId":"5670f202517dedb"}';
+var apply = 'title=00111101211u0122i40&content=222&recipient_id={"userId":"5672592b202517dedb"},{"userId":"2517dedb"},{"userId":"5670f202517dedb"}';
 xmlhttp.open('POST','http://localhost:3000/api/v1.0/apply/add',true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(apply);
- */
+*/
 
-exports.index = function(req, res, next) {
+exports.tome = function(req, res, next) {
     var applyModel = global.dbConn.getModel('apply');  
     var recipient_id = req.session.user._id;
 
     // 查询子文档
     applyModel.find({'recipient_id.userId':recipient_id},function(err, data){
+        if(err){ 
+            // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
+            console.log(err);
+        }else if(!data){
+            req.session.error = '申请不存在';
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
+        }else{ 
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":data
+            });
+        }
+    });
+};
+
+
+exports.fromme = function(req, res, next) {
+    var applyModel = global.dbConn.getModel('apply');  
+    var applicant_id = req.session.user._id;
+
+    // 查询子文档
+    applyModel.find({'applicant_id':applicant_id},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -47,9 +79,10 @@ exports.add = function(req, res, next) {
     var delete_flag = 'false';
 
     // 格式化提交参数
-    var recipient= recipient_id.split(",");
-    for(var i=0; i<recipient.length; i++) { 
-        recipient[i] = JSON.parse(recipient[i]);
+    var recipient = [];
+    for(var i=0; i<recipient_id.length; i++) { 
+        recipient[i] = new Object();
+        recipient[i].userId = recipient_id[i];
         recipient[i].read = "false";
     } 
 
@@ -65,7 +98,7 @@ exports.add = function(req, res, next) {
             console.log(err);
         }else if(data){ 
             // 对应title已经有数据
-            req.session.error = '通知已存在';
+            req.session.error = '申请已存在';
             // 接口返回对象 res.send();
             res.send({
                 "code":"2",
@@ -92,9 +125,8 @@ exports.add = function(req, res, next) {
                     applyModel.update(
                         {'_id':data._id}, 
                         {'$push':{'recipient_id':{'$each': recipient}}},
-                        // {'$push':{'recipient_id':{'$each': [{'userId':'1111111'},{'userId':'1111112'},{'userId':'1111113'}]}}},
                         {upsert : true},
-                        function(err, data){
+                        function(err){
                             if (err) {
                                 // 不能更新子文档
                                 applyModel.remove(
@@ -103,7 +135,7 @@ exports.add = function(req, res, next) {
                                         if(err){
                                             // 更新不了子文档且删除失败
                                             res.send({
-                                                "code":"1",
+                                                "code":"3",
                                                 "msg":err,
                                                 "data":""
                                             });
@@ -137,9 +169,8 @@ exports.add = function(req, res, next) {
 };
 
 
-exports.list = function(req, res, next) {
-    var applyModel = global.dbConn.getModel('apply'); 
-    // console.log(req.params.id);
+exports.detail = function(req, res, next) {
+    var applyModel = global.dbConn.getModel('apply');  
     var id = req.params.id;
 
     applyModel.findOne({"_id": id},function(err, data){
@@ -210,7 +241,41 @@ exports.delete = function(req, res, next) {
     var id = req.params.id;
     var delete_flag = 'true';
 
-    applyModel.findOneAndUpdate({"_id": id}, {"delete_flag": delete_flag}, {new: true}, function(err, data){
+    applyModel.findOneAndUpdate({"_id": id}, {"delete_flag": delete_flag}, {new: false}, function(err, data){
+        if(err){ 
+            // 接口返回对象 res.send();
+            res.send({
+                "code":"0",
+                "msg":err,
+                "data":""
+            });
+            console.log(err);
+        }else if(!data){
+            req.session.error = '申请不存在';
+            res.send({
+                "code":"-2",
+                "msg":"Not Found",
+                "data":""
+            });
+        }else{ 
+            res.send({
+                "code":"1",
+                "msg":"success",
+                "data":data
+            });
+        }
+    });
+};
+
+
+exports.read = function(req, res, next) {
+    var applyModel = global.dbConn.getModel('apply'); 
+    var recipient_id = req.session.user._id;
+    //var recipient_id = "5672592b4c970f202517dedb";
+    var id = req.params.id;
+    var delete_flag = 'true';
+
+    applyModel.findOneAndUpdate({"_id": id,"recipient_id.userId":recipient_id}, {$set: { "recipient_id.$.read" : delete_flag }}, {new: false}, function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({

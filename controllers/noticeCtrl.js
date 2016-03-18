@@ -251,7 +251,7 @@ exports.delete = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",
@@ -285,7 +285,7 @@ exports.read = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",
