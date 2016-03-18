@@ -6,6 +6,8 @@ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(apply);
 */
 
+//db.find({ name: { $in: ['jhon', 'eric']}})
+
 exports.tome = function(req, res, next) {
     var applyModel = global.dbConn.getModel('apply');  
     var recipient_id = req.session.user._id;
