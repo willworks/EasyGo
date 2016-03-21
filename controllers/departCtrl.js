@@ -1,8 +1,8 @@
 /// <reference path="../typings/node/node.d.ts"/>
 /*
 var xmlhttp = new XMLHttpRequest();
-var depart = "departd=['5672592b4c970f202517dedb','56714c62725ef0741119966e']";
-xmlhttp.open('POST','http://localhost:3000/api/v1.0/depart',true);
+var depart = "name=21212&leader_id=222&depart_upper_id=333";
+xmlhttp.open('POST','http://localhost:3000/api/v1.0/depart/add',true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(depart);
  */

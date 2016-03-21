@@ -52,6 +52,7 @@ define(function(require, exports, module) {
                 // data为部门id数组
                 var deferred = $q.defer(); // 声明承诺
                 var url = 'api/v1.0/user';
+                console.log(data);
                 $http.post(url, data)
                 .then(
                     function(res) {

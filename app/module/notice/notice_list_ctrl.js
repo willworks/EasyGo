@@ -201,8 +201,10 @@ define(function(require, exports, module) {
                     	recipient : "['5672592b4c970f202517dedb','1','2']",
                     	animation : "am-fade-and-slide-top",
                     	template : "common/directive/dialog.html",
-                        selectedIcons : [],
-                        icons : [{"value":"Gear"},{"value":"Globe"},{"value":"Heart"},{"value":"Camera"}]
+                        selectedDeparts : [],
+                        departs : [],
+                        selectedUsers : [],
+                        users : []
                     };
 
                     // 弹出新增页面
@@ -212,11 +214,11 @@ define(function(require, exports, module) {
 
                     // 新增内容
                     $scope.addItem = function (modal) {
-                        console.log($scope.dialog.selectedIcons);
+                        console.log($scope.dialog.selectedUsers);
                     	var data = {
                     	    "title":$scope.dialog.title,
                     	    "content":$scope.dialog.content,
-                    	    "recipient_id":['5672592b4c970f202517dedb','1','2']
+                    	    "recipient_id":$scope.dialog.selectedUsers,
                     	};
 
                     	networkSvc.addItem($scope.param,data)
@@ -336,7 +338,26 @@ define(function(require, exports, module) {
                         networkSvc.getDepartList()
                         .then(
                             function (res) {
-                                $scope.dialog.icons = res.data.data;
+                                $scope.dialog.departs = res.data.data;
+                                //console.log(res.data);
+                            },
+			    		    // networkSvc.deleteItem() reject接口
+			    		    function(err){
+		                        //
+			    		    },
+			    		    // networkSvc.deleteItem() notify接口
+			    		    function(proc){
+			    		        // loading
+			    		    }
+                        );
+                    }
+                    
+                    $scope.getUserList = function (data) {
+                        console.log(data);
+                        networkSvc.getUserList(data)
+                        .then(
+                            function (res) {
+                                $scope.dialog.users = res.data.data;
                                 //console.log(res.data);
                             },
 			    		    // networkSvc.deleteItem() reject接口

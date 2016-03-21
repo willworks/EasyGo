@@ -78,7 +78,7 @@ exports.add = function(req, res, next) {
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
     var delete_flag = 'false';
-
+    console.log(recipient_id);
     // 格式化提交参数
     var recipient = [];
     for(var i=0; i<recipient_id.length; i++) { 

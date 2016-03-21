@@ -11,8 +11,9 @@ xmlhttp.send(user);
 exports.list = function(req, res, next) {
     var userModel = global.dbConn.getModel('user');  
     var depart_id = req.body.depart_id;
-
-    userModel.find({depart_id: depart_id},function(err, data){
+    console.log(depart_id);
+    //db.find({ name: { $in: ['jhon', 'eric']}})
+    userModel.find({depart_id: {$in: depart_id}},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
