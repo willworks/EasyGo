@@ -14,7 +14,7 @@
 				<h4>内容</h4>
 				<input type="textarea" ng-model="dialog.content" class="form-control"/>
 
-				<button type="button" class="btn btn-default" ng-model="selectedIcons" data-multiple="1" bs-options="icon.value for icon in icons" bs-select>
+				<button type="button" class="btn btn-default" ng-model="dialog.selectedIcons" ng-click="getDepartList()" data-multiple="1" bs-options="icon._id as icon._id for icon in dialog.icons" bs-select>
 				  Action <span class="caret"></span>
 				</button>
 

@@ -1,16 +1,16 @@
+/// <reference path="../typings/node/node.d.ts"/>
 /*
 var xmlhttp = new XMLHttpRequest();
-var depart = "title=222&content=222&recipient_id=['5672592b4c970f202517dedb','56714c62725ef0741119966e']";
-xmlhttp.open('POST','http://localhost:3000/api/v1.0/depart/add',true);
+var depart = "departd=['5672592b4c970f202517dedb','56714c62725ef0741119966e']";
+xmlhttp.open('POST','http://localhost:3000/api/v1.0/depart',true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(depart);
  */
 
-exports.index = function(req, res, next) {
+exports.list = function(req, res, next) {
     var departModel = global.dbConn.getModel('depart');  
-    var recipient_id = req.session.user._id;
-
-    departModel.find({recipient_id: recipient_id},function(err, data){
+    // 罗列所有部门
+    departModel.find({},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -88,7 +88,7 @@ exports.add = function(req, res, next) {
 };
 
 
-exports.list = function(req, res, next) {
+exports.detail = function(req, res, next) {
     var departModel = global.dbConn.getModel('depart');  
     var id = req.params.id;
 

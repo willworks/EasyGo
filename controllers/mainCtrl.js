@@ -1,3 +1,4 @@
+/// <reference path="../typings/node/node.d.ts"/>
 /*
  * 在用户登录成功之后，系统会把用户信息写进req.session，而后期单用户实例每次req，都会传递req.session
  * 后期操作通过req.session来检测登陆状态，根据session内容返回对应用户请求数据

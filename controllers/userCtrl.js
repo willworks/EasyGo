@@ -1,3 +1,4 @@
+/// <reference path="../typings/node/node.d.ts"/>
 /*
 var xmlhttp = new XMLHttpRequest();
 var user = "name=123456&password=123456&depart_id=1";
@@ -7,7 +8,7 @@ xmlhttp.send(user);
  */
 
 // 查询某个部门下的全部员工
-exports.index = function(req, res, next) {
+exports.list = function(req, res, next) {
     var userModel = global.dbConn.getModel('user');  
     var depart_id = req.body.depart_id;
 
@@ -89,7 +90,7 @@ exports.add = function(req, res, next) {
 };
 
 
-exports.list = function(req, res, next) {
+exports.detail = function(req, res, next) {
     var userModel = global.dbConn.getModel('user');  
     var id = req.params.id;
 

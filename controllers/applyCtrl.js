@@ -1,3 +1,4 @@
+/// <reference path="../typings/node/node.d.ts"/>
 /*
 var xmlhttp = new XMLHttpRequest();
 var apply = 'title=00111101211u0122i40&content=222&recipient_id={"userId":"5672592b202517dedb"},{"userId":"2517dedb"},{"userId":"5670f202517dedb"}';

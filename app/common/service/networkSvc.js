@@ -29,6 +29,43 @@ define(function(require, exports, module) {
                 );
                 return deferred.promise;
             },
+            
+            getDepartList : function() {
+                var deferred = $q.defer(); // 声明承诺
+                var url = 'api/v1.0/depart';
+                $http.get(url)
+                .then(
+                    function(res) {
+                        deferred.resolve(res);
+                    }, 
+                    function(err) {
+                        deferred.reject(err);
+                    },
+                    function(proc) {
+                        deferred.notify('processing');
+                    }
+                );
+                return deferred.promise;
+            },
+            
+            getUserList : function(data) {
+                // data为部门id数组
+                var deferred = $q.defer(); // 声明承诺
+                var url = 'api/v1.0/user';
+                $http.post(url, data)
+                .then(
+                    function(res) {
+                        deferred.resolve(res);
+                    }, 
+                    function(err) {
+                        deferred.reject(err);
+                    },
+                    function(proc) {
+                        deferred.notify('processing');
+                    }
+                );
+                return deferred.promise;
+            },
 
             getDeatil : function(resource, resource_id) {
                 var deferred = $q.defer(); // 声明承诺
@@ -83,6 +120,8 @@ define(function(require, exports, module) {
                 );
                 return deferred.promise;
             }
+            
+            
         };
 
     }]);

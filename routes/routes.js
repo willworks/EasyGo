@@ -22,22 +22,25 @@ module.exports = function (app) {
 
     // 用户接口
     // 需要插入部门id
-    app.get('/api/v1.0/user', userCtrl.index);
+    app.post('/api/v1.0/user', userCtrl.list); //罗列指定部门id下的所有用户，支持批量查询
+    
     app.post('/api/v1.0/user/add', userCtrl.add);
-    app.get('/api/v1.0/user/:id', userCtrl.list);
+    app.get('/api/v1.0/user/:id', userCtrl.detail); //用户详细信息
     app.put('/api/v1.0/user/:id/edit', userCtrl.edit);
     app.delete('/api/v1.0/user/:id/delete', userCtrl.delete);
 
     // 部门接口
-    app.get('/api/v1.0/depart', departCtrl.index);
+    app.get('/api/v1.0/depart', departCtrl.list); //罗列全部部门列表
+    
     app.post('/api/v1.0/depart/add', departCtrl.add);
-    app.get('/api/v1.0/depart/:id', departCtrl.list);
+    app.get('/api/v1.0/depart/:id', departCtrl.detail); //部门详细信息
     app.put('/api/v1.0/depart/:id/edit', departCtrl.edit);
     app.delete('/api/v1.0/depart/:id/delete', departCtrl.delete);
 
     // 申请接口
     app.get('/api/v1.0/apply/fromme', applyCtrl.fromme);
     app.get('/api/v1.0/apply/tome', applyCtrl.tome);
+    
     app.post('/api/v1.0/apply/add', applyCtrl.add);
     app.get('/api/v1.0/apply/:id', applyCtrl.detail);
     app.put('/api/v1.0/apply/:id/edit', applyCtrl.edit);
@@ -47,6 +50,7 @@ module.exports = function (app) {
     // 通知接口
     app.get('/api/v1.0/notice/fromme', noticeCtrl.fromme);
     app.get('/api/v1.0/notice/tome', noticeCtrl.tome);
+    
     app.post('/api/v1.0/notice/add', noticeCtrl.add);
     app.get('/api/v1.0/notice/:id', noticeCtrl.detail);
     app.put('/api/v1.0/notice/:id/edit', noticeCtrl.edit);

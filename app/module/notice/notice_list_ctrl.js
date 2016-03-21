@@ -1,5 +1,5 @@
 'use strict';
-
+/// <reference path="typings/angular/angular.d.ts"/>
 /**
  * 定义首页控制器
  */
@@ -68,8 +68,6 @@ define(function(require, exports, module) {
                         $location.path("/" + $scope.param);
                     }
 
-                    $scope.selectedIcons = [];
-                    $scope.icons = [{"value":"Gear"},{"value":"Globe"},{"value":"Heart"},{"value":"Camera"}];
             		// -------------------------混乱数据区-------------------------
             		
 
@@ -202,7 +200,9 @@ define(function(require, exports, module) {
                     	content : ' ', 
                     	recipient : "['5672592b4c970f202517dedb','1','2']",
                     	animation : "am-fade-and-slide-top",
-                    	template : "common/directive/dialog.html"
+                    	template : "common/directive/dialog.html",
+                        selectedIcons : [],
+                        icons : [{"value":"Gear"},{"value":"Globe"},{"value":"Heart"},{"value":"Camera"}]
                     };
 
                     // 弹出新增页面
@@ -212,6 +212,7 @@ define(function(require, exports, module) {
 
                     // 新增内容
                     $scope.addItem = function (modal) {
+                        console.log($scope.dialog.selectedIcons);
                     	var data = {
                     	    "title":$scope.dialog.title,
                     	    "content":$scope.dialog.content,
@@ -328,6 +329,25 @@ define(function(require, exports, module) {
 			    		        // loading
 			    		    }
                     	);
+                    }
+                    
+                    
+                    $scope.getDepartList = function () {
+                        networkSvc.getDepartList()
+                        .then(
+                            function (res) {
+                                $scope.dialog.icons = res.data.data;
+                                //console.log(res.data);
+                            },
+			    		    // networkSvc.deleteItem() reject接口
+			    		    function(err){
+		                        //
+			    		    },
+			    		    // networkSvc.deleteItem() notify接口
+			    		    function(proc){
+			    		        // loading
+			    		    }
+                        );
                     }
                     //=============================end 页面主逻辑位置=============================
             	},
