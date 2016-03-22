@@ -14,10 +14,12 @@
 				<h4>内容</h4>
 				<input type="textarea" ng-model="dialog.content" class="form-control"/>
 
+				<h4>部门</h4>
 				<button type="button" class="btn btn-default" ng-model="dialog.selectedDeparts" ng-click="getDepartList()" data-multiple="1" bs-options="depart._id for depart in dialog.departs" bs-select>
 				  Action <span class="caret"></span>
 				</button>
                 
+                <h4>接收对象</h4>
                 <button type="button" class="btn btn-default" ng-model="dialog.selectedUsers" ng-click="getUserList(dialog.selectedDeparts)" data-multiple="1" bs-options="user._id for user in dialog.users" bs-select>
 				  Action <span class="caret"></span>
 				</button>
