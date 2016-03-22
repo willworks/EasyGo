@@ -78,15 +78,17 @@ exports.add = function(req, res, next) {
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
     var delete_flag = 'false';
-    console.log(recipient_id);
+    console.log('notice' + req.body);
     // 格式化提交参数
     var recipient = [];
     for(var i=0; i<recipient_id.length; i++) { 
         recipient[i] = new Object();
-        recipient[i].userId = recipient_id[i];
+        recipient[i].userId = recipient_id[i]._id;
         recipient[i].read = "false";
+        console.log(recipient_id[i]._id);
     } 
-
+    
+    console.log('all' + recipient);
     // 查询——创建——创建子文档
     noticeModel.findOne({title: title},function(err, data){
         if(err){ 

@@ -10,9 +10,14 @@ xmlhttp.send(user);
 // 查询某个部门下的全部员工
 exports.list = function(req, res, next) {
     var userModel = global.dbConn.getModel('user');  
-    var depart_id = req.body.depart_id;
-    console.log(depart_id);
-    //db.find({ name: { $in: ['jhon', 'eric']}})
+    var depart_id = req.body;
+    // 将对象数组格式化，这部分后期考虑放在前端，耦合度问题
+    var depart = [];
+    for(var i=0; i<depart_id.length; i++) { 
+        depart[i] = depart_id[i]._id;
+    } 
+    // console.log(depart);
+    // db.find({ name: { $in: ['jhon', 'eric']}})
     userModel.find({depart_id: {$in: depart_id}},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();

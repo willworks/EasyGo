@@ -214,13 +214,12 @@ define(function(require, exports, module) {
 
                     // 新增内容
                     $scope.addItem = function (modal) {
-                        console.log($scope.dialog.selectedUsers);
                     	var data = {
                     	    "title":$scope.dialog.title,
                     	    "content":$scope.dialog.content,
                     	    "recipient_id":$scope.dialog.selectedUsers,
                     	};
-
+                        console.log($scope.dialog);
                     	networkSvc.addItem($scope.param,data)
                     	.then(
         					// networkSvc.addItem() resolve接口
@@ -232,7 +231,7 @@ define(function(require, exports, module) {
         				                break;
         				            case '1':
         				            	modal.$hide();
-        				            	networkSvc.getList($scope.param)
+        				            	networkSvc.getList($scope.param, 'fromme')
         				            	.then(
         				            	    // networkSvc.getList() resolve接口
         				            	    function(res){
@@ -353,7 +352,6 @@ define(function(require, exports, module) {
                     }
                     
                     $scope.getUserList = function (data) {
-                        console.log(data);
                         networkSvc.getUserList(data)
                         .then(
                             function (res) {

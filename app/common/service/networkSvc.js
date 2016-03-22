@@ -14,7 +14,14 @@ define(function(require, exports, module) {
 
             getList : function(resource, type) {
                 var deferred = $q.defer(); // 声明承诺
-                var url = 'api/v1.0/' + resource + '/' + type;
+                var url;
+                // 兼容拉取列表情况
+                if(type){
+                    url = 'api/v1.0/' + resource + '/' + type;
+                }else{
+                    url = 'api/v1.0/' + resource;
+                }
+                
                 $http.get(url)
                 .then(
                     function(res) {
