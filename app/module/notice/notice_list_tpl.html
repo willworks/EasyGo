@@ -39,10 +39,7 @@
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </ul>
-            <h3>三、第三种数组过滤器：</h3><br/>
-            <ul>
-                <li ng-repeat="word in ['aa','bb','vv','mm'] | filter">{{word}}</li>
-            </ul>
+
             <!-- 数据渲染区directive -->
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -55,7 +52,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in item track by $index">
+                        <tr ng-repeat="item in item | time">
                             <td>{{item._id}}</td>
                             <td>{{item.title}}</td>
                             <td>{{item.content}}</td>
