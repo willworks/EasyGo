@@ -7,12 +7,13 @@ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(notice);
 */
 
+// query={elete_flag:'false'}在服务端筛选好数据
 exports.tome = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
     var recipient_id = req.session.user._id;
 
     // 查询子文档
-    noticeModel.find({'recipient_id.userId':recipient_id},function(err, data){
+    noticeModel.find({'recipient_id.userId':recipient_id, delete_flag:'false'},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -39,12 +40,13 @@ exports.tome = function(req, res, next) {
 };
 
 
+// query={elete_flag:'false'}在服务端筛选好数据
 exports.fromme = function(req, res, next) {
     var noticeModel = global.dbConn.getModel('notice');  
     var applicant_id = req.session.user._id;
 
     // 查询子文档
-    noticeModel.find({'applicant_id':applicant_id},function(err, data){
+    noticeModel.find({'applicant_id':applicant_id, delete_flag:'false'},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({

@@ -11,7 +11,7 @@ define(function(require, exports, module) {
         return function(items){
             angular.forEach(items,function(item, i){
                 //item = i+'、'+ item + '===';
-                console.log(item.delete_flag);
+                console.log(item.recipient_id);
                 //items[i] = item;
             });
             return items;
