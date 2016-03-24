@@ -288,8 +288,8 @@ define(function(require, exports, module) {
                     	);
                     }
 
-                    $scope.showDetail = function(item_id) {
-                    	alert('开发中');
+                    $scope.showDetail = function($index, itemId) {
+                    	alert(itemId + ' 开发中');
                     };
 
                     $scope.deleteItemPanel = function (index, item_id) {
