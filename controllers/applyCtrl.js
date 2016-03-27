@@ -7,12 +7,13 @@ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send(apply);
 */
 
+// query={elete_flag:'false'}在服务端筛选好数据
 exports.tome = function(req, res, next) {
     var applyModel = global.dbConn.getModel('apply');  
     var recipient_id = req.session.user._id;
 
     // 查询子文档
-    applyModel.find({'recipient_id.userId':recipient_id},function(err, data){
+    applyModel.find({'recipient_id.userId':recipient_id, delete_flag:'false'},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -22,7 +23,7 @@ exports.tome = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",
@@ -39,12 +40,13 @@ exports.tome = function(req, res, next) {
 };
 
 
+// query={elete_flag:'false'}在服务端筛选好数据
 exports.fromme = function(req, res, next) {
     var applyModel = global.dbConn.getModel('apply');  
     var applicant_id = req.session.user._id;
 
     // 查询子文档
-    applyModel.find({'applicant_id':applicant_id},function(err, data){
+    applyModel.find({'applicant_id':applicant_id, delete_flag:'false'},function(err, data){
         if(err){ 
             // 接口返回对象 res.send();
             res.send({
@@ -54,7 +56,7 @@ exports.fromme = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",
@@ -78,15 +80,17 @@ exports.add = function(req, res, next) {
     var applicant_id = req.session.user._id;
     var recipient_id = req.body.recipient_id;
     var delete_flag = 'false';
-
+    console.log('apply' + req.body);
     // 格式化提交参数
     var recipient = [];
     for(var i=0; i<recipient_id.length; i++) { 
         recipient[i] = new Object();
-        recipient[i].userId = recipient_id[i];
+        recipient[i].userId = recipient_id[i]._id;
         recipient[i].read = "false";
+        console.log(recipient_id[i]._id);
     } 
-
+    
+    console.log('all' + recipient);
     // 查询——创建——创建子文档
     applyModel.findOne({title: title},function(err, data){
         if(err){ 
@@ -99,7 +103,7 @@ exports.add = function(req, res, next) {
             console.log(err);
         }else if(data){ 
             // 对应title已经有数据
-            req.session.error = '申请已存在';
+            req.session.error = '通知已存在';
             // 接口返回对象 res.send();
             res.send({
                 "code":"2",
@@ -184,7 +188,7 @@ exports.detail = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",
@@ -219,7 +223,7 @@ exports.edit = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",
@@ -252,7 +256,7 @@ exports.delete = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",
@@ -286,7 +290,7 @@ exports.read = function(req, res, next) {
             });
             console.log(err);
         }else if(!data){
-            req.session.error = '申请不存在';
+            req.session.error = '通知不存在';
             res.send({
                 "code":"-2",
                 "msg":"Not Found",

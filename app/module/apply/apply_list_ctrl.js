@@ -1,5 +1,5 @@
 'use strict';
-
+/// <reference path="typings/angular/angular.d.ts"/>
 /**
  * 定义首页控制器
  */
@@ -21,7 +21,7 @@ define(function(require, exports, module) {
                 // 安全路由确认客户端已经登陆，isLogin()确认服务器端登陆
                 function(){
                     // -------------------------混乱数据区-------------------------
-                    $rootScope.title = "applyList Page";
+                    $rootScope.title = "ApplyList Page";
                     $scope.uname = authenticationSvc.getUserInfo().uname;
 
                     // 左边nav选项
@@ -68,8 +68,6 @@ define(function(require, exports, module) {
                         $location.path("/" + $scope.param);
                     }
 
-                    $scope.selectedIcons = [];
-                    $scope.icons = [{"value":"Gear"},{"value":"Globe"},{"value":"Heart"},{"value":"Camera"}];
                     // -------------------------混乱数据区-------------------------
                     
 
@@ -202,7 +200,11 @@ define(function(require, exports, module) {
                         content : ' ', 
                         recipient : "['5672592b4c970f202517dedb','1','2']",
                         animation : "am-fade-and-slide-top",
-                        template : "common/directive/dialog.html"
+                        template : "common/directive/dialog.html",
+                        selectedDeparts : [],
+                        departs : [],
+                        selectedUsers : [],
+                        users : []
                     };
 
                     // 弹出新增页面
@@ -215,9 +217,9 @@ define(function(require, exports, module) {
                         var data = {
                             "title":$scope.dialog.title,
                             "content":$scope.dialog.content,
-                            "recipient_id":['5672592b4c970f202517dedb','1','2']
+                            "recipient_id":$scope.dialog.selectedUsers,
                         };
-
+                        console.log($scope.dialog);
                         networkSvc.addItem($scope.param,data)
                         .then(
                             // networkSvc.addItem() resolve接口
@@ -229,7 +231,7 @@ define(function(require, exports, module) {
                                         break;
                                     case '1':
                                         modal.$hide();
-                                        networkSvc.getList($scope.param)
+                                        networkSvc.getList($scope.param, 'fromme')
                                         .then(
                                             // networkSvc.getList() resolve接口
                                             function(res){
@@ -286,8 +288,8 @@ define(function(require, exports, module) {
                         );
                     }
 
-                    $scope.showDetail = function(item_id) {
-                        alert('开发中');
+                    $scope.showDetail = function($index, itemId) {
+                        alert(itemId + ' 开发中');
                     };
 
                     $scope.deleteItemPanel = function (index, item_id) {
@@ -322,6 +324,43 @@ define(function(require, exports, module) {
                             function(err){
                                 alert('失败了，程序猿在奋力为你解决');
                                 $log.log(err);
+                            },
+                            // networkSvc.deleteItem() notify接口
+                            function(proc){
+                                // loading
+                            }
+                        );
+                    }
+                    
+                    
+                    $scope.getDepartList = function () {
+                        networkSvc.getDepartList()
+                        .then(
+                            function (res) {
+                                $scope.dialog.departs = res.data.data;
+                                //console.log(res.data);
+                            },
+                            // networkSvc.deleteItem() reject接口
+                            function(err){
+                                //
+                            },
+                            // networkSvc.deleteItem() notify接口
+                            function(proc){
+                                // loading
+                            }
+                        );
+                    }
+                    
+                    $scope.getUserList = function (data) {
+                        networkSvc.getUserList(data)
+                        .then(
+                            function (res) {
+                                $scope.dialog.users = res.data.data;
+                                //console.log(res.data);
+                            },
+                            // networkSvc.deleteItem() reject接口
+                            function(err){
+                                //
                             },
                             // networkSvc.deleteItem() notify接口
                             function(proc){
@@ -365,6 +404,9 @@ define(function(require, exports, module) {
                     }
                 );
             }
+
+
+            
 
         });
     }

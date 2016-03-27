@@ -39,6 +39,7 @@
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </ul>
+
             <!-- 数据渲染区directive -->
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -51,12 +52,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in item track by $index">
+                        <tr ng-repeat="item in item | filter">
                             <td>{{item._id}}</td>
                             <td>{{item.title}}</td>
                             <td>{{item.content}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail()">查看</button>
+                                <button type="button" class="btn btn-sm btn-info"  data-animation="am-fade-and-scale" data-placement="center" ng-click="showDetail($index, item._id)">查看</button>
                                 <button type="button" class="btn btn-sm btn-danger" ng-click="deleteItemPanel($index, item._id)">删除</button>
                             </td>
                         </tr>

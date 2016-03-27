@@ -85,7 +85,7 @@ define(function(require, exports, module) {
                                 switch(res.data.code){
                                     case '-99':
                                         alert('请先登录');
-                                        $location.path("/login");
+                                        //$location.path("/login");
                                         break;
                                     case '0':
                                         alert('失败了，程序猿在奋力为你解决');
@@ -132,7 +132,7 @@ define(function(require, exports, module) {
             	// 客户端以及登陆而服务器端未登录
             	function(){
             		alert('请先登录');
-            		$location.path("/login");
+            		//$location.path("/login");
             	}
             );
 
@@ -144,7 +144,7 @@ define(function(require, exports, module) {
 	    		    function(res){
 	    		        switch(res.data.code){
 	    		            case '1':
-	    		            	$location.path("/login");
+	    		            	//$location.path("/login");
 	    		                break;
 	    		            default:
 		    		            alert('失败了，程序猿在奋力为你解决');
